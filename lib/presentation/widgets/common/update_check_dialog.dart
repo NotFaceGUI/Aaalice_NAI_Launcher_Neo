@@ -480,8 +480,8 @@ class UpdateCheckDialog extends ConsumerWidget {
         ? versionInfo.displayVersion
         : 'v${versionInfo.displayVersion}';
     final rawContentBase = Uri.parse(
-      'https://raw.githubusercontent.com/Aaalice233/'
-      'Aaalice_NAI_Launcher/$versionTag/',
+      'https://raw.githubusercontent.com/NotFaceGUI/'
+      'Aaalice_NAI_Launcher_Neo/$versionTag/',
     );
     final codeBackground = colorScheme.surfaceContainerHighest;
     final codeForeground = _readableForeground(codeBackground);
