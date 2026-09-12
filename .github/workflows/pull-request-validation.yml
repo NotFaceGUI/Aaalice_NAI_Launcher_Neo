@@ -231,9 +231,11 @@ jobs:
     name: Build Windows debug
     runs-on: windows-2022
     needs: changes
+    # Windows compile stays off the push path; commits to main only run quality checks
+    # and tests. Release builds are produced by release.yml on v* tags.
     if: >-
-      github.event_name != 'workflow_dispatch' &&
-      (github.event_name == 'push' || needs.changes.outputs.windows_build == 'true') &&
+      github.event_name == 'pull_request' &&
+      needs.changes.outputs.windows_build == 'true' &&
       needs.changes.outputs.windows_package != 'true'
     timeout-minutes: 20
 
