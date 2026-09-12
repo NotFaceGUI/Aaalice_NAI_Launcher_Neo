@@ -149,6 +149,20 @@ void main() {
     expect(source, isNot(contains('windowManager.destroy()')));
   });
 
+  test('runner keeps app-data identity fields that decide user data path', () {
+    final source = File('windows/runner/Runner.rc').readAsStringSync();
+
+    // path_provider_windows 用 %APPDATA%\<CompanyName>\<ProductName> 作为
+    // getApplicationSupportDirectory() 的结果；这两个值变化会切换到空目录，
+    // 导致用户设置、Hive 数据库与缓存看似丢失。
+    expect(source, contains('VALUE "CompanyName", "com.example" "\\0"'));
+    expect(source, contains('VALUE "ProductName", "nai_launcher" "\\0"'));
+    expect(
+      source,
+      contains('VALUE "FileDescription", "Aaalice NAI Launcher Neo" "\\0"'),
+    );
+  });
+
   test('locked window_manager version supports hidden resizable caption API', () {
     final pubspec = File('pubspec.yaml').readAsStringSync();
     final lockfile = File('pubspec.lock').readAsStringSync();
