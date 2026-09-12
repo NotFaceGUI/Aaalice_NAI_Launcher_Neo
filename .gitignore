@@ -244,6 +244,10 @@ nai_web_copy/
 NAI COPY/
 .shared/
 
+# 个人热重载快捷脚本（硬编码本机 Flutter/JDK/AVD 绝对路径，仅本机使用）
+/start_windows_hot_reload.bat
+/start_android_hot_reload.bat
+
 # 本机临时/对话工件
 /300d1829-66f3-4b01-810d-d8092e28b96f.png
 /a5795f23-9c74-461d-b50e-53452c186f36.png
