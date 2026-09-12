@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/font_provider.dart';
 
-// Import all 16 theme presets
+// Import all 17 theme presets
 import 'presets/bold_retro_theme.dart';
 import 'presets/grunge_collage_theme.dart';
 import 'presets/fluid_saturated_theme.dart';
@@ -20,8 +20,12 @@ import 'presets/retro_wave_theme.dart';
 import 'presets/brutalist_theme.dart';
 import 'presets/apple_light_theme.dart';
 import 'presets/system_theme.dart';
+import 'presets/novelai_theme.dart';
 
-/// 风格类型枚举 - 16 套主题
+/// 风格类型枚举 - 17 套主题
+///
+/// 声明顺序即本地存储使用的下标，新主题一律追加到末尾：插入中间会让已保存
+/// 的主题选择整体错位（用户会突然被换到别的预设）。
 enum AppStyle {
   // 8 套新设计主题
   grungeCollage, // 拼贴朋克 (默认)
@@ -41,6 +45,7 @@ enum AppStyle {
   brutalist, // 原 motorolaFixBeeper - LCD 电子
   appleLight, // 原 pureLight - 纯净白
   system, // 跟随系统
+  novelAi, // NovelAI 图像生成页配色
 }
 
 extension AppStyleExtension on AppStyle {
@@ -125,6 +130,11 @@ extension AppStyleExtension on AppStyle {
       SystemTheme.displayName,
       SystemTheme.description,
       SystemTheme.supportsDarkMode,
+    ),
+    AppStyle.novelAi: _ThemeMetadata(
+      NovelAiTheme.displayName,
+      NovelAiTheme.description,
+      NovelAiTheme.supportsDarkMode,
     ),
   };
 
@@ -217,6 +227,10 @@ class AppTheme {
     AppStyle.system: _ThemeBuilder(
       () => SystemTheme.light,
       () => SystemTheme.dark,
+    ),
+    AppStyle.novelAi: _ThemeBuilder(
+      () => NovelAiTheme.light,
+      () => NovelAiTheme.dark,
     ),
   };
 

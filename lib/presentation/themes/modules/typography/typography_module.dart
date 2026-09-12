@@ -15,6 +15,7 @@ export 'presets/flat_typography.dart';
 export 'presets/hand_drawn_typography.dart';
 export 'presets/editorial_typography.dart';
 export 'presets/zen_typography.dart';
+export 'presets/novelai_typography.dart';
 
 /// Base implementation of [TypographyModule] with common utilities.
 abstract class BaseTypographyModule implements TypographyModule {
