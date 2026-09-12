@@ -13254,8 +13254,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Checking the account saved on this device. Please wait; you do not need to sign in again.';
 
   @override
-  String get cloudSync_googleDriveUnavailable =>
-      'Google Drive is unavailable while app authorization approval is pending.';
+  String get cloudSync_cloudDriveUnavailable =>
+      'Cloud drive backup is unavailable in this build. Use WebDAV or GitHub instead.';
 
   @override
   String get cloudSync_disconnected => 'Not connected';

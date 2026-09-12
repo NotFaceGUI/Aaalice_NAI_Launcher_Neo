@@ -12908,8 +12908,8 @@ class AppLocalizationsJa extends AppLocalizations {
       'この端末に保存されたアカウントを確認しています。再ログインせず、そのままお待ちください。';
 
   @override
-  String get cloudSync_googleDriveUnavailable =>
-      'Google Drive はアプリの認可審査が完了していないため、現在利用できません。';
+  String get cloudSync_cloudDriveUnavailable =>
+      'このビルドではクラウドドライブのバックアップを利用できません。WebDAV または GitHub をご利用ください。';
 
   @override
   String get cloudSync_disconnected => '未接続';

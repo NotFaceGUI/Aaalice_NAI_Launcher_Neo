@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nai_launcher/core/cloud_sync/backend/cloud_sync_backend.dart';
 import 'package:nai_launcher/core/cloud_sync/cloud_drive_provider.dart';
+import 'package:nai_launcher/core/cloud_sync/cloud_drive_oauth_feature.dart';
 import 'package:nai_launcher/core/cloud_sync/oauth/cloud_drive_oauth_client.dart';
 import 'package:nai_launcher/core/cloud_sync/oauth/cloud_drive_oauth_config.dart';
 import 'package:nai_launcher/core/cloud_sync/oauth/cloud_drive_oauth_models.dart';
@@ -17,6 +18,37 @@ import 'package:nai_launcher/presentation/screens/settings/settings_screen.dart'
 import 'package:nai_launcher/presentation/screens/settings/settings_section.dart';
 
 void main() {
+  setUp(() {
+    // 默认状态取自编译期开关；用例内开启后必须逐条复位，避免相互影响。
+    CloudDriveOAuthFeature.enabledForTesting = false;
+  });
+
+  testWidgets('云盘 OAuth 默认关闭，两个后端都不可作为新连接目标', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(840, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(_subject());
+    await tester.pumpAndSettle();
+
+    for (final label in ['Google Drive', 'OneDrive']) {
+      expect(
+        tester
+            .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, label))
+            .onSelected,
+        isNull,
+        reason: label,
+      );
+    }
+    await tester.tap(find.text('OneDrive'));
+    await tester.pumpAndSettle();
+    expect(
+      tester
+          .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, 'WebDAV'))
+          .selected,
+      isTrue,
+    );
+    expect(CloudDriveOAuthFeature.enabled, isFalse);
+  });
+
   testWidgets('未连接布局在 320–1600 宽度与 3x 文本下均无 overflow', (tester) async {
     for (final width in [320.0, 600.0, 840.0, 1180.0, 1600.0]) {
       await tester.binding.setSurfaceSize(Size(width, 1200));
@@ -28,9 +60,16 @@ void main() {
       expect(find.text('WebDAV'), findsOneWidget);
       expect(find.text('GitHub'), findsOneWidget);
       expect(find.text('Google Drive'), findsOneWidget);
+      expect(find.text('OneDrive'), findsOneWidget);
       expect(
         tester
             .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, 'Google Drive'))
+            .onSelected,
+        isNull,
+      );
+      expect(
+        tester
+            .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, 'OneDrive'))
             .onSelected,
         isNull,
       );
@@ -40,8 +79,10 @@ void main() {
             .onSelected,
         isNotNull,
       );
-      expect(find.text('Google Drive 暂不可用：应用授权审核尚未通过。'), findsOneWidget);
-      expect(find.text('OneDrive'), findsOneWidget);
+      expect(
+        find.text('云盘备份在当前版本中不可用，请改用 WebDAV 或 GitHub。'),
+        findsOneWidget,
+      );
       expect(find.text('保存连接'), findsOneWidget);
       expect(tester.takeException(), isNull, reason: 'width=$width');
     }
@@ -210,10 +251,9 @@ void main() {
 
   testWidgets('OAuth 草稿随页面销毁安全清理且不读取已失效 ref', (tester) async {
     final port = _FakePort();
-    final registry = CloudDriveProviderRegistry([
-      const _ConfiguredCloudDriveProvider(CloudDriveOAuthProvider.oneDrive),
-    ]);
-    await tester.pumpWidget(_subject(port: port, registry: registry));
+    await tester.pumpWidget(
+      _subject(port: port, registry: _oneDriveRegistry()),
+    );
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('OneDrive'));
@@ -704,9 +744,13 @@ void main() {
 Finder _fieldWithLabel(String label) =>
     find.byKey(ValueKey('cloud-sync-field-$label'));
 
-CloudDriveProviderRegistry _oneDriveRegistry() => CloudDriveProviderRegistry([
-  const _ConfiguredCloudDriveProvider(CloudDriveOAuthProvider.oneDrive),
-]);
+/// 云盘 OAuth 在发布构建中默认关闭，这些用例覆盖开关打开后的授权流程。
+CloudDriveProviderRegistry _oneDriveRegistry() {
+  CloudDriveOAuthFeature.enabledForTesting = true;
+  return CloudDriveProviderRegistry([
+    const _ConfiguredCloudDriveProvider(CloudDriveOAuthProvider.oneDrive),
+  ]);
+}
 
 Future<void> _authorizeOneDrive(WidgetTester tester) async {
   await tester.tap(find.text('OneDrive'));

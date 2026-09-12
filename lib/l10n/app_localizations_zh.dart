@@ -12689,8 +12689,8 @@ class AppLocalizationsZh extends AppLocalizations {
       '正在检查此设备保存的账号，请稍候，无需重新登录。';
 
   @override
-  String get cloudSync_googleDriveUnavailable =>
-      'Google Drive 暂不可用：应用授权审核尚未通过。';
+  String get cloudSync_cloudDriveUnavailable =>
+      '云盘备份在当前版本中不可用，请改用 WebDAV 或 GitHub。';
 
   @override
   String get cloudSync_disconnected => '尚未连接';
@@ -27264,8 +27264,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
       '正在檢查此裝置儲存的帳號，請稍候，無需重新登入。';
 
   @override
-  String get cloudSync_googleDriveUnavailable =>
-      'Google Drive 暫不可用：應用程式授權審核尚未通過。';
+  String get cloudSync_cloudDriveUnavailable =>
+      '雲端硬碟備份在目前版本中無法使用，請改用 WebDAV 或 GitHub。';
 
   @override
   String get cloudSync_disconnected => '尚未連線';

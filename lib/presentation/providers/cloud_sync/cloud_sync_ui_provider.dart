@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/cloud_sync/backend/cloud_sync_backend.dart';
+import '../../../core/cloud_sync/cloud_drive_oauth_feature.dart';
 import '../../../core/cloud_sync/content_selection.dart';
 import '../../../core/cloud_sync/oauth/cloud_drive_oauth_models.dart';
 import 'cloud_sync_provider_wiring.dart';
@@ -9,9 +10,10 @@ import 'cloud_sync_provider_wiring.dart';
 enum CloudSyncBackendKind { webDav, github, googleDrive, oneDrive }
 
 extension CloudSyncBackendKindX on CloudSyncBackendKind {
-  // Keep the implementation and persisted account format while OAuth review
-  // prevents offering Google Drive to new users.
-  bool get acceptsNewConnections => this != CloudSyncBackendKind.googleDrive;
+  // Keep the implementation and persisted account format while the build
+  // disables new cloud-drive OAuth connections.
+  bool get acceptsNewConnections =>
+      !usesOAuth || CloudDriveOAuthFeature.enabled;
 
   bool get usesOAuth =>
       this == CloudSyncBackendKind.googleDrive ||

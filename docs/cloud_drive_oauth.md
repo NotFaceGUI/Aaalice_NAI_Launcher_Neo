@@ -1,6 +1,8 @@
 # Google Drive / OneDrive OAuth 开发者配置
 
-Google Drive 的应用授权审核尚未通过，产品暂时禁用新增连接按钮；已有连接及历史备份代码保留。以下 Google 配置说明仍用于维护现有集成，不能据此认为正式用户入口已开放。
+本分支默认关闭云盘 OAuth 备份：`CloudDriveOAuthFeature` 读取编译期开关 `ENABLE_CLOUD_DRIVE_OAUTH`（默认 `false`），关闭时 Google Drive 与 OneDrive 都不作为可创建的新连接目标，应用也不会发起授权；已有连接与历史备份代码保留，WebDAV 与 GitHub 备份不受影响。
+
+需要恢复时同时完成两件事：构建时传入 `--dart-define=ENABLE_CLOUD_DRIVE_OAUTH=true`，并在 `release.yml` 恢复被移除的 `verify_cloud_drive_oauth_config.ps1 -RequireConfigured` 校验步骤。以下配置说明用于维护该集成，不能据此认为正式用户入口已开放。
 
 本文只描述云盘 OAuth 基础设施和人工控制台配置。仓库中不得提交真实 client ID、Google Windows Desktop client secret、token、`google-services.json` 或下载的 Google plist。
 

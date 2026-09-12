@@ -23029,11 +23029,11 @@ abstract class AppLocalizations {
   /// **'Checking the account saved on this device. Please wait; you do not need to sign in again.'**
   String get cloudSync_restoringConnectionDescription;
 
-  /// No description provided for @cloudSync_googleDriveUnavailable.
+  /// No description provided for @cloudSync_cloudDriveUnavailable.
   ///
   /// In en, this message translates to:
-  /// **'Google Drive is unavailable while app authorization approval is pending.'**
-  String get cloudSync_googleDriveUnavailable;
+  /// **'Cloud drive backup is unavailable in this build. Use WebDAV or GitHub instead.'**
+  String get cloudSync_cloudDriveUnavailable;
 
   /// No description provided for @cloudSync_disconnected.
   ///

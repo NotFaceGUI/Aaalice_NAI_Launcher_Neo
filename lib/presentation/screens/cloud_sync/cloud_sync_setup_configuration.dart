@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/cloud_sync/cloud_drive_oauth_feature.dart';
 import '../../../core/utils/localization_extension.dart';
 import '../../providers/cloud_sync/cloud_sync_ui_provider.dart';
 import 'cloud_sync_widgets.dart';
@@ -59,22 +60,26 @@ class CloudSyncSetupConfiguration extends StatelessWidget {
             children: [
               _destinationChip(CloudSyncBackendKind.webDav, 'WebDAV'),
               _destinationChip(CloudSyncBackendKind.github, 'GitHub'),
-              Tooltip(
-                message: context.l10n.cloudSync_googleDriveUnavailable,
-                child: _destinationChip(
-                  CloudSyncBackendKind.googleDrive,
-                  'Google Drive',
-                ),
+              _oauthDestinationChip(
+                context,
+                CloudSyncBackendKind.googleDrive,
+                'Google Drive',
               ),
-              _destinationChip(CloudSyncBackendKind.oneDrive, 'OneDrive'),
+              _oauthDestinationChip(
+                context,
+                CloudSyncBackendKind.oneDrive,
+                'OneDrive',
+              ),
             ],
           ),
         ),
-        const SizedBox(height: 8),
-        Text(
-          context.l10n.cloudSync_googleDriveUnavailable,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
+        if (!CloudDriveOAuthFeature.enabled) ...[
+          const SizedBox(height: 8),
+          Text(
+            context.l10n.cloudSync_cloudDriveUnavailable,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
         const SizedBox(height: 20),
         if (backend == CloudSyncBackendKind.webDav) ...[
           _fieldGrid([
@@ -169,6 +174,20 @@ class CloudSyncSetupConfiguration extends StatelessWidget {
                 if (selected) onBackendChanged(value);
               },
       );
+
+  /// 关闭云盘 OAuth 时附带原因说明，避免出现无解释的禁用控件。
+  Widget _oauthDestinationChip(
+    BuildContext context,
+    CloudSyncBackendKind value,
+    String label,
+  ) {
+    final chip = _destinationChip(value, label);
+    if (value.acceptsNewConnections) return chip;
+    return Tooltip(
+      message: context.l10n.cloudSync_cloudDriveUnavailable,
+      child: chip,
+    );
+  }
 
   Widget _oauthConnection(BuildContext context) {
     final providerName = backend == CloudSyncBackendKind.googleDrive

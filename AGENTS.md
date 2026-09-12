@@ -114,7 +114,9 @@ Windows release 产物位于 `build/windows/x64/runner/Release/`。macOS 使用 
 
 本地图库图像本体不参与云备份；相簿、分类及基于稳定相对路径的成员引用可以作为独立轻量选项同步，但不得读取或上传引用指向的图像字节。在线画廊只同步用户创建的轻量状态和收藏引用，不同步远程原图、缓存、浏览历史或远程目录副本。
 
-云同步的协议、后端能力与验证入口见 [docs/cloud_sync.md](docs/cloud_sync.md)，OAuth 配置见 [docs/cloud_drive_oauth.md](docs/cloud_drive_oauth.md)。OneDrive 与 Google Drive 云同步保持简单明文备份，不引入加密、解密、恢复密钥或 KEY 文件流程；不保留未发布加密格式的兼容、迁移或分支；已发布数据的兼容边界以当前协议和回归测试为准。保存连接只保存和验证配置，不得自动上传、拉取或恢复待处理同步，所有数据传输必须由用户显式触发。
+云同步的协议、后端能力与验证入口见 [docs/cloud_sync.md](docs/cloud_sync.md)，OAuth 配置见 [docs/cloud_drive_oauth.md](docs/cloud_drive_oauth.md)。本分支默认关闭云盘 OAuth 备份：`CloudDriveOAuthFeature` 的编译期开关 `ENABLE_CLOUD_DRIVE_OAUTH` 默认 `false`，关闭时 Google Drive 与 OneDrive 不作为可创建的新连接目标，`release.yml` 也不要求 OAuth 变量与 secret；WebDAV 与 GitHub 备份保持可用。恢复该功能必须同时打开开关并还原被移除的授权校验步骤，不得只改其中一处。
+
+OneDrive 与 Google Drive 云同步保持简单明文备份，不引入加密、解密、恢复密钥或 KEY 文件流程；不保留未发布加密格式的兼容、迁移或分支；已发布数据的兼容边界以当前协议和回归测试为准。保存连接只保存和验证配置，不得自动上传、拉取或恢复待处理同步，所有数据传输必须由用户显式触发。
 
 ## UI 设计语言
 
