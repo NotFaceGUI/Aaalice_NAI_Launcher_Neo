@@ -4,10 +4,7 @@
   <a href="README.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · English
 </p>
 
-> [!NOTE]
-> **This repository is the community-maintained continuation (Neo) of [Aaalice233/Aaalice_NAI_Launcher](https://github.com/Aaalice233/Aaalice_NAI_Launcher).**
->
-> Upstream paused development on 2026-09-08. This fork continues maintenance on top of the original author's work. Auto-updates, releases, and downloads all come from this repository; upstream no longer ships updates.
+> This repository is a continuation of [Aaalice233/Aaalice_NAI_Launcher](https://github.com/Aaalice233/Aaalice_NAI_Launcher).
 
 <p align="center">
   <img src="assets/icons/Icon.png" alt="NAI Launcher Neo icon" width="112">

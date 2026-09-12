@@ -4,10 +4,7 @@
   <a href="README.md">简体中文</a> · 繁體中文 · <a href="README.en-US.md">English</a>
 </p>
 
-> [!NOTE]
-> **本倉庫是 [Aaalice233/Aaalice_NAI_Launcher](https://github.com/Aaalice233/Aaalice_NAI_Launcher) 的社群續更分支（Neo）。**
->
-> 上游已於 2026-09-08 暫停更新。本分支在原作者工作基礎上繼續維護，自動更新、發布與下載均以本倉庫為準；上游不再提供更新。
+> 本倉庫是 [Aaalice233/Aaalice_NAI_Launcher](https://github.com/Aaalice233/Aaalice_NAI_Launcher) 的續更分支。
 
 <p align="center">
   <img src="assets/icons/Icon.png" alt="NAI Launcher Neo 圖示" width="112">
