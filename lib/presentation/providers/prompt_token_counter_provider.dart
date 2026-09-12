@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/constants/api_constants.dart';
 import '../../core/constants/model_capabilities.dart';
+import '../../core/enums/model_mode.dart';
 import '../../core/services/prompt_token_counter_service.dart';
 import '../../core/utils/novelai_auto_text.dart';
 import '../../core/utils/prompt_preset_resolution.dart';
@@ -58,6 +59,7 @@ final promptTokenUsageProvider =
             prompt: params.prompt,
             negativePrompt: params.negativePrompt,
             model: params.model,
+            modelMode: params.modelMode,
             isEnhanceRequest:
                 target == PromptTokenCountTarget.positive &&
                 params.shouldApplyEnhancePromptAddition,
@@ -94,6 +96,7 @@ final promptTokenUsageProvider =
         prompt: promptState.prompt,
         negativePrompt: promptState.negativePrompt,
         model: promptState.model,
+        modelMode: promptState.modelMode,
         fixedTagsState: fixedTagsState,
         qualityToggle: qualityPresetState.mode == PromptPresetMode.naiDefault,
         ucPreset: UcPresets.toApiValue(ucPresetState.presetType),
@@ -160,12 +163,14 @@ PromptTokenCountPayload buildPromptTokenCountPayload({
   bool transparentBackground = false,
   String qualityTier = QualityTags.standardTier,
   bool useCoords = false,
+  ModelMode modelMode = ModelMode.anime,
 }) {
   return switch (target) {
     PromptTokenCountTarget.positive => _buildPositiveTokenCountPayload(
       prompt: prompt,
       negativePrompt: negativePrompt,
       model: model,
+      modelMode: modelMode,
       fixedTagsState: fixedTagsState,
       qualityToggle: qualityToggle,
       ucPreset: ucPreset,
@@ -217,6 +222,7 @@ PromptTokenCountPayload _buildPositiveTokenCountPayload({
   bool transparentBackground = false,
   String qualityTier = QualityTags.standardTier,
   bool useCoords = false,
+  ModelMode modelMode = ModelMode.anime,
 }) {
   final resolvedPrompt = CharacterPromptBlockParser.parse(
     resolveAliases(prompt),
@@ -289,6 +295,7 @@ PromptTokenCountPayload _buildPositiveTokenCountPayload({
     qualityTier: qualityTier,
     characters: resolvedCharacters,
     useCoords: useCoords,
+    modelMode: modelMode,
   );
   final fixedTagTexts = [
     ...fixedTagsState.enabledPrefixes

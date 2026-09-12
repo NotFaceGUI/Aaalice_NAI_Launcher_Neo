@@ -47,6 +47,7 @@ final class GenerationParamsPersistenceService {
       prompt: _localStorage.getLastPrompt(),
       negativePrompt: _localStorage.getLastNegativePrompt(),
       model: model,
+      modelMode: _localStorage.getModelMode(),
       sampler: _localStorage.getDefaultSampler(),
       steps: _localStorage.getDefaultSteps(),
       scale: _localStorage.getDefaultScale(),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constants/api_constants.dart';
+import '../../../../core/enums/model_mode.dart';
 import '../../../../core/utils/localization_extension.dart';
 import '../../../../data/models/image/image_params.dart';
 import '../../../providers/image_generation_provider.dart';
@@ -36,17 +37,24 @@ class ParamSectionTitle extends StatelessWidget {
   }
 }
 
-/// 模型选择分节（标题 + 下拉框）
+/// 模型选择分节（模型 + Model Mode）
 class ModelSection extends ConsumerWidget {
   const ModelSection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(
-      generationParamsNotifierProvider.select((params) => params.model),
+    final selection = ref.watch(
+      generationParamsNotifierProvider.select(
+        (params) => (
+          model: params.model,
+          modelMode: params.modelMode,
+          // 官网只在支持 Furry Mode 的模型上显示该开关（V4/V4.5/V5）。
+          supportsModelMode: params.capabilities.supportsModelMode,
+        ),
+      ),
     );
     // 测试期的 custom 键归一到正式 ID，保证下拉框 value 一定在候选项里。
-    final normalizedModel = ImageModels.migrateLegacyModel(model);
+    final normalizedModel = ImageModels.migrateLegacyModel(selection.model);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -74,10 +82,41 @@ class ModelSection extends ConsumerWidget {
             }
           },
         ),
+        if (selection.supportsModelMode) ...[
+          const SizedBox(height: 12),
+          ParamSectionTitle(context.l10n.generation_modelMode),
+          const SizedBox(height: 8),
+          ThemedDropdown<ModelMode>(
+            value: selection.modelMode,
+            items: ModelMode.values
+                .map(
+                  (mode) => DropdownMenuItem(
+                    value: mode,
+                    child: Text(
+                      _modelModeLabel(context, mode),
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (value) {
+              if (value != null) {
+                ref
+                    .read(generationParamsNotifierProvider.notifier)
+                    .updateModelMode(value);
+              }
+            },
+          ),
+        ],
       ],
     );
   }
 }
+
+String _modelModeLabel(BuildContext context, ModelMode mode) => switch (mode) {
+  ModelMode.anime => context.l10n.generation_modelModeAnime,
+  ModelMode.furry => context.l10n.generation_modelModeFurry,
+};
 
 /// 尺寸设置分节（标题 + 尺寸选择器）
 class SizeSection extends ConsumerWidget {

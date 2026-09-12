@@ -60,6 +60,7 @@ class ModelCapabilities {
     this.supportsEnhancePromptAdd = false,
     this.supportsTextRendering = false,
     this.supportsAutoText = false,
+    this.supportsModelMode = false,
     this.supportsNoiseSchedule = true,
     this.supportsVarietyPlus = false,
     this.retainsVarietyPlus = true,
@@ -129,6 +130,13 @@ class ModelCapabilities {
   /// Whether quoted text is automatically mirrored into a trailing `teXt:`
   /// block. The production web client enables this for V5.
   final bool supportsAutoText;
+
+  /// 是否支持 Model Mode（Anime / Furry）。
+  ///
+  /// 网页端能力位 `hasFurryMode`，V4、V4.5 与 V5 家族为 true。开启 Furry
+  /// 时客户端往正向提示词最前面加 `fur dataset, ` 数据集标签，Anime 不加；
+  /// 提示词结构与质量词后缀保持不变。
+  final bool supportsModelMode;
 
   /// 噪声调度是否可选。
   final bool supportsNoiseSchedule;
@@ -235,6 +243,7 @@ class ModelCapabilityRegistry {
     supportsEncodedVibeTransfer: true,
     supportsImg2ImgInpainting: true,
     supportsTextRendering: true,
+    supportsModelMode: true,
     supportsVarietyPlus: true,
   );
 
@@ -252,6 +261,7 @@ class ModelCapabilityRegistry {
     supportsEncodedVibeTransfer: true,
     supportsImg2ImgInpainting: true,
     supportsTextRendering: true,
+    supportsModelMode: true,
     supportsVarietyPlus: true,
   );
 
@@ -271,6 +281,7 @@ class ModelCapabilityRegistry {
     supportsImg2ImgInpainting: true,
     supportsEnhancePromptAdd: true,
     supportsTextRendering: true,
+    supportsModelMode: true,
     supportsVarietyPlus: true,
     cfgDelaySigma: 58.0,
   );
@@ -291,6 +302,7 @@ class ModelCapabilityRegistry {
     supportsImg2ImgInpainting: true,
     supportsEnhancePromptAdd: true,
     supportsTextRendering: true,
+    supportsModelMode: true,
     supportsVarietyPlus: true,
     cfgDelaySigma: 58.0,
   );
@@ -316,6 +328,7 @@ class ModelCapabilityRegistry {
     supportsEnhancePromptAdd: true,
     supportsTextRendering: true,
     supportsAutoText: true,
+    supportsModelMode: true,
     // 网页端对 V5 隐藏了噪声调度与 Variety+，这里刻意放开供手动尝试。
     supportsNoiseSchedule: true,
     supportsVarietyPlus: true,
@@ -342,6 +355,7 @@ class ModelCapabilityRegistry {
     supportsEnhancePromptAdd: true,
     supportsTextRendering: true,
     supportsAutoText: true,
+    supportsModelMode: true,
     // 网页端对 V5 隐藏了噪声调度与 Variety+，这里刻意放开供手动尝试。
     supportsNoiseSchedule: true,
     supportsVarietyPlus: true,

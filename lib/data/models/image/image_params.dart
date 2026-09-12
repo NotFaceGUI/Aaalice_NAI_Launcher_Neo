@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/constants/api_constants.dart';
 import '../../../core/constants/model_capabilities.dart';
+import '../../../core/enums/model_mode.dart';
 import '../../../core/enums/precise_ref_type.dart';
 import '../vibe/vibe_reference.dart';
 
@@ -95,6 +96,13 @@ class ImageParams with _$ImageParams {
 
     /// 模型
     @Default(ImageModels.animeDiffusionV5Full) String model,
+
+    /// Model Mode（Anime / Furry）。
+    ///
+    /// 该选项不进 API 请求体：Furry 时把 `fur dataset, ` 数据集标签加到正向
+    /// 提示词最前面，Anime 不加。只有能力位 supportsModelMode 为真的 V4、V4.5
+    /// 与 V5 家族会生效。
+    @Default(ModelMode.anime) ModelMode modelMode,
 
     /// 图像宽度 (必须是64的倍数)
     @Default(832) int width,

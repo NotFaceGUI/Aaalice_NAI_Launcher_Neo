@@ -83,6 +83,8 @@ void main() {
         expect(commentJson['quality_toggle'], isTrue);
         expect(commentJson['uc_preset'], equals(0));
         expect(commentJson['model'], equals(ImageModels.animeDiffusionV45Full));
+        // Model Mode 不进请求体，单独写入元数据才能在重新生成时还原。
+        expect(commentJson['model_mode'], equals('anime'));
         expect(
           commentJson['v4_prompt']['caption']['base_caption'],
           equals('1girl, sunset'),

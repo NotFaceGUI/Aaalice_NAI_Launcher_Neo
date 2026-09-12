@@ -182,6 +182,11 @@ class NaiImageMetadata with _$NaiImageMetadata {
     @HiveField(41, defaultValue: false)
     @Default(false)
     bool hasRecordedFixedTagFields,
+
+    /// Model Mode 名称（`anime` / `furry`）。
+    ///
+    /// 官网元数据没有这个字段，此时由提示词的 `fur dataset, ` 前缀反推。
+    @HiveField(42) String? modelMode,
   }) = _NaiImageMetadata;
 
   const NaiImageMetadata._();
@@ -393,6 +398,7 @@ NaiImageMetadata _metadataFromFields(NaiImageMetadataFields fields) =>
       transparentBackground: fields.transparentBackground,
       fixedTagUsageData: fields.fixedTagUsageData,
       hasRecordedFixedTagFields: fields.hasRecordedFixedTagFields,
+      modelMode: fields.modelMode,
     );
 
 bool _rawJsonMayContainUpgrade(String raw) {

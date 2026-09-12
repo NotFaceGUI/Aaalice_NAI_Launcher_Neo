@@ -7,6 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image/image.dart' as img;
 import 'package:nai_launcher/core/constants/api_constants.dart';
 import 'package:nai_launcher/core/constants/storage_keys.dart';
+import 'package:nai_launcher/core/enums/model_mode.dart';
 import 'package:nai_launcher/core/enums/precise_ref_type.dart';
 import 'package:nai_launcher/core/services/anlas_calculator.dart';
 import 'package:nai_launcher/core/storage/local_storage_service.dart';
@@ -1049,6 +1050,42 @@ void main() {
       notifier.updateModel(ImageModels.v5StagingKey, followDefaults: false);
 
       expect(container.read(generationParamsNotifierProvider).scale, 5.0);
+    });
+  });
+
+  group('model mode', () {
+    test('should default to anime and persist the selected mode', () async {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(
+        generationParamsNotifierProvider.notifier,
+      );
+
+      expect(
+        container.read(generationParamsNotifierProvider).modelMode,
+        ModelMode.anime,
+      );
+
+      notifier.updateModelMode(ModelMode.furry);
+
+      expect(
+        container.read(generationParamsNotifierProvider).modelMode,
+        ModelMode.furry,
+      );
+      await Future<void>.delayed(Duration.zero);
+      expect(LocalStorageService().getModelMode(), ModelMode.furry);
+    });
+
+    test('should restore a stored model mode on build', () async {
+      await LocalStorageService().setModelMode(ModelMode.furry);
+
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+
+      expect(
+        container.read(generationParamsNotifierProvider).modelMode,
+        ModelMode.furry,
+      );
     });
   });
 }

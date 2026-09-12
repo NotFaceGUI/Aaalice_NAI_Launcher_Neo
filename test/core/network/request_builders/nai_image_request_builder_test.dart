@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as img;
 import 'package:nai_launcher/core/constants/api_constants.dart';
+import 'package:nai_launcher/core/enums/model_mode.dart';
 import 'package:nai_launcher/core/enums/precise_ref_type.dart';
 import 'package:nai_launcher/core/network/request_builders/nai_image_request_builder.dart';
 import 'package:nai_launcher/core/utils/nai_api_utils.dart';
@@ -26,6 +27,43 @@ void main() {
       expect(encoded, isFalse);
     },
   );
+  test('fuses the furry dataset tag into the prompt and v4 caption', () async {
+    const params = ImageParams(
+      prompt: '1girl, sunset',
+      model: ImageModels.animeDiffusionV45Full,
+      qualityToggle: false,
+      modelMode: ModelMode.furry,
+      characters: [CharacterPrompt(prompt: 'wolf girl')],
+    );
+    final builder = NAIImageRequestBuilder(
+      params: params,
+      encodeVibe: _fakeEncodeVibe,
+    );
+
+    final result = await builder.build(sampler: 'k_euler');
+    const expected = 'fur dataset, 1girl, sunset';
+
+    expect(result.effectivePrompt, equals(expected));
+    expect(result.requestData['input'], equals(expected));
+    expect(
+      result.requestParameters['v4_prompt']['caption']['base_caption'],
+      equals(expected),
+    );
+    // 角色提示词与负向提示词不参与 Model Mode（与官网一致）。
+    expect(
+      result.requestParameters['characterPrompts'][0]['prompt'],
+      equals('wolf girl'),
+    );
+    expect(
+      result.requestParameters['v4_prompt']['caption']['char_captions'][0]['char_caption'],
+      equals('wolf girl'),
+    );
+    expect(
+      result.requestParameters['v4_negative_prompt']['caption']['base_caption'],
+      isNot(contains('fur dataset')),
+    );
+  });
+
   group('NAIImageRequestBuilder.build', () {
     test('should keep provided sampler and stream mode difference', () async {
       const params = ImageParams(model: 'nai-diffusion-4-full');

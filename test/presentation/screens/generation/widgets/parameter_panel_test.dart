@@ -120,6 +120,12 @@ void main() {
     testWidgets('parameter sliders keep their discrete behavior', (
       tester,
     ) async {
+      // 面板分节变多后 CFG 滑块超出默认 800×600 测试画布的懒构建范围，
+      // ListView 不构建视口外的分节；给足画布高度才能断言到它。
+      tester.view.physicalSize = const Size(960, 1600);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -138,7 +144,7 @@ void main() {
             supportedLocales: AppLocalizations.supportedLocales,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             home: Scaffold(
-              body: SizedBox(width: 960, height: 1200, child: ParameterPanel()),
+              body: SizedBox(width: 960, height: 1600, child: ParameterPanel()),
             ),
           ),
         ),

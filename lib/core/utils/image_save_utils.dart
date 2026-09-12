@@ -12,6 +12,7 @@ import '../../data/models/image/image_params.dart';
 import '../../data/services/image_metadata_service.dart';
 import '../../data/services/metadata/unified_metadata_parser.dart';
 import '../constants/api_constants.dart';
+import '../enums/model_mode.dart';
 import '../enums/precise_ref_type.dart';
 import 'app_logger.dart';
 import 'prompt_semantics_utils.dart';
@@ -72,6 +73,9 @@ class ImageSaveUtils {
       'sm': params.smea,
       'sm_dyn': params.smeaDyn,
       'model': params.model,
+      // Model Mode 不进请求体，只在客户端表现为提示词前缀；单独记录才能在
+      // 重新生成时还原用户的模式选择。
+      'model_mode': params.modelMode.name,
       'quality_toggle': params.qualityToggle,
       'uc_preset': params.ucPreset,
       if (qualityTagHint != null) 'tag_hint_qt': qualityTagHint,
@@ -257,6 +261,7 @@ class ImageSaveUtils {
             ucPreset: params.ucPreset,
             transparentBackground: params.transparentBackground,
             qualityTier: params.qualityTier,
+            modelMode: params.modelMode,
           ).effectivePrompt,
       source: existingMetadata?.source ?? getModelSourceName(params.model),
       software: existingMetadata?.software ?? 'NovelAI',
@@ -470,6 +475,7 @@ class ImageSaveUtils {
         qualityTier: metadata.qualityTier ?? QualityTags.standardTier,
         ucPreset: metadata.ucPreset ?? UcPresets.noneApiValue,
         transparentBackground: metadata.transparentBackground ?? false,
+        modelMode: ModelMode.fromName(metadata.modelMode),
       );
 
       // 恢复Vibe数据

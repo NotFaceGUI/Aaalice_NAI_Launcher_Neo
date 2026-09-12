@@ -1435,6 +1435,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get generation_model => '模型';
 
   @override
+  String get generation_modelMode => '模式';
+
+  @override
+  String get generation_modelModeAnime => '动漫';
+
+  @override
+  String get generation_modelModeFurry => '兽人';
+
+  @override
   String generation_opusUsageRemaining(Object percent) {
     return 'Opus 免费生成剩余 $percent%';
   }
@@ -16007,6 +16016,15 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get generation_model => '模型';
+
+  @override
+  String get generation_modelMode => '模式';
+
+  @override
+  String get generation_modelModeAnime => '動漫';
+
+  @override
+  String get generation_modelModeFurry => '獸人';
 
   @override
   String generation_opusUsageRemaining(Object percent) {

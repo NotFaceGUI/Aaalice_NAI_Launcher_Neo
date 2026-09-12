@@ -1457,6 +1457,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get generation_model => 'モデル';
 
   @override
+  String get generation_modelMode => 'モード';
+
+  @override
+  String get generation_modelModeAnime => 'アニメ';
+
+  @override
+  String get generation_modelModeFurry => 'ケモノ';
+
+  @override
   String generation_opusUsageRemaining(Object percent) {
     return 'Opus 無料生成の残り $percent%';
   }

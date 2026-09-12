@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nai_launcher/core/constants/api_constants.dart';
+import 'package:nai_launcher/core/enums/model_mode.dart';
 import 'package:nai_launcher/core/utils/novelai_auto_text.dart';
 import 'package:nai_launcher/core/utils/prompt_semantics_utils.dart';
 
@@ -377,6 +378,77 @@ void main() {
           reason: model,
         );
       }
+    });
+  });
+
+  group('buildPromptSemanticsSnapshot model mode', () {
+    test('prepends the furry dataset tag ahead of the quality tags', () {
+      final snapshot = buildPromptSemanticsSnapshot(
+        prompt: '1girl',
+        negativePrompt: '',
+        model: ImageModels.animeDiffusionV45Full,
+        qualityToggle: true,
+        ucPreset: UcPresets.toApiValue(UcPresetType.none),
+        modelMode: ModelMode.furry,
+      );
+
+      expect(
+        snapshot.effectivePrompt,
+        equals(
+          'fur dataset, 1girl, location, very aesthetic, masterpiece, no text',
+        ),
+      );
+      // 元数据里保留用户原文，模式单独记录
+      expect(snapshot.basePrompt, equals('1girl'));
+    });
+
+    test('leaves anime mode and unsupported models untouched', () {
+      final anime = buildPromptSemanticsSnapshot(
+        prompt: '1girl',
+        negativePrompt: '',
+        model: ImageModels.animeDiffusionV45Full,
+        qualityToggle: false,
+        ucPreset: UcPresets.toApiValue(UcPresetType.none),
+      );
+      expect(anime.effectivePrompt, equals('1girl'));
+
+      // V3 及更早的模型没有 Model Mode（官网能力位 hasFurryMode 为 false）。
+      final legacy = buildPromptSemanticsSnapshot(
+        prompt: '1girl',
+        negativePrompt: '',
+        model: ImageModels.animeDiffusionV3,
+        qualityToggle: false,
+        ucPreset: UcPresets.toApiValue(UcPresetType.none),
+        modelMode: ModelMode.furry,
+      );
+      expect(legacy.effectivePrompt, equals('1girl'));
+    });
+
+    test('does not duplicate a dataset tag the user already typed', () {
+      for (final prompt in ['fur dataset, 1girl', 'background dataset, scenery']) {
+        final snapshot = buildPromptSemanticsSnapshot(
+          prompt: prompt,
+          negativePrompt: '',
+          model: ImageModels.animeDiffusionV45Full,
+          qualityToggle: false,
+          ucPreset: UcPresets.toApiValue(UcPresetType.none),
+          modelMode: ModelMode.furry,
+        );
+        expect(snapshot.effectivePrompt, equals(prompt), reason: prompt);
+      }
+    });
+
+    test('leaves the negative prompt untouched', () {
+      final snapshot = buildPromptSemanticsSnapshot(
+        prompt: '1girl',
+        negativePrompt: 'bad hands',
+        model: ImageModels.animeDiffusionV45Full,
+        qualityToggle: false,
+        ucPreset: UcPresets.toApiValue(UcPresetType.none),
+        modelMode: ModelMode.furry,
+      );
+
+      expect(snapshot.effectiveNegativePrompt, equals('bad hands'));
     });
   });
 }

@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/constants/api_constants.dart';
 import '../../../core/constants/model_capabilities.dart';
+import '../../../core/enums/model_mode.dart';
 import '../../../core/enums/precise_ref_type.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/utils/app_logger.dart';
@@ -213,6 +214,15 @@ class GenerationParamsNotifier extends _$GenerationParamsNotifier {
         _storage.setLastVarietyPlus(followUps.varietyPlus!);
       }
     }
+  }
+
+  /// 更新 Model Mode（Anime / Furry）
+  ///
+  /// 该值可以停留在不支持的模型上：提示词注入与界面控件都按模型能力位判定，
+  /// 切回 V4/V4.5/V5 时沿用上次选择。
+  void updateModelMode(ModelMode mode) {
+    state = state.copyWith(modelMode: mode);
+    _storage.setModelMode(mode);
   }
 
   /// 更新尺寸

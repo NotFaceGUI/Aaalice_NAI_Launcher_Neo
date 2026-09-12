@@ -2807,6 +2807,24 @@ abstract class AppLocalizations {
   /// **'Model'**
   String get generation_model;
 
+  /// No description provided for @generation_modelMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Mode'**
+  String get generation_modelMode;
+
+  /// No description provided for @generation_modelModeAnime.
+  ///
+  /// In en, this message translates to:
+  /// **'Anime'**
+  String get generation_modelModeAnime;
+
+  /// No description provided for @generation_modelModeFurry.
+  ///
+  /// In en, this message translates to:
+  /// **'Furry'**
+  String get generation_modelModeFurry;
+
   /// No description provided for @generation_opusUsageRemaining.
   ///
   /// In en, this message translates to:

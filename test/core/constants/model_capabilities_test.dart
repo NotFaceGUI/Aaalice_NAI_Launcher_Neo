@@ -601,4 +601,39 @@ void main() {
       expect(followUps.varietyPlus, isNull);
     });
   });
+
+  group('ModelCapabilityRegistry model mode support', () {
+    test('enables Model Mode on the V4 and later families', () {
+      for (final model in [
+        ImageModels.animeDiffusionV4Curated,
+        ImageModels.animeDiffusionV4Full,
+        ImageModels.animeDiffusionV45Curated,
+        ImageModels.animeDiffusionV45Full,
+        ImageModels.animeDiffusionV5Curated,
+        ImageModels.animeDiffusionV5Full,
+        ImageModels.v5StagingKey,
+      ]) {
+        expect(
+          ModelCapabilityRegistry.of(model).supportsModelMode,
+          isTrue,
+          reason: model,
+        );
+      }
+    });
+
+    test('keeps Model Mode off on the V3 and older families', () {
+      for (final model in [
+        ImageModels.animeFull,
+        ImageModels.animeV2,
+        ImageModels.animeDiffusionV3,
+        ImageModels.furryDiffusionV3,
+      ]) {
+        expect(
+          ModelCapabilityRegistry.of(model).supportsModelMode,
+          isFalse,
+          reason: model,
+        );
+      }
+    });
+  });
 }

@@ -117,6 +117,7 @@ class StorageKeys {
   static const String rightPanelTab = 'right_panel_tab';
   static const String agentChatActiveSession = 'agent_chat_active_session';
   static const String defaultModel = 'default_model';
+  static const String modelMode = 'model_mode';
   static const String defaultSampler = 'default_sampler';
   static const String defaultSteps = 'default_steps';
   static const String defaultScale = 'default_scale';

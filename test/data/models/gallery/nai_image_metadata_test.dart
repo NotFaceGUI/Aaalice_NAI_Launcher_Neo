@@ -24,6 +24,24 @@ void main() {
       expect(NaiImageMetadata.fromJson(metadata.toJson()), metadata);
     });
 
+    test('fromNaiComment derives and preserves the model mode', () {
+      final explicit = NaiImageMetadata.fromNaiComment({
+        'prompt': '1girl',
+        'model_mode': 'furry',
+      });
+      expect(explicit.modelMode, 'furry');
+
+      // 官网图片没有 mode 字段，按 `fur dataset, ` 前缀还原，提示词原样保留。
+      final derived = NaiImageMetadata.fromNaiComment({
+        'prompt': 'fur dataset, 1girl',
+      });
+      expect(derived.modelMode, 'furry');
+      expect(derived.prompt, 'fur dataset, 1girl');
+
+      final anime = NaiImageMetadata.fromNaiComment({'prompt': '1girl'});
+      expect(anime.modelMode, isNull);
+    });
+
     test('fromNaiComment preserves an explicit empty fixed-tag record', () {
       final metadata = NaiImageMetadata.fromNaiComment({
         'prompt': 'subject',

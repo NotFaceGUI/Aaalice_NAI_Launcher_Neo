@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../constants/api_constants.dart';
 import '../constants/model_capabilities.dart';
 import '../constants/storage_keys.dart';
+import '../enums/model_mode.dart';
 
 part 'local_storage_service.g.dart';
 
@@ -141,6 +142,18 @@ class LocalStorageService {
   /// 保存默认模型
   Future<void> setDefaultModel(String model) async {
     await setSetting(StorageKeys.defaultModel, model);
+  }
+
+  /// 获取 Model Mode（Anime / Furry，默认 Anime）
+  ModelMode getModelMode() {
+    return ModelMode.fromName(
+      getSetting<String>(StorageKeys.modelMode),
+    );
+  }
+
+  /// 保存 Model Mode
+  Future<void> setModelMode(ModelMode mode) async {
+    await setSetting(StorageKeys.modelMode, mode.name);
   }
 
   /// 获取默认采样器

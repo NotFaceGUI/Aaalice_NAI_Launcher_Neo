@@ -1,5 +1,6 @@
 import '../constants/api_constants.dart';
 import '../constants/model_capabilities.dart';
+import '../enums/model_mode.dart';
 import 'novelai_auto_text.dart';
 import 'prompt_edit_document.dart';
 
@@ -34,6 +35,7 @@ PromptSemanticsSnapshot buildPromptSemanticsSnapshot({
   String qualityTier = QualityTags.standardTier,
   List<NovelAiAutoTextCharacter> characters = const [],
   bool useCoords = false,
+  ModelMode modelMode = ModelMode.anime,
 }) {
   final basePrompt = prompt;
   final baseNegativePrompt = negativePrompt;
@@ -50,6 +52,13 @@ PromptSemanticsSnapshot buildPromptSemanticsSnapshot({
       )
       .toList(growable: false);
   final capabilities = ModelCapabilityRegistry.of(model);
+  // 官网的 Model Mode 不进入请求参数：Furry 只由客户端把 `fur dataset, `
+  // 数据集标签加到正向提示词最前面，Anime 不加任何内容。模型不支持该模式时
+  // （网页端能力位 hasFurryMode 为 false）不注入。质量词是后缀，因此前缀
+  // 一定落在最终提示词最前面。
+  if (capabilities.supportsModelMode) {
+    prompt = modelMode.applyDatasetTag(prompt);
+  }
   // 自定义质量预设在到这一步之前就已经并进 prompt（qualityToggle=false），
   // 因此 `transparent background` 会落在自定义质量词之后；官网没有自定义
   // 预设这一路，NAI 默认质量词的顺序与官网一致。

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../../../core/constants/api_constants.dart';
 import '../../../core/constants/model_capabilities.dart';
+import '../../../core/enums/model_mode.dart';
 import '../../../core/enums/precise_ref_type.dart';
 import '../../../core/utils/nai_prompt_parser.dart';
 import '../../../core/utils/novelai_auto_text.dart';
@@ -200,6 +201,7 @@ class NaiImageMetadataRawDecoder {
         preciseReferenceTypes: preciseReferenceMetadata.types,
         preciseReferenceStrengths: preciseReferenceMetadata.strengths,
         preciseReferenceFidelities: preciseReferenceMetadata.fidelities,
+        modelMode: _extractModelMode(commentData, prompt),
       );
     } catch (e, stack) {
       PortableLogger.e(
@@ -227,6 +229,21 @@ class NaiImageMetadataRawDecoder {
     } catch (_) {
       return null;
     }
+  }
+
+  /// 解析 Model Mode。
+  ///
+  /// 本应用写回的元数据带 `model_mode`；官网图片没有该字段，但 Furry 模式会把
+  /// `fur dataset, ` 注入提示词最前面，因此按前缀还原，与官网导入行为一致。
+  static String? _extractModelMode(
+    Map<String, dynamic> commentData,
+    String prompt,
+  ) {
+    final explicit =
+        _safeGetString(commentData, 'model_mode') ??
+        _safeGetString(commentData, 'modelMode');
+    if (explicit != null && explicit.isNotEmpty) return explicit;
+    return ModelMode.hasDatasetTag(prompt) ? ModelMode.furry.name : null;
   }
 
   /// 安全获取布尔字段
@@ -1064,6 +1081,7 @@ class NaiImageMetadataFields {
     this.transparentBackground,
     this.fixedTagUsageData,
     this.hasRecordedFixedTagFields = false,
+    this.modelMode,
   });
 
   final String prompt;
@@ -1108,4 +1126,7 @@ class NaiImageMetadataFields {
   final bool? transparentBackground;
   final Map<String, dynamic>? fixedTagUsageData;
   final bool hasRecordedFixedTagFields;
+
+  /// Model Mode 名称（`anime` / `furry`），无记录时为 null。
+  final String? modelMode;
 }

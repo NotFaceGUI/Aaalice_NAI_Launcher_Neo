@@ -633,6 +633,7 @@ class NAIImageRequestBuilder {
       qualityTier: params.qualityTier,
       characters: _buildAutoTextCharacters(),
       useCoords: params.useCoords,
+      modelMode: params.modelMode,
     );
     final effectivePrompt = promptSemantics.effectivePrompt;
     final effectiveNegativePrompt = promptSemantics.effectiveNegativePrompt;
