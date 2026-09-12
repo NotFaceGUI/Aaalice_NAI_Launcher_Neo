@@ -25,30 +25,8 @@ on:
       - "test/**"
       - "tool/**"
       - "windows/**"
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/actions/prepare-flutter-build/action.yml"
-      - ".github/workflows/android-build.yml"
-      - ".github/workflows/pull-request-validation.yml"
-      - ".github/workflows/release.yml"
-      - ".github/workflows/windows-portable.yml"
-      - "analysis_options.yaml"
-      - "android/**"
-      - "assets/**"
-      - "build.yaml"
-      - "dart_test.yaml"
-      - "fonts/**"
-      - "installer/windows/**"
-      - "l10n.yaml"
-      - "lib/**"
-      - "pubspec.lock"
-      - "pubspec.yaml"
-      - "scripts/**"
-      - "test/**"
-      - "tool/**"
-      - "windows/**"
+  # Intentionally no push trigger: main is maintained by a single developer, and release
+  # builds come from release.yml on v* tags. Validation runs on pull requests or dispatch.
   workflow_dispatch:
 
 permissions:
@@ -231,8 +209,8 @@ jobs:
     name: Build Windows debug
     runs-on: windows-2022
     needs: changes
-    # Windows compile stays off the push path; commits to main only run quality checks
-    # and tests. Release builds are produced by release.yml on v* tags.
+    # Manual dispatch builds the full package through windows-package instead, so this
+    # debug compile is limited to pull requests.
     if: >-
       github.event_name == 'pull_request' &&
       needs.changes.outputs.windows_build == 'true' &&
