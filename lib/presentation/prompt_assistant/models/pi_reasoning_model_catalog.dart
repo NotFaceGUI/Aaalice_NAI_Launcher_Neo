@@ -1416,6 +1416,30 @@ const piReasoningModelCatalog = <String, Map<String, AgentReasoningModelRule>>{
     ),
   },
   'deepseek': {
+    'deepseek-flash': AgentReasoningModelRule(
+      api: AgentReasoningApi.deepSeek,
+      levels: [
+        ThinkingLevel.off,
+        ThinkingLevel.low,
+        ThinkingLevel.high,
+        ThinkingLevel.max,
+      ],
+      levelMap: {
+        ThinkingLevel.minimal: null,
+        ThinkingLevel.low: 'low',
+        ThinkingLevel.medium: null,
+        ThinkingLevel.high: 'high',
+        ThinkingLevel.max: 'max',
+      },
+      supportsReasoningEffort: true,
+      requiresReasoningContent: true,
+      allowEmptySignature: false,
+      alwaysIncludeEncryptedReasoning: false,
+      thinkingBudgets: {},
+      disabledEffort: null,
+      contextWindow: 1000000,
+      maxOutputTokens: 384000,
+    ),
     'deepseek-v4-flash': AgentReasoningModelRule(
       api: AgentReasoningApi.deepSeek,
       levels: [
@@ -2638,6 +2662,32 @@ const piReasoningModelCatalog = <String, Map<String, AgentReasoningModelRule>>{
       disabledEffort: null,
       contextWindow: 1048576,
       maxOutputTokens: 943718,
+    ),
+    'deepseek/deepseek-v4.1-flash': AgentReasoningModelRule(
+      api: AgentReasoningApi.openRouter,
+      levels: [
+        ThinkingLevel.off,
+        ThinkingLevel.low,
+        ThinkingLevel.high,
+        ThinkingLevel.max,
+      ],
+      levelMap: {
+        ThinkingLevel.off: 'none',
+        ThinkingLevel.minimal: null,
+        ThinkingLevel.low: 'low',
+        ThinkingLevel.medium: null,
+        ThinkingLevel.high: 'high',
+        ThinkingLevel.xhigh: null,
+        ThinkingLevel.max: 'max',
+      },
+      supportsReasoningEffort: true,
+      requiresReasoningContent: true,
+      allowEmptySignature: false,
+      alwaysIncludeEncryptedReasoning: false,
+      thinkingBudgets: {},
+      disabledEffort: null,
+      contextWindow: 1048576,
+      maxOutputTokens: 384000,
     ),
     'dots-studio/dots-3-note-preview:free': AgentReasoningModelRule(
       api: AgentReasoningApi.openRouter,

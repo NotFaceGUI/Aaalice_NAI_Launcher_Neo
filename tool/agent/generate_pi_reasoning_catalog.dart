@@ -37,6 +37,95 @@ const _mistralEffortModels = <String>{
   'mistral-medium-3.5',
 };
 
+/// 上游 pi-ai 尚未发版、但已经存在于 `earendil-works/pi` main 的模型定义。
+///
+/// pi-ai 的 provider 数据由上游 `scripts/generate-models.ts` 从 models.dev 与
+/// OpenRouter 在线数据生成，模型在两次发版之间改名或上线时，锁定的包内数据会
+/// 缺少新名字（例如 DeepSeek V4.1 把 Flash 的 id 从 `deepseek-v4-flash` 改成
+/// `deepseek-flash`），导致本地目录认不出该模型、思考强度无法解析。
+///
+/// 这里等价移植上游 main 的 `deepseekModels` 补充块与
+/// `getOpenRouterThinkingLevelMap()` 的推导结果，条目结构与
+/// `dist/providers/data/*.json` 完全一致。包内数据始终优先：锁定的 pi-ai 版本
+/// 一旦自带同 id 条目，这里的定义即被忽略；若官方定义与补充不同，`--check`
+/// 会因生成结果变化而报出目录不同步，此时应删除多余补充并重新生成。
+const _pendingUpstreamModels = <String, Map<String, Map<String, dynamic>>>{
+  'deepseek': {
+    'openai-completions': {
+      // 上游 main: deepseekModels 中的 DeepSeek V4.1 Flash 定义。
+      // 官方文档 https://api-docs.deepseek.com/quick_start/pricing 说明
+      // `deepseek-v4-flash` 与 `deepseek-v4-flash-vision-exp` 仍被接受，但底层
+      // 已由 DeepSeek-V4.1-Flash 承接；思考模式与 effort 取值（low/high/max）
+      // 与旧 Flash 一致。
+      'deepseek-flash': {
+        'id': 'deepseek-flash',
+        'name': 'DeepSeek V4.1 Flash',
+        'api': 'openai-completions',
+        'baseUrl': 'https://api.deepseek.com',
+        'provider': 'deepseek',
+        'reasoning': true,
+        'thinkingLevelMap': {
+          'minimal': null,
+          'low': 'low',
+          'medium': null,
+          'high': 'high',
+          'max': 'max',
+        },
+        'input': ['text', 'image'],
+        'cost': {
+          'input': 0.3,
+          'output': 1.2,
+          'cacheRead': 0.006,
+          'cacheWrite': 0,
+        },
+        'contextWindow': 1000000,
+        'maxTokens': 384000,
+        'compat': {
+          'requiresReasoningContentOnAssistantMessages': true,
+          'thinkingFormat': 'deepseek',
+        },
+      },
+    },
+  },
+  'openrouter': {
+    'openai-completions': {
+      // 上游 main 从 OpenRouter 实时元数据推导：supported_efforts 为
+      // low/high/max 且 mandatory 为 false，因此可关闭并保留 low/high/max。
+      'deepseek/deepseek-v4.1-flash': {
+        'id': 'deepseek/deepseek-v4.1-flash',
+        'name': 'DeepSeek: DeepSeek V4.1 Flash',
+        'api': 'openai-completions',
+        'baseUrl': 'https://openrouter.ai/api/v1',
+        'provider': 'openrouter',
+        'reasoning': true,
+        'thinkingLevelMap': {
+          'off': 'none',
+          'minimal': null,
+          'low': 'low',
+          'medium': null,
+          'high': 'high',
+          'xhigh': null,
+          'max': 'max',
+        },
+        'input': ['text', 'image'],
+        'cost': {
+          'input': 0.15,
+          'output': 0.6,
+          'cacheRead': 0.003,
+          'cacheWrite': 0,
+        },
+        'contextWindow': 1048576,
+        'maxTokens': 384000,
+        'compat': {
+          'supportsDeveloperRole': false,
+          'thinkingFormat': 'openrouter',
+          'requiresReasoningContentOnAssistantMessages': true,
+        },
+      },
+    },
+  },
+};
+
 void main(List<String> arguments) {
   final check = arguments.contains('--check');
   final rootArgument = _option(arguments, '--pi-ai-root');
@@ -147,6 +236,7 @@ String _generate(Directory root, String version) {
     final data = _jsonObject(
       File('${root.path}/dist/providers/data/$provider.json'),
     );
+    _supplementPendingUpstreamModels(data, provider);
     final models =
         <Map<String, dynamic>>[
           for (final apiModels in data.values)
@@ -198,6 +288,29 @@ String _generate(Directory root, String version) {
   }
   output.writeln('};');
   return output.toString();
+}
+
+/// 把 [provider] 的待上游条目并入包内 provider 数据。
+///
+/// 只在包内还没有同 id 条目时写入，因此升级 pi-ai 版本后新增的官方定义会自然
+/// 接管，无需手工删除补充。
+void _supplementPendingUpstreamModels(
+  Map<String, dynamic> data,
+  String provider,
+) {
+  final pending = _pendingUpstreamModels[provider];
+  if (pending == null) return;
+  for (final api in pending.entries) {
+    final apiModels = data.putIfAbsent(api.key, () => <String, dynamic>{});
+    if (apiModels is! Map<String, dynamic>) {
+      throw StateError(
+        'pi-ai provider data for $provider/${api.key} is not an object.',
+      );
+    }
+    for (final model in api.value.entries) {
+      apiModels.putIfAbsent(model.key, () => model.value);
+    }
+  }
 }
 
 bool _supportsReasoningEffort(

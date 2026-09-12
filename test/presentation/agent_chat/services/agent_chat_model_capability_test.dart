@@ -4,6 +4,7 @@ import 'package:nai_launcher/presentation/prompt_assistant/models/agent_reasonin
 import 'package:nai_launcher/presentation/prompt_assistant/models/assistant_model_capability.dart';
 import 'package:nai_launcher/presentation/prompt_assistant/models/agent_protocol.dart';
 import 'package:nai_launcher/presentation/prompt_assistant/models/prompt_assistant_models.dart';
+import 'package:nai_launcher/presentation/prompt_assistant/services/provider_adapters/reasoning_payload.dart';
 
 void main() {
   group('Pi reasoning capability matrix', () {
@@ -57,6 +58,31 @@ void main() {
             protocol: ProviderProtocol.openaiChatCompletions,
             baseUrl: 'https://api.deepseek.com',
             model: 'deepseek-v4-flash',
+            levels: const [
+              ThinkingLevel.off,
+              ThinkingLevel.low,
+              ThinkingLevel.high,
+              ThinkingLevel.max,
+            ],
+          ),
+          (
+            // DeepSeek V4.1 把 Flash 的 id 改成 deepseek-flash。
+            provider: 'deepseek',
+            protocol: ProviderProtocol.openaiChatCompletions,
+            baseUrl: 'https://api.deepseek.com',
+            model: 'deepseek-flash',
+            levels: const [
+              ThinkingLevel.off,
+              ThinkingLevel.low,
+              ThinkingLevel.high,
+              ThinkingLevel.max,
+            ],
+          ),
+          (
+            provider: 'openrouter',
+            protocol: ProviderProtocol.openaiChatCompletions,
+            baseUrl: 'https://openrouter.ai/api/v1',
+            model: 'deepseek/deepseek-v4.1-flash',
             levels: const [
               ThinkingLevel.off,
               ThinkingLevel.low,
@@ -191,6 +217,70 @@ void main() {
         expect(capability.model.contextWindow, greaterThan(0));
       });
     }
+  });
+
+  test('DeepSeek V4.1 rename keeps thinking control and legacy ids', () {
+    const provider = ProviderConfig(
+      id: 'deepseek',
+      name: 'DeepSeek',
+      protocol: ProviderProtocol.openaiChatCompletions,
+      baseUrl: 'https://api.deepseek.com',
+      preset: ProviderPreset.deepseek,
+    );
+    final legacy = AgentChatModelCapability.resolve(
+      provider,
+      'deepseek-v4-flash',
+    );
+    final renamed = AgentChatModelCapability.resolve(
+      provider,
+      'deepseek-flash',
+    );
+
+    // 官方文档：旧 id 仍被接受，由 DeepSeek-V4.1-Flash 承接，能力应保持一致。
+    expect(renamed.levels, legacy.levels);
+    expect(renamed.metadata.contextWindow, legacy.metadata.contextWindow);
+    expect(renamed.metadata.maxOutputTokens, legacy.metadata.maxOutputTokens);
+    expect(
+      renamed.resolveReasoningRequest('high'),
+      isA<AgentReasoningRequest>()
+          .having((request) => request.api, 'api', AgentReasoningApi.deepSeek)
+          .having((request) => request.effort, 'effort', 'high')
+          .having((request) => request.enabled, 'enabled', isTrue),
+    );
+    expect(chatReasoningPayload(renamed.resolveReasoningRequest('high')), {
+      'thinking': {'type': 'enabled'},
+      'reasoning_effort': 'high',
+    });
+    expect(chatReasoningPayload(renamed.resolveReasoningRequest(null)), {
+      'thinking': {'type': 'disabled'},
+    });
+  });
+
+  test('OpenRouter DeepSeek V4.1 Flash maps native effort levels', () {
+    const provider = ProviderConfig(
+      id: 'openrouter',
+      name: 'OpenRouter',
+      protocol: ProviderProtocol.openaiChatCompletions,
+      baseUrl: 'https://openrouter.ai/api/v1',
+      preset: ProviderPreset.openRouter,
+    );
+    final capability = AgentChatModelCapability.resolve(
+      provider,
+      'deepseek/deepseek-v4.1-flash',
+    );
+
+    expect(capability.levels, const [
+      ThinkingLevel.off,
+      ThinkingLevel.low,
+      ThinkingLevel.high,
+      ThinkingLevel.max,
+    ]);
+    expect(chatReasoningPayload(capability.resolveReasoningRequest('max')), {
+      'reasoning': {'effort': 'max'},
+    });
+    expect(chatReasoningPayload(capability.resolveReasoningRequest(null)), {
+      'reasoning': {'effort': 'none'},
+    });
   });
 
   test('named presets keep Pi semantics behind custom base URLs', () {
