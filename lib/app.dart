@@ -30,6 +30,7 @@ import 'presentation/providers/queue_execution_provider.dart';
 import 'presentation/providers/subscription_provider.dart'
     hide anlasBalanceProvider;
 import 'presentation/themes/app_theme.dart';
+import 'presentation/themes/theme_reveal_overlay.dart';
 import 'presentation/widgets/common/desktop_window_frame.dart';
 import 'presentation/widgets/discord_share/discord_share_task_overlay.dart';
 import 'presentation/widgets/shortcuts/shortcut_aware_widget.dart';
@@ -367,9 +368,13 @@ class NAILauncherApp extends ConsumerWidget {
                   initialPolicy: PlatformCapabilities.current.isMobile
                       ? InteractionPolicy.touchFirst
                       : InteractionPolicy.neutral,
-                  child: DesktopWindowFrame(
-                    child: LargestDisplayFeatureSubScreen(
-                      child: DiscordShareTaskOverlay(child: child!),
+                  // 主题切换时从触发点圆形揭示新主题。位置必须在主题生效的
+                  // AnimatedTheme 之内，才能抓到并冻结旧主题那一帧。
+                  child: ThemeRevealOverlay(
+                    child: DesktopWindowFrame(
+                      child: LargestDisplayFeatureSubScreen(
+                        child: DiscordShareTaskOverlay(child: child!),
+                      ),
                     ),
                   ),
                 ),
