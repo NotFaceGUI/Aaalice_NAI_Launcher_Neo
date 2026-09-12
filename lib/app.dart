@@ -314,7 +314,7 @@ class NAILauncherApp extends ConsumerWidget {
       child: GlobalShortcuts(
         shortcuts: globalShortcuts,
         child: MaterialApp.router(
-          title: 'NAI Launcher',
+          title: 'Aaalice NAI Launcher Neo',
           debugShowCheckedModeBanner: false,
           restorationScopeId: 'nai_launcher',
 

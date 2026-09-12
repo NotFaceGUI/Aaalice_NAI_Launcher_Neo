@@ -451,7 +451,7 @@ Future<_DesktopWindowConfiguration?> _prepareDesktopWindow() async {
             ? TitleBarStyle.hidden
             : TitleBarStyle.normal,
         windowButtonVisibility: !Platform.isWindows,
-        title: 'NAI Launcher',
+        title: 'Aaalice NAI Launcher Neo',
       ),
       restorePlan: restorePlan,
       stateController: stateController,

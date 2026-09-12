@@ -9,16 +9,17 @@
 
 // 单实例互斥体名称（使用应用唯一标识）
 constexpr const wchar_t kSingleInstanceMutexName[] =
-    L"NAI_Launcher_SingleInstance_Mutex";
+    L"NAI_Launcher_Neo_SingleInstance_Mutex";
 constexpr const wchar_t kFlutterRunnerWindowClassName[] =
     L"FLUTTER_RUNNER_WIN32_WINDOW";
-constexpr const wchar_t kLauncherWindowTitle[] = L"NAI Launcher";
+constexpr const wchar_t kLauncherWindowTitle[] =
+    L"Aaalice NAI Launcher Neo";
 constexpr const wchar_t kWakeUpMessageName[] =
-    L"NAI_Launcher_WakeUp_Message";
+    L"NAI_Launcher_Neo_WakeUp_Message";
 constexpr DWORD kExistingWindowWaitTimeoutMs = 3000;
 constexpr DWORD kExistingWindowPollIntervalMs = 200;
 constexpr const wchar_t kAlreadyStartingMessage[] =
-    L"NAI Launcher is already starting.\n"
+    L"Aaalice NAI Launcher Neo is already starting.\n"
     L"Please wait a few seconds and try again.";
 
 static UINT GetWakeUpMessage() {
@@ -231,7 +232,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
   FlutterWindow window(project);
   Win32Window::Point origin(10, 10);
   Win32Window::Size size(1280, 720);
-  if (!window.Create(L"NAI Launcher", origin, size)) {
+  if (!window.Create(L"Aaalice NAI Launcher Neo", origin, size)) {
     if (single_instance_mutex != nullptr) {
       CloseHandle(single_instance_mutex);
     }

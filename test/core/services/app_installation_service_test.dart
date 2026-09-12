@@ -7,9 +7,9 @@ void main() {
       expect(
         AppInstallationService.isExecutableInsideInstallDir(
           executablePath:
-              r'C:\Users\alice\AppData\Local\Programs\Aaalice NAI Launcher\nai_launcher.exe',
+              r'C:\Users\alice\AppData\Local\Programs\Aaalice NAI Launcher Neo\nai_launcher.exe',
           installLocation:
-              r'C:\Users\alice\AppData\Local\Programs\Aaalice NAI Launcher',
+              r'C:\Users\alice\AppData\Local\Programs\Aaalice NAI Launcher Neo',
         ),
         isTrue,
       );
@@ -19,9 +19,9 @@ void main() {
       expect(
         AppInstallationService.isExecutableInsideInstallDir(
           executablePath:
-              r'C:\Users\alice\AppData\Local\Programs\Aaalice NAI Launcher Portable\nai_launcher.exe',
+              r'C:\Users\alice\AppData\Local\Programs\Aaalice NAI Launcher Neo Portable\nai_launcher.exe',
           installLocation:
-              r'C:\Users\alice\AppData\Local\Programs\Aaalice NAI Launcher',
+              r'C:\Users\alice\AppData\Local\Programs\Aaalice NAI Launcher Neo',
         ),
         isFalse,
       );
@@ -31,9 +31,9 @@ void main() {
       expect(
         AppInstallationService.isExecutableInsideInstallDir(
           executablePath:
-              'C:/Users/alice/AppData/Local/Programs/Aaalice NAI Launcher/nai_launcher.exe',
+              'C:/Users/alice/AppData/Local/Programs/Aaalice NAI Launcher Neo/nai_launcher.exe',
           installLocation:
-              r'C:\Users\alice\AppData\Local\Programs\Aaalice NAI Launcher\',
+              r'C:\Users\alice\AppData\Local\Programs\Aaalice NAI Launcher Neo\',
         ),
         isTrue,
       );

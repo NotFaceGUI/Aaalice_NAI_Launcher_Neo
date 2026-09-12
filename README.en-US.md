@@ -1,18 +1,16 @@
-# NAI Launcher
+# Aaalice NAI Launcher Neo
 
 <p align="center">
   <a href="README.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · English
 </p>
 
-> [!WARNING]
-> **Project updates paused (2026-09-08)**
+> [!NOTE]
+> **This repository is the community-maintained continuation (Neo) of [Aaalice233/Aaalice_NAI_Launcher](https://github.com/Aaalice233/Aaalice_NAI_Launcher).**
 >
-> NovelAI has restricted my account: my subscription was canceled, and I can no longer make purchases or subscribe. I still do not understand the specific reason for this action, so I have decided to pause updates to this project.
-
-![Notice from NovelAI canceling the subscription and restricting purchases](docs/screenshots/novelai-subscription-canceled-2026-09-08.png)
+> Upstream paused development on 2026-09-08. This fork continues maintenance on top of the original author's work. Auto-updates, releases, and downloads all come from this repository; upstream no longer ships updates.
 
 <p align="center">
-  <img src="assets/icons/Icon.png" alt="NAI Launcher icon" width="112">
+  <img src="assets/icons/Icon.png" alt="NAI Launcher Neo icon" width="112">
 </p>
 
 <p align="center">
@@ -20,26 +18,26 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Aaalice233/Aaalice_NAI_Launcher/releases/latest"><img src="https://img.shields.io/github/v/release/Aaalice233/Aaalice_NAI_Launcher?display_name=tag&sort=semver" alt="Latest release"></a>
+  <a href="https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/releases/latest"><img src="https://img.shields.io/github/v/release/NotFaceGUI/Aaalice_NAI_Launcher_Neo?display_name=tag&sort=semver" alt="Latest release"></a>
   <img src="https://img.shields.io/badge/Windows%20%7C%20macOS%20%7C%20Android-available-6f7785" alt="Supported platforms">
   <img src="https://img.shields.io/badge/license-MIT-5b8c5a" alt="MIT License">
   <a href="https://discord.gg/R48n6GwXzD"><img src="https://img.shields.io/badge/Discord-Join-5865F2?logo=discord&logoColor=white" alt="Discord community"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Aaalice233/Aaalice_NAI_Launcher/releases/latest">Download latest release</a> ·
+  <a href="https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/releases/latest">Download latest release</a> ·
   <a href="CHANGELOG.md">Read the changelog</a> ·
-  <a href="https://github.com/Aaalice233/Aaalice_NAI_Launcher/issues">Report an issue</a> ·
+  <a href="https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/issues">Report an issue</a> ·
   <a href="https://discord.gg/R48n6GwXzD">Join Discord</a>
 </p>
 
-> NAI Launcher is a community-developed third-party client, not an official NovelAI product. Bring your own NovelAI account for online features, and follow the applicable terms of service, content rules, and local laws.
+> NAI Launcher Neo is a community-developed third-party client, not an official NovelAI product. Bring your own NovelAI account for online features, and follow the applicable terms of service, content rules, and local laws.
 
-NAI Launcher is built for people who use NovelAI regularly. Generation, editing, Prompts, characters, references, galleries, queues, and Agent Chat connect in one workflow. Windows, macOS, and Android share the same core features, and local tools work before you sign in.
+NAI Launcher Neo is built for people who use NovelAI regularly. Generation, editing, Prompts, characters, references, galleries, queues, and Agent Chat connect in one workflow. Windows, macOS, and Android share the same core features, and local tools work before you sign in.
 
 ## ✨ One complete creative workflow
 
-| What you want to do | How NAI Launcher helps |
+| What you want to do | How NAI Launcher Neo helps |
 | --- | --- |
 | **Start creating** | Write a Prompt, choose a model and parameters, then add characters, Vibes, Precise References, or a source image. |
 | **Keep refining** | Use image-to-image, inpainting, outpainting, variations, and enhancement, or restore selected settings from an older image. |
@@ -79,7 +77,7 @@ NAI Launcher is built for people who use NovelAI regularly. Generation, editing,
 - Dedicated Vibe and Precise Reference libraries provide categories, search, previews, batch management, import/export, and direct use in the current generation.
 - The inpaint editor includes brushes, masks, Focused Inpaint regions, and canvas expansion. Agent Chat can prepare a mask or outpaint draft for review.
 - NovelAI image metadata can restore selected model, size, sampler, Steps, CFG, Seed, pinned tags, and character content.
-- On Android, share a single image or a direct image link from apps such as Discord to NAI Launcher, then choose metadata import, img2img, or reference use. Direct links must be accessible, and restoring parameters requires an original image with metadata intact.
+- On Android, share a single image or a direct image link from apps such as Discord to NAI Launcher Neo, then choose metadata import, img2img, or reference use. Direct links must be accessible, and restoring parameters requires an original image with metadata intact.
 
 ### 🗂️ Local gallery and artwork organization
 
@@ -174,13 +172,13 @@ NAI Launcher is built for people who use NovelAI regularly. Generation, editing,
 
 ### 1. Download the package for your platform
 
-Open [GitHub Releases](https://github.com/Aaalice233/Aaalice_NAI_Launcher/releases/latest):
+Open [GitHub Releases](https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/releases/latest):
 
 | Platform | File | Usage |
 | --- | --- | --- |
 | Windows | `NAI_Launcher_Windows_<version>_Setup.exe` | Installer recommended for most users. |
 | Windows | `NAI_Launcher_Windows_<version>_Portable.zip` | Portable package; extract and run. |
-| macOS | `NAI_Launcher_macOS_<version>_Portable.zip` | Extract and open `Aaalice NAI Launcher.app`. |
+| macOS | `NAI_Launcher_macOS_<version>_Portable.zip` | Extract and open `Aaalice NAI Launcher Neo.app`. |
 | Android | `NAI_Launcher_Android_<version>.apk` | Sideload the APK. The first install may require permission to install unknown apps. |
 
 Every release includes `checksums.txt`. If an archive cannot be extracted or installed, verify the downloaded file first.
@@ -199,7 +197,7 @@ Sign in with NovelAI credentials or a **Persistent API Token**. If web security 
 
 ## 🔒 Data and privacy
 
-NAI Launcher does not host your account or artwork on a project-operated server. Data is sent to another service only when you actively use the related feature:
+NAI Launcher Neo does not host your account or artwork on a project-operated server. Data is sent to another service only when you actively use the related feature:
 
 | Feature in use | Where the data goes |
 | --- | --- |
@@ -217,9 +215,9 @@ NAI Launcher does not host your account or artwork on a project-operated server.
 ## 🆘 Support and feedback
 
 - If something goes wrong, use **Settings → About → Export diagnostic logs** and attach the exported information to your report.
-- [Open an Issue](https://github.com/Aaalice233/Aaalice_NAI_Launcher/issues) for a reproducible bug or feature request.
+- [Open an Issue](https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/issues) for a reproducible bug or feature request.
 - [Join Discord](https://discord.gg/R48n6GwXzD) for usage discussion and community help.
-- [View Releases](https://github.com/Aaalice233/Aaalice_NAI_Launcher/releases) to download packages, verify files, and read release notes.
+- [View Releases](https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/releases) to download packages, verify files, and read release notes.
 
 ## 🙏 Acknowledgments
 

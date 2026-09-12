@@ -12,7 +12,7 @@ cd "$(dirname "$0")/.."
 # CocoaPods 需要 UTF-8 终端编码
 export LANG="${LANG:-en_US.UTF-8}"
 
-APP_PATH="build/macos/Build/Products/Release/Aaalice NAI Launcher.app"
+APP_PATH="build/macos/Build/Products/Release/Aaalice NAI Launcher Neo.app"
 
 echo "========================================"
 echo "  NAI Launcher macOS Release Build"

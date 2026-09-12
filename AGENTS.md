@@ -14,7 +14,7 @@
 这是 NovelAI 的 Flutter 跨平台客户端。主应用按 `core`、`data`、`presentation` 分层，平台工程、资源、测试和工具各自独立；新增代码应放入现有职责最接近的目录，不在仓库根目录堆放临时实现。
 
 ```text
-Aaalice_NAI_Launcher/
+Aaalice_NAI_Launcher_Neo/
 ├── lib/
 │   ├── core/               # 网络、存储、数据库、缓存、通用服务与基础能力
 │   ├── data/               # API 数据源、业务模型、仓库与领域服务

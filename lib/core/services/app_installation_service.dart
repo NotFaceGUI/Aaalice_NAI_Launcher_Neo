@@ -17,7 +17,7 @@ enum AppInstallationType {
 /// 判断当前应用是安装版还是便携版。
 class AppInstallationService {
   static const uninstallRegistryPath =
-      r'Software\Microsoft\Windows\CurrentVersion\Uninstall\Aaalice NAI Launcher';
+      r'Software\Microsoft\Windows\CurrentVersion\Uninstall\Aaalice NAI Launcher Neo';
 
   AppInstallationType getInstallationType() {
     if (Platform.isWindows) {

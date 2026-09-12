@@ -66,7 +66,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get generation_enhancementFinalizing => '合成并编码图像…';
 
   @override
-  String get app_title => 'NAI 启动器';
+  String get app_title => 'NAI 启动器 Neo';
 
   @override
   String get app_subtitle => 'NovelAI 第三方客户端';
@@ -14640,7 +14640,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get generation_enhancementFinalizing => '合成並編碼影像…';
 
   @override
-  String get app_title => 'NAI 啟動器';
+  String get app_title => 'NAI 啟動器 Neo';
 
   @override
   String get app_subtitle => 'NovelAI 第三方客戶端';

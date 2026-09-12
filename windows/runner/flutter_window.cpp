@@ -71,7 +71,7 @@ std::optional<std::vector<std::string>> GetSystemFonts(
 }
 
 constexpr const wchar_t kWakeUpMessageName[] =
-    L"NAI_Launcher_WakeUp_Message";
+    L"NAI_Launcher_Neo_WakeUp_Message";
 
 static UINT GetWakeUpMessage() {
   static const UINT message = RegisterWindowMessage(kWakeUpMessageName);

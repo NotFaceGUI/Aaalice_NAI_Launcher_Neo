@@ -14,11 +14,11 @@
 !endif
 
 !ifndef INSTALL_DIR
-  !define INSTALL_DIR "$LOCALAPPDATA\Programs\Aaalice NAI Launcher"
+  !define INSTALL_DIR "$LOCALAPPDATA\Programs\Aaalice NAI Launcher Neo"
 !endif
 
 !ifndef APP_NAME
-  !define APP_NAME "Aaalice NAI Launcher"
+  !define APP_NAME "Aaalice NAI Launcher Neo"
 !endif
 
 !ifndef APP_EXE
@@ -26,11 +26,11 @@
 !endif
 
 !ifndef PUBLISHER
-  !define PUBLISHER "Aaalice"
+  !define PUBLISHER "NotFaceGUI"
 !endif
 
 !ifndef UNINSTALL_KEY
-  !define UNINSTALL_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Aaalice NAI Launcher"
+  !define UNINSTALL_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Aaalice NAI Launcher Neo"
 !endif
 
 !ifndef PROCESS_QUERY_ACCESS

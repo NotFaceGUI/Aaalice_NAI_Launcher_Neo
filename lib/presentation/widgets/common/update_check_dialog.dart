@@ -608,7 +608,7 @@ class UpdateCheckDialog extends ConsumerWidget {
           : null;
     }
     return Uri.parse(
-      'https://github.com/Aaalice233/Aaalice_NAI_Launcher/blob/'
+      'https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/blob/'
       '$versionTag/',
     ).resolveUri(uri);
   }

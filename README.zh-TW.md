@@ -1,18 +1,16 @@
-# NAI Launcher
+# Aaalice NAI Launcher Neo
 
 <p align="center">
   <a href="README.md">简体中文</a> · 繁體中文 · <a href="README.en-US.md">English</a>
 </p>
 
-> [!WARNING]
-> **專案暫停更新（2026-09-08）**
+> [!NOTE]
+> **本倉庫是 [Aaalice233/Aaalice_NAI_Launcher](https://github.com/Aaalice233/Aaalice_NAI_Launcher) 的社群續更分支（Neo）。**
 >
-> 我的 NovelAI 帳號遭到官方限制：訂閱被取消，且無法再購買或訂閱。對於這次處理，我至今不明白具體原因，因此決定暫停本專案的更新。
-
-![NovelAI 官方取消訂閱及限制購買的通知截圖](docs/screenshots/novelai-subscription-canceled-2026-09-08.png)
+> 上游已於 2026-09-08 暫停更新。本分支在原作者工作基礎上繼續維護，自動更新、發布與下載均以本倉庫為準；上游不再提供更新。
 
 <p align="center">
-  <img src="assets/icons/Icon.png" alt="NAI Launcher 圖示" width="112">
+  <img src="assets/icons/Icon.png" alt="NAI Launcher Neo 圖示" width="112">
 </p>
 
 <p align="center">
@@ -20,26 +18,26 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Aaalice233/Aaalice_NAI_Launcher/releases/latest"><img src="https://img.shields.io/github/v/release/Aaalice233/Aaalice_NAI_Launcher?display_name=tag&sort=semver" alt="最新版本"></a>
+  <a href="https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/releases/latest"><img src="https://img.shields.io/github/v/release/NotFaceGUI/Aaalice_NAI_Launcher_Neo?display_name=tag&sort=semver" alt="最新版本"></a>
   <img src="https://img.shields.io/badge/Windows%20%7C%20macOS%20%7C%20Android-available-6f7785" alt="支援平台">
   <img src="https://img.shields.io/badge/license-MIT-5b8c5a" alt="MIT License">
   <a href="https://discord.gg/R48n6GwXzD"><img src="https://img.shields.io/badge/Discord-加入社群-5865F2?logo=discord&logoColor=white" alt="Discord 社群"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Aaalice233/Aaalice_NAI_Launcher/releases/latest">下載最新版本</a> ·
+  <a href="https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/releases/latest">下載最新版本</a> ·
   <a href="CHANGELOG.md">查看更新記錄</a> ·
-  <a href="https://github.com/Aaalice233/Aaalice_NAI_Launcher/issues">回報問題</a> ·
+  <a href="https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/issues">回報問題</a> ·
   <a href="https://discord.gg/R48n6GwXzD">加入 Discord</a>
 </p>
 
-> NAI Launcher 是社群開發的第三方用戶端，並非 NovelAI 官方產品。使用線上功能前，請準備自己的 NovelAI 帳號，並遵守相關服務條款、內容規則與當地法律。
+> NAI Launcher Neo 是社群開發的第三方用戶端，並非 NovelAI 官方產品。使用線上功能前，請準備自己的 NovelAI 帳號，並遵守相關服務條款、內容規則與當地法律。
 
-NAI Launcher 面向經常使用 NovelAI 的圖像創作者。生成、改圖、Prompt、角色、參考圖、圖庫、佇列和智慧代理都能在同一套工作流程中銜接；Windows、macOS 與 Android 共用核心能力，不登入也能先使用本機工具。
+NAI Launcher Neo 面向經常使用 NovelAI 的圖像創作者。生成、改圖、Prompt、角色、參考圖、圖庫、佇列和智慧代理都能在同一套工作流程中銜接；Windows、macOS 與 Android 共用核心能力，不登入也能先使用本機工具。
 
 ## ✨ 一套完整的創作流程
 
-| 你想做什麼 | NAI Launcher 可以怎麼幫你 |
+| 你想做什麼 | NAI Launcher Neo 可以怎麼幫你 |
 | --- | --- |
 | **開始創作** | 寫 Prompt、選模型和參數，再加入角色、Vibe、Precise Reference 或來源圖片。 |
 | **反覆調整** | 圖片生成圖片、局部重繪、擴圖、變體、增強，隨時從歷史圖片取回部分參數。 |
@@ -79,7 +77,7 @@ NAI Launcher 面向經常使用 NovelAI 的圖像創作者。生成、改圖、P
 - Vibe 與 Precise Reference 都有獨立資源庫，可分類、搜尋、預覽、批次管理，並直接送到目前生成任務。
 - 重繪編輯器提供畫筆、遮罩、Focused Inpaint 區域和畫布擴展；也可先讓智慧代理準備遮罩或擴圖草稿，再由你檢查後送出。
 - 可從 NovelAI 圖片中讀取模型、尺寸、採樣器、Steps、CFG、Seed、固定詞和角色內容，並選擇性還原。
-- Android 可從 Discord 等應用程式將單張圖片或圖片直連連結分享到 NAI Launcher，讀取圖片後選擇擷取中繼資料、圖生圖或參考圖等用途；圖片連結須可存取，還原參數須原圖保留中繼資料。
+- Android 可從 Discord 等應用程式將單張圖片或圖片直連連結分享到 NAI Launcher Neo，讀取圖片後選擇擷取中繼資料、圖生圖或參考圖等用途；圖片連結須可存取，還原參數須原圖保留中繼資料。
 
 ### 🗂️ 本機圖庫與作品整理
 
@@ -174,13 +172,13 @@ NAI Launcher 面向經常使用 NovelAI 的圖像創作者。生成、改圖、P
 
 ### 1. 下載對應平台的安裝包
 
-前往 [GitHub Releases](https://github.com/Aaalice233/Aaalice_NAI_Launcher/releases/latest)：
+前往 [GitHub Releases](https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/releases/latest)：
 
 | 平台 | 檔案 | 用法 |
 | --- | --- | --- |
 | Windows | `NAI_Launcher_Windows_<version>_Setup.exe` | 推薦給大多數使用者的安裝版。 |
 | Windows | `NAI_Launcher_Windows_<version>_Portable.zip` | 解壓縮後直接執行的可攜版。 |
-| macOS | `NAI_Launcher_macOS_<version>_Portable.zip` | 解壓縮後開啟 `Aaalice NAI Launcher.app`。 |
+| macOS | `NAI_Launcher_macOS_<version>_Portable.zip` | 解壓縮後開啟 `Aaalice NAI Launcher Neo.app`。 |
 | Android | `NAI_Launcher_Android_<version>.apk` | 側載 APK；首次安裝可能需要允許目前的應用程式安裝未知來源軟體。 |
 
 每個 Release 都會提供 `checksums.txt`。如果下載後無法解壓縮或安裝，可以先核對檔案校驗值。
@@ -199,7 +197,7 @@ NAI Launcher 面向經常使用 NovelAI 的圖像創作者。生成、改圖、P
 
 ## 🔒 資料與隱私
 
-NAI Launcher 不會在專案自有伺服器上託管你的帳號或作品。只有在你主動使用對應功能時，資料才會傳送給相關服務：
+NAI Launcher Neo 不會在專案自有伺服器上託管你的帳號或作品。只有在你主動使用對應功能時，資料才會傳送給相關服務：
 
 | 使用的功能 | 資料會傳送到哪裡 |
 | --- | --- |
@@ -217,9 +215,9 @@ NAI Launcher 不會在專案自有伺服器上託管你的帳號或作品。只�
 ## 🆘 支援與回饋
 
 - 如遇異常，請透過「設定 → 關於 → 匯出診斷日誌」儲存排查資訊，並在回報時一併提供。
-- [提交 Issue](https://github.com/Aaalice233/Aaalice_NAI_Launcher/issues)：回報可以重現的問題或提出功能建議。
+- [提交 Issue](https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/issues)：回報可以重現的問題或提出功能建議。
 - [加入 Discord](https://discord.gg/R48n6GwXzD)：交流使用經驗、取得社群協助。
-- [查看 Releases](https://github.com/Aaalice233/Aaalice_NAI_Launcher/releases)：下載版本、校驗檔案並閱讀更新內容。
+- [查看 Releases](https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/releases)：下載版本、校驗檔案並閱讀更新內容。
 
 ## 🙏 致謝
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Aaalice NAI Launcher</string>
+    <string name="app_name">Aaalice NAI Launcher Neo</string>
     <string name="generation_notification_channel">AI タスク</string>
     <string name="generation_notification_channel_description">進行中の画像生成と Agent タスクをバックグラウンドで継続します</string>
     <string name="generation_notification_title">AI タスクを実行中</string>

@@ -215,10 +215,10 @@ class UpdateCheckService {
   final DateTime Function() _now;
 
   /// 默认仓库所有者
-  static const String defaultOwner = 'Aaalice233';
+  static const String defaultOwner = 'NotFaceGUI';
 
   /// 默认仓库名称
-  static const String defaultRepo = 'Aaalice_NAI_Launcher';
+  static const String defaultRepo = 'Aaalice_NAI_Launcher_Neo';
 
   /// 前台使用期间定期发现启动后发布的新版本。
   static const Duration defaultCheckInterval = Duration(minutes: 30);

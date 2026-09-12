@@ -61,6 +61,7 @@ class CooccurrenceManifestCodec {
     final uri = Uri.parse(_string(release, 'url'));
     final releaseTag = _string(release, 'tag');
     final archiveName = _string(archive, 'name');
+    // 共现数据包由上游 Aaalice233 仓库的独立 prerelease 托管，不随本仓库改名。
     final expectedPath =
         '/Aaalice233/Aaalice_NAI_Launcher/releases/download/'
         '$releaseTag/$archiveName';

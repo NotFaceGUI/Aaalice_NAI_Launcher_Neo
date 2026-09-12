@@ -266,7 +266,7 @@ class AndroidFileExportChannel(
 
     @Suppress("DEPRECATION")
     private fun publishImage(source: File, fileName: String, mimeType: String): Uri {
-        val relativePath = "${Environment.DIRECTORY_PICTURES}/Aaalice NAI Launcher/"
+        val relativePath = "${Environment.DIRECTORY_PICTURES}/Aaalice NAI Launcher Neo/"
         val displayName = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             uniqueMediaStoreDisplayName(fileName, relativePath)
         } else {
@@ -281,7 +281,7 @@ class AndroidFileExportChannel(
             } else {
                 val directory = File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    "Aaalice NAI Launcher",
+                    "Aaalice NAI Launcher Neo",
                 )
                 check(directory.exists() || directory.mkdirs()) {
                     "Unable to create the Pictures directory."

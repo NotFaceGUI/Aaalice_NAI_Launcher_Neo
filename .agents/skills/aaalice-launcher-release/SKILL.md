@@ -5,7 +5,7 @@ description: 为 Aaalice NAI Launcher 准备并发布新版本，包括同步 ma
 
 # Aaalice NAI Launcher 版本发布
 
-必须位于 Aaalice_NAI_Launcher 仓库，并具备 Git、Git LFS、Flutter、Dart 与 PowerShell。
+必须位于 Aaalice_NAI_Launcher_Neo 仓库，并具备 Git、Git LFS、Flutter、Dart 与 PowerShell。
 
 本 skill 是 Aaalice NAI Launcher 应用版本发布与 Changelog 撰写的唯一流程文档。`AGENTS.md` 只保留通用工程、资源和验证约束；执行发布时同时遵守这些通用约束，但不得在其他文档复制本流程。
 

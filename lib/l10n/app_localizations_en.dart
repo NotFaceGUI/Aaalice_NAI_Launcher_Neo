@@ -71,7 +71,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Compositing and encoding image…';
 
   @override
-  String get app_title => 'NAI Launcher';
+  String get app_title => 'NAI Launcher Neo';
 
   @override
   String get app_subtitle => 'NovelAI Third-party Client';
