@@ -147,18 +147,23 @@ class _AppearanceSettingsSectionState
                   Navigator.pop(dialogContext);
                 }
               },
-              child: ListView(
-                shrinkWrap: true,
-                children: sortedStyles.map((style) {
-                  // grungeCollage 使用多语言的"默认"
-                  final displayName = style == AppStyle.grungeCollage
-                      ? context.l10n.settings_defaultPreset
-                      : style.displayName;
-                  return RadioListTile<AppStyle>(
-                    title: Text(displayName),
-                    value: style,
-                  );
-                }).toList(),
+              // AlertDialog 会内在测量内容，而 RenderShrinkWrappingViewport
+              // （ListView 的 shrinkWrap）不支持提供内在尺寸，会在布局期直接断言
+              // 失败、弹窗拿不到尺寸。这里与同文件其他弹窗一致改用 Column。
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: sortedStyles.map((style) {
+                    // grungeCollage 使用多语言的"默认"
+                    final displayName = style == AppStyle.grungeCollage
+                        ? context.l10n.settings_defaultPreset
+                        : style.displayName;
+                    return RadioListTile<AppStyle>(
+                      title: Text(displayName),
+                      value: style,
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ),

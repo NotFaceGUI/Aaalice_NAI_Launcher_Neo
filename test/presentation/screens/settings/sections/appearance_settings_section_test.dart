@@ -11,7 +11,9 @@ import 'package:nai_launcher/presentation/providers/font_provider.dart';
 import 'package:nai_launcher/presentation/providers/font_scale_provider.dart';
 import 'package:nai_launcher/presentation/providers/generation_layout_mode_provider.dart';
 import 'package:nai_launcher/presentation/providers/history_click_behavior_provider.dart';
+import 'package:nai_launcher/presentation/providers/theme_provider.dart';
 import 'package:nai_launcher/presentation/screens/settings/sections/appearance_settings_section.dart';
+import 'package:nai_launcher/presentation/themes/app_theme.dart';
 
 void main() {
   late Directory hiveDir;
@@ -323,6 +325,54 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  // 主题弹窗是唯一"长度随预设数量增长"的弹窗，此前没有覆盖：加预设后必须仍能
+  // 打开、滚动到末尾并选中，否则新预设等于不可达。
+  testWidgets('主题选择弹窗可打开、可滚动到末尾并持久化新预设', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(1000, 1600));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final storage = _FakeStorage();
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [localStorageServiceProvider.overrideWith((ref) => storage)],
+        child: const MaterialApp(
+          locale: Locale('zh'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: SingleChildScrollView(child: AppearanceSettingsSection()),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('风格').first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('选择风格'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+    // 弹窗会内在测量内容，列表必须非懒加载：全部预设都要在树里，新增的
+    // NovelAI 才可能可达。
+    expect(
+      find.byType(RadioListTile<AppStyle>),
+      findsNWidgets(AppStyle.values.length),
+    );
+
+    await tester.ensureVisible(find.text('NovelAI'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('NovelAI'));
+    await tester.pumpAndSettle();
+
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(AppearanceSettingsSection)),
+    );
+    expect(container.read(themeNotifierProvider), AppStyle.novelAi);
+    expect(storage.themeIndex, AppStyle.novelAi.index);
+    expect(tester.takeException(), isNull);
+    expect(find.byType(AlertDialog), findsNothing);
+  });
+
   testWidgets('历史点击行为默认经典并可从外观设置切换和持久化', (tester) async {
     await tester.binding.setSurfaceSize(const Size(1000, 1600));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -378,6 +428,15 @@ class _FakeStorage extends LocalStorageService {
   String behavior = 'open_detail';
   String fontFamily = FontConfig.defaultFont.key;
   double fontScale = 1;
+  int themeIndex = 0;
+
+  @override
+  int getThemeIndex() => themeIndex;
+
+  @override
+  Future<void> setThemeIndex(int index) async {
+    themeIndex = index;
+  }
 
   @override
   String getFontFamily() => fontFamily;
