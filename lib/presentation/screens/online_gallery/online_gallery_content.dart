@@ -369,6 +369,7 @@ class _OnlineGalleryContentPresenter {
             required loadMedia,
             required mediaRequestActive,
             detail,
+            onCoverLoadFailed,
           }) => _buildResolvedPostCard(
             state,
             item,
@@ -377,6 +378,7 @@ class _OnlineGalleryContentPresenter {
             loadMedia: loadMedia,
             mediaRequestActive: mediaRequestActive,
             detail: detail,
+            onCoverLoadFailed: onCoverLoadFailed,
           ),
     );
   }
@@ -389,6 +391,7 @@ class _OnlineGalleryContentPresenter {
     required bool loadMedia,
     required bool mediaRequestActive,
     GalleryDetail? detail,
+    VoidCallback? onCoverLoadFailed,
   }) {
     final capabilities = gallerySourceCapabilities[post.sourceId]!;
     final canWriteFavorite =
@@ -522,6 +525,7 @@ class _OnlineGalleryContentPresenter {
               : null,
           hoverController: _controller.hoverController,
           imageCoordinator: _controller.prefetchCoordinator,
+          onCoverLoadFailed: onCoverLoadFailed,
           onHoverIntent: () {
             if (post.isVideo ||
                 post.isAnimated ||

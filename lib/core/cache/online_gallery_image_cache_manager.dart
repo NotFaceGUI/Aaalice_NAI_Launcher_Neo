@@ -1,26 +1,6 @@
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-const _gelbooruReferer = 'https://gelbooru.com/';
-const _gelbooruContentCookie = 'fringeBenefits=yup';
-const _aiTagReferer = 'https://aitag.win/';
-const _onlineGalleryBrowserUserAgent =
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-    'AppleWebKit/537.36 (KHTML, like Gecko) '
-    'Chrome/126.0.0.0 Safari/537.36';
-const _imageAcceptHeader =
-    'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8';
-
-const _gelbooruImageHeaders = <String, String>{
-  'User-Agent': _onlineGalleryBrowserUserAgent,
-  'Referer': _gelbooruReferer,
-  'Cookie': _gelbooruContentCookie,
-  'Accept': _imageAcceptHeader,
-};
-const _aiTagImageHeaders = <String, String>{
-  'User-Agent': _onlineGalleryBrowserUserAgent,
-  'Referer': _aiTagReferer,
-  'Accept': _imageAcceptHeader,
-};
+import '../network/online_gallery_browser_headers.dart';
 
 final Set<String> _aiTagMediaHosts = {'ai-img.10118899.xyz'};
 
@@ -32,8 +12,8 @@ void registerAiTagImageBaseUrl(String url) {
 
 Map<String, String> onlineGalleryImageHeadersForUrl(String url) {
   final uri = Uri.tryParse(url);
-  if (_isGelbooruMediaHost(uri)) return _gelbooruImageHeaders;
-  if (_isAiTagMediaHost(uri)) return _aiTagImageHeaders;
+  if (_isGelbooruMediaHost(uri)) return gelbooruImageHeaders;
+  if (_isAiTagMediaHost(uri)) return aiTagImageHeaders;
   return const {};
 }
 

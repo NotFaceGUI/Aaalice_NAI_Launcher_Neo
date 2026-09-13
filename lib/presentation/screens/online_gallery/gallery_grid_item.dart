@@ -17,8 +17,10 @@ void _scheduleRevealImmediately(VoidCallback reveal) => reveal();
 /// Owns one gallery tile's visibility and detail request lifecycle.
 ///
 /// AI TAG items without a preview resolve their detail once when they first
-/// become visible. Rebuilds caused by scrolling, selection, or theme changes
-/// reuse the same future instead of starting new business work from build.
+/// become visible. Items whose derived list cover fails to load fall back to
+/// the same detail request, so the tile never keeps a broken cover. Rebuilds
+/// caused by scrolling, selection, or theme changes reuse the same future
+/// instead of starting new business work from build.
 class GalleryGridItem extends StatefulWidget {
   const GalleryGridItem({
     super.key,
@@ -70,6 +72,7 @@ class GalleryGridItem extends StatefulWidget {
     required bool loadMedia,
     required bool mediaRequestActive,
     GalleryDetail? detail,
+    VoidCallback? onCoverLoadFailed,
   })
   buildCard;
 
@@ -83,13 +86,35 @@ class _GalleryGridItemState extends State<GalleryGridItem> {
   final int _visibilityTokenSequence = ++_nextVisibilityTokenSequence;
   Future<GalleryDetail>? _detailFuture;
   bool _isVisible = false;
+  bool _coverFailed = false;
 
   bool get _needsDetail =>
       widget.post.sourceId == GallerySourceId.aiTag &&
       !widget.post.hasValidPreview;
 
+  /// AI TAG 列表封面由列表字段推导，少数作品推导出的地址不存在；
+  /// 这类卡片在封面加载失败后再回退到详情。
+  bool get _coverFallbackRequested =>
+      _coverFailed &&
+      widget.post.sourceId == GallerySourceId.aiTag &&
+      widget.post.hasValidPreview;
+
+  bool get _showsDetail => _needsDetail || _coverFallbackRequested;
+
   Future<GalleryDetail> _loadDetail() =>
       widget.loadDetail(widget.post, priority: GalleryDetailPriority.visible);
+
+  void _handleCoverLoadFailed() {
+    if (!mounted || _coverFailed || _detailFuture != null) return;
+    // 图片错误回调可能在构建阶段触发，延后到帧末再切换到详情。
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _coverFailed || _detailFuture != null) return;
+      setState(() {
+        _coverFailed = true;
+        _detailFuture = _loadDetail();
+      });
+    });
+  }
 
   @override
   void didUpdateWidget(covariant GalleryGridItem oldWidget) {
@@ -97,6 +122,7 @@ class _GalleryGridItemState extends State<GalleryGridItem> {
     if (oldWidget.post.detailStableKey != widget.post.detailStableKey ||
         oldWidget.detailRequestScope != widget.detailRequestScope) {
       _detailFuture = null;
+      _coverFailed = false;
       if (_isVisible && _needsDetail) {
         _detailFuture = _loadDetail();
       }
@@ -142,6 +168,7 @@ class _GalleryGridItemState extends State<GalleryGridItem> {
     required bool loadMedia,
     required bool mediaRequestActive,
     GalleryDetail? detail,
+    VoidCallback? onCoverLoadFailed,
   }) {
     return AgentResourceDragSource(
       selectionId: item.stableKey,
@@ -176,6 +203,7 @@ class _GalleryGridItemState extends State<GalleryGridItem> {
         loadMedia: loadMedia,
         mediaRequestActive: mediaRequestActive,
         detail: detail,
+        onCoverLoadFailed: onCoverLoadFailed,
       ),
     );
   }
@@ -216,13 +244,14 @@ class _GalleryGridItemState extends State<GalleryGridItem> {
           if (!hasBeenVisible) {
             return _buildDeferredCard(layoutAspectRatio);
           }
-          if (!_needsDetail) {
+          if (!_showsDetail) {
             return _buildResourceCard(
               context,
               post,
               layoutAspectRatio,
               loadMedia: hasBeenVisible,
               mediaRequestActive: hasBeenVisible,
+              onCoverLoadFailed: _handleCoverLoadFailed,
             );
           }
           if (_detailFuture == null) {

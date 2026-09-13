@@ -298,6 +298,7 @@ void main() {
                               required loadMedia,
                               required mediaRequestActive,
                               detail,
+                              onCoverLoadFailed,
                             }) {
                               ratios.add(layoutAspectRatio);
                               cardItem = item;

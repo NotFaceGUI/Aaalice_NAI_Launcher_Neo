@@ -84,6 +84,7 @@ class DanbooruPostCard extends ConsumerStatefulWidget {
   final OnlineGalleryPrefetchCoordinator? imageCoordinator;
   final bool loadMedia;
   final bool mediaRequestActive;
+  final VoidCallback? onCoverLoadFailed;
 
   const DanbooruPostCard({
     super.key,
@@ -120,6 +121,7 @@ class DanbooruPostCard extends ConsumerStatefulWidget {
     this.imageCoordinator,
     this.loadMedia = true,
     this.mediaRequestActive = true,
+    this.onCoverLoadFailed,
   });
 
   @override
@@ -671,11 +673,13 @@ class _DanbooruPostCardState extends ConsumerState<DanbooruPostCard> {
                             ),
                             enabled: widget.mediaRequestActive,
                             fadeIn: false,
-                            errorBuilder: (context, retry) =>
-                                OnlineGalleryImagePlaceholder(
-                                  failed: true,
-                                  onRetry: retry,
-                                ),
+                            errorBuilder: (context, retry) {
+                              widget.onCoverLoadFailed?.call();
+                              return OnlineGalleryImagePlaceholder(
+                                failed: true,
+                                onRetry: retry,
+                              );
+                            },
                           )
                         else
                           CachedNetworkImage(
@@ -693,10 +697,12 @@ class _DanbooruPostCardState extends ConsumerState<DanbooruPostCard> {
                                 const OnlineGalleryImagePlaceholder(
                                   loading: true,
                                 ),
-                            errorWidget: (context, url, error) =>
-                                const OnlineGalleryImagePlaceholder(
-                                  failed: true,
-                                ),
+                            errorWidget: (context, url, error) {
+                              widget.onCoverLoadFailed?.call();
+                              return const OnlineGalleryImagePlaceholder(
+                                failed: true,
+                              );
+                            },
                           ),
                         if (widget.selectionMode) ...[
                           // Selection Overlay

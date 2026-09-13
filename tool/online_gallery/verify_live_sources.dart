@@ -6,6 +6,22 @@ import 'package:dio/dio.dart';
 const _userAgent =
     'Aaalice-NAI-Launcher/online-gallery-contract-check (+https://github.com/Aaalice-Team/Aaalice_NAI_Launcher)';
 
+// AI TAG 边缘防护要求浏览器化请求头，缺少 Referer 时会返回 403 拦截页。
+// 这里必须与应用请求保持一致，否则契约检查会把真实可用的接口判为失败。
+const _aiTagApiHeaders = <String, String>{
+  'User-Agent':
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+      '(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+  'Referer': 'https://aitag.win/',
+  'Accept': 'application/json',
+  'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+};
+
+Map<String, String>? _browserHeadersFor(String url) {
+  final host = Uri.tryParse(url)?.host;
+  return host == 'aitag.win' ? _aiTagApiHeaders : null;
+}
+
 Future<void> main() async {
   final dio = Dio(
     BaseOptions(
@@ -154,6 +170,8 @@ Future<void> _verifyAiTag(Dio dio) async {
     total != null && total > page1Items.length,
     'AI TAG total is missing',
   );
+
+  await _verifyAiListCovers(dio, assetBase, page1Items);
 
   await _verifyAiRank(
     dio,
@@ -316,6 +334,7 @@ Future<Object?> _getJson(
     queryParameters: query,
     options: Options(
       responseType: ResponseType.plain,
+      headers: _browserHeadersFor(url),
       validateStatus: (status) =>
           status != null && (status >= 200 && status < 300 || acceptErrorJson),
     ),
@@ -386,7 +405,6 @@ void _requireNoOverlap(
 }
 
 String _aiCdnUrl(String base, Map<String, Object?> image) {
-  final normalizedBase = base.endsWith('/') ? base : '$base/';
   final type = image['image_type']?.toString().trim() ?? '';
   final author = image['author_id']?.toString().trim() ?? '';
   final fileName = image['file_name']?.toString().trim() ?? '';
@@ -394,7 +412,69 @@ String _aiCdnUrl(String base, Map<String, Object?> image) {
     type.isNotEmpty && author.isNotEmpty && fileName.isNotEmpty,
     'Incomplete AI TAG CDN fields',
   );
-  return '$normalizedBase$type/$author/$fileName.webp';
+  return _aiCdnPath(base, type, author, '$fileName.webp');
+}
+
+/// Mirrors the app's CDN URL builder so the contract check exercises the same
+/// percent-encoding the client uses.
+String _aiCdnPath(String base, String type, String author, String fileName) {
+  final normalizedBase = base.endsWith('/') ? base : '$base/';
+  final uri = Uri.parse(normalizedBase);
+  return uri
+      .replace(
+        pathSegments: [
+          ...uri.pathSegments.where((segment) => segment.isNotEmpty),
+          type,
+          author,
+          fileName,
+        ],
+        query: null,
+        fragment: null,
+      )
+      .toString();
+}
+
+/// 列表封面由 `AI_type` / `userId` 加首页序号推导，卡片因此不必为缩略图逐条
+/// 请求详情。少数作品只上传了部分页，首个文件不是 `_p0` 而由界面回退到详情，
+/// 所以这里只要求抽样中的多数命中，用来发现整体推导规则失效。
+Future<void> _verifyAiListCovers(
+  Dio dio,
+  String assetBase,
+  List<Object?> items,
+) async {
+  final sample = items.take(8).toList(growable: false);
+  if (sample.isEmpty) return;
+  var resolved = 0;
+  for (final value in sample) {
+    final item = _map(value, 'AI TAG list item');
+    final type = item['AI_type']?.toString().trim() ?? '';
+    final author = item['userId']?.toString().trim() ?? '';
+    final id = _int(item['id']);
+    if (type.isEmpty || author.isEmpty || id == null) continue;
+    final url = _aiCdnPath(assetBase, type, author, '${id}_p0.webp');
+    if (await _probeImage(dio, url)) resolved++;
+  }
+  _require(
+    resolved * 2 >= sample.length,
+    'AI TAG derived list covers resolved $resolved of ${sample.length}',
+  );
+}
+
+Future<bool> _probeImage(Dio dio, String url) async {
+  try {
+    final response = await dio.get<List<int>>(
+      url,
+      options: Options(
+        responseType: ResponseType.bytes,
+        headers: const {'Referer': 'https://aitag.win/'},
+      ),
+    );
+    final contentType = response.headers.value(Headers.contentTypeHeader) ?? '';
+    return contentType.startsWith('image/') &&
+        (response.data?.length ?? 0) >= 1024;
+  } catch (_) {
+    return false;
+  }
 }
 
 String? _optionalFirstUrl(Map<String, Object?> json, List<String> keys) {

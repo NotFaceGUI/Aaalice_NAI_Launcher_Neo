@@ -422,6 +422,65 @@ void main() {
 
     expect(secondKey, isNot(firstKey));
   });
+
+  testWidgets('AI TAG derived cover failure falls back to the detail', (
+    tester,
+  ) async {
+    const post = GalleryItem(
+      id: 7,
+      workId: 'work-7',
+      sourceId: GallerySourceId.aiTag,
+      cover: GalleryMedia(
+        id: '7_p0',
+        previewUrl: 'https://cdn.example/SD/7/7_p0.webp',
+        displayUrl: 'https://cdn.example/SD/7/7_p0.webp',
+        downloadUrl: 'https://cdn.example/SD/7/7_p0.webp',
+        extension: 'webp',
+        mediaType: 'image',
+      ),
+    );
+    final resolved = post.copyWith(
+      cover: const GalleryMedia(
+        id: '7_p31',
+        previewUrl: 'https://cdn.example/SD/7/7_p31.webp',
+        displayUrl: 'https://cdn.example/SD/7/7_p31.webp',
+        downloadUrl: 'https://cdn.example/SD/7/7_p31.webp',
+      ),
+    );
+    var detailRequests = 0;
+    final renderedItems = <GalleryItem>[];
+
+    await tester.pumpWidget(
+      _app(
+        post: post,
+        detailRequestScope: 1,
+        failCoverLoad: true,
+        onCardItem: renderedItems.add,
+        loadDetail: (item, {required priority, forceRefresh = false}) async {
+          detailRequests++;
+          return GalleryDetail(item: resolved, media: const []);
+        },
+      ),
+    );
+    final detector = tester.widget<VisibilityDetector>(
+      find.byType(VisibilityDetector),
+    );
+    detector.onVisibilityChanged?.call(
+      VisibilityInfo(
+        key: detector.key!,
+        size: const Size(200, 200),
+        visibleBounds: const Rect.fromLTWH(0, 0, 200, 200),
+      ),
+    );
+    await tester.pump();
+    await tester.pump();
+    await tester.pump();
+
+    // 推导封面失败恰好补一次详情，并改用详情返回的封面。
+    expect(detailRequests, 1);
+    expect(renderedItems.last.cover.id, '7_p31');
+    expect(find.byKey(const ValueKey('resolved-card')), findsOneWidget);
+  });
 }
 
 const _item = GalleryItem(
@@ -443,6 +502,8 @@ Widget _app({
   ValueChanged<bool>? onBuildCard,
   ValueChanged<bool>? onMediaRequestActive,
   ValueChanged<double>? onLayoutAspectRatio,
+  ValueChanged<GalleryItem>? onCardItem,
+  bool failCoverLoad = false,
   double containerHeight = 200,
 }) {
   return ProviderScope(
@@ -474,10 +535,15 @@ Widget _app({
                   required loadMedia,
                   required mediaRequestActive,
                   detail,
+                  onCoverLoadFailed,
                 }) {
                   onBuildCard?.call(loadMedia);
                   onMediaRequestActive?.call(mediaRequestActive);
                   onLayoutAspectRatio?.call(layoutAspectRatio);
+                  onCardItem?.call(item);
+                  if (failCoverLoad && detail == null) {
+                    onCoverLoadFailed?.call();
+                  }
                   return SizedBox(
                     key: const ValueKey('resolved-card'),
                     height: itemWidth / layoutAspectRatio,

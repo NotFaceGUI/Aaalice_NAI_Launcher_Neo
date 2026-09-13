@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:html/parser.dart' as html_parser;
 
 import '../../../../core/cache/online_gallery_image_cache_manager.dart';
+import '../../../../core/network/online_gallery_browser_headers.dart';
 import '../../../../core/utils/app_logger.dart';
 import '../../../models/gallery/nai_image_metadata.dart';
 import '../../../models/online_gallery/ai_tag_generation_info.dart';
@@ -60,7 +61,7 @@ class AiTagGallerySourceAdapter implements GallerySourceAdapter {
     try {
       final response = await _dio.get(
         '$_baseUrl/api/config',
-        options: Options(headers: const {'Accept': 'application/json'}),
+        options: Options(headers: aiTagApiHeaders()),
         cancelToken: cancelToken,
       );
       if (response.data is! Map) {
@@ -185,12 +186,7 @@ class AiTagGallerySourceAdapter implements GallerySourceAdapter {
       final response = await _dio.get(
         url,
         queryParameters: queryParameters,
-        options: Options(
-          headers: {
-            'Accept': 'application/json',
-            if (noCache) 'Cache-Control': 'no-cache',
-          },
-        ),
+        options: Options(headers: aiTagApiHeaders(noCache: noCache)),
         cancelToken: cancelToken,
       );
       if (response.data is! Map) {
@@ -226,6 +222,7 @@ class AiTagGallerySourceAdapter implements GallerySourceAdapter {
           final item = _parseListItem(
             Map<String, dynamic>.from(raw),
             rank: includeRank ? (page - 1) * pageSize + index + 1 : null,
+            assetBaseUrl: config.assetBaseUrl,
           );
           if (!_isBlacklisted(item, blacklistTags)) parsed.add(item);
         } catch (error) {
@@ -282,7 +279,7 @@ class AiTagGallerySourceAdapter implements GallerySourceAdapter {
     try {
       final response = await _dio.get(
         '$_baseUrl/api/work/${item.id}',
-        options: Options(headers: const {'Accept': 'application/json'}),
+        options: Options(headers: aiTagApiHeaders()),
         cancelToken: cancelToken,
       );
       if (response.data is! Map) {
@@ -395,7 +392,11 @@ class AiTagGallerySourceAdapter implements GallerySourceAdapter {
     }
   }
 
-  GalleryItem _parseListItem(Map<String, dynamic> json, {int? rank}) {
+  GalleryItem _parseListItem(
+    Map<String, dynamic> json, {
+    int? rank,
+    String? assetBaseUrl,
+  }) {
     final id = _asInt(json['id']);
     if (id == null || id <= 0) {
       throw const FormatException('AI TAG work id is invalid');
@@ -437,15 +438,62 @@ class AiTagGallerySourceAdapter implements GallerySourceAdapter {
       // The list payload omits per-media prompts searched by the upstream q
       // endpoint. Detail loading must aggregate every media prompt first.
       tagsComplete: false,
-      cover: GalleryMedia(
-        id: '${id}_pending',
-        previewUrl: '',
-        displayUrl: '',
-        downloadUrl: '',
-        mediaType: 'image',
-      ),
+      cover: _listCover(id: id, json: json, assetBaseUrl: assetBaseUrl),
     );
   }
+
+  /// 列表接口不返回 CDN 路径字段，封面按作品级类型与上传者加首页序号推导，
+  /// 避免每张卡片为了缩略图再取一次详情。少数作品的首张不是 `_p0`（只上传了
+  /// 部分页），这类封面会 404，由界面回退到详情加载。
+  static GalleryMedia _listCover({
+    required int id,
+    required Map<String, dynamic> json,
+    required String? assetBaseUrl,
+  }) {
+    final base = assetBaseUrl?.trim() ?? '';
+    final imageType = (json['AI_type'] ?? json['ai_type'])?.toString().trim();
+    final authorId = (json['userId'] ?? json['userid'])?.toString().trim();
+    final uri = Uri.tryParse(base);
+    if (base.isEmpty ||
+        uri == null ||
+        !uri.isAbsolute ||
+        uri.scheme != 'https' ||
+        imageType == null ||
+        imageType.isEmpty ||
+        authorId == null ||
+        authorId.isEmpty) {
+      return _pendingCover(id);
+    }
+    final fileName = '${id}_p0';
+    final url = uri
+        .replace(
+          pathSegments: [
+            ...uri.pathSegments.where((segment) => segment.isNotEmpty),
+            imageType,
+            authorId,
+            '$fileName.webp',
+          ],
+          query: null,
+          fragment: null,
+        )
+        .toString();
+    return GalleryMedia(
+      id: fileName,
+      previewUrl: url,
+      displayUrl: url,
+      downloadUrl: url,
+      extension: 'webp',
+      mediaType: 'image',
+    );
+  }
+
+  static GalleryMedia _pendingCover(int id) => GalleryMedia(
+    id: '${id}_pending',
+    previewUrl: '',
+    displayUrl: '',
+    downloadUrl: '',
+    mediaType: 'image',
+  );
 
   static MetadataParseResult _parseMetadata(
     String? rawAiJson,

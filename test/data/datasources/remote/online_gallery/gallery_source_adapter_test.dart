@@ -606,6 +606,92 @@ void main() {
       );
     });
 
+    test('sends browser-like headers on every AI TAG request', () async {
+      final http = _RecordingHttpAdapter((request) {
+        if (request.uri.path == '/api/config') return _configJson;
+        if (request.uri.path == '/api/ai_works_search') {
+          return {
+            'page': 1,
+            'page_size': 60,
+            'total': 1,
+            'items': [_aiWork(501)],
+          };
+        }
+        if (request.uri.path == '/api/work/501') {
+          return {
+            'work': _aiWork(501),
+            'images': [_aiImage('501 p0')],
+          };
+        }
+        throw StateError('Unexpected request ${request.uri}');
+      });
+      final adapter = AiTagGallerySourceAdapter(
+        dio: Dio()..httpClientAdapter = http,
+      );
+
+      await adapter.getConfig();
+      await adapter.search(
+        const GallerySearchRequest(cursor: '1', pageSize: 60, query: '1girl'),
+      );
+      await adapter.detail(
+        const GalleryItem(id: 501, sourceId: GallerySourceId.aiTag),
+      );
+
+      expect(http.requests.map((request) => request.uri.path), [
+        '/api/config',
+        '/api/ai_works_search',
+        '/api/work/501',
+      ]);
+      for (final request in http.requests) {
+        // 边缘防护会拦截缺少浏览器化请求头的请求（403 HTML），
+        // 缺少 Referer 时用户侧表现为“无法获取来源配置”。
+        expect(request.headers['Referer'], 'https://aitag.win/');
+        expect(request.headers['User-Agent'], contains('Mozilla/5.0'));
+        expect(request.headers['Accept'], 'application/json');
+        expect(request.headers['Accept-Language'], isNotNull);
+      }
+    });
+
+    test('derives the AI TAG list cover from list fields', () async {
+      final http = _RecordingHttpAdapter((request) {
+        if (request.uri.path == '/api/config') return _configJson;
+        expect(request.uri.path, '/api/ai_works_search');
+        return {
+          'page': 1,
+          'page_size': 60,
+          'total': 3,
+          'items': [
+            _aiWork(100),
+            {..._aiWork(101), 'AI_type': null},
+            {..._aiWork(102), 'userId': null},
+          ],
+        };
+      });
+      final adapter = AiTagGallerySourceAdapter(
+        dio: Dio()..httpClientAdapter = http,
+      );
+
+      final page = await adapter.search(
+        const GallerySearchRequest(cursor: '1', pageSize: 60, query: '1girl'),
+      );
+
+      // 列表封面由列表字段直接拼出，卡片不必再为缩略图请求详情。
+      expect(http.requests.map((request) => request.uri.path), [
+        '/api/config',
+        '/api/ai_works_search',
+      ]);
+      final cover = page.items.first.cover;
+      expect(cover.id, '100_p0');
+      expect(cover.previewUrl, 'https://cdn.example/SD/9/100_p0.webp');
+      expect(cover.displayUrl, cover.previewUrl);
+      expect(cover.downloadUrl, cover.previewUrl);
+      expect(page.items.first.hasValidPreview, isTrue);
+      expect(cover.previewUrl, isNot(contains('pximg.net')));
+      // 缺少类型或上传者的条目保持空封面，界面仍走详情。
+      expect(page.items[1].cover.previewUrl, isEmpty);
+      expect(page.items[2].cover.previewUrl, isEmpty);
+    });
+
     test('random page one reuses the exact total probe response', () async {
       var listRequests = 0;
       final http = _RecordingHttpAdapter((request) {
