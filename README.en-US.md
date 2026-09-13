@@ -10,8 +10,6 @@ Maintained for personal use only.
 
 ## Update history
 
-Timeline since the Neo line (4.3.0), newest first.
-
 | Date | Version | Change |
 | --- | --- | --- |
 | 2026-09-13 | Unreleased | Added an infinite canvas to the center of the generation page: image, seed to-do and Markdown note nodes can be dragged, resized and linked, canvases are split into project-like boards, and new results can land on their own. |
