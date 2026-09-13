@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/utils/localization_extension.dart';
+import '../../../../data/models/canvas/canvas_node.dart';
+import '../../../../data/models/canvas/canvas_node_params.dart';
+import '../../../../data/models/gallery/nai_image_metadata.dart';
 import '../../../../data/models/image/image_params.dart'
     show ImageParamsExtension;
 import '../../../adaptive/interaction_policy.dart';
@@ -11,6 +14,7 @@ import '../../../providers/image_generation_provider.dart';
 import '../../../providers/preview_transparency_provider.dart';
 import '../../../widgets/common/transparency_background.dart';
 import '../../../widgets/image_editor/widgets/color_picker.dart';
+import '../canvas/canvas_actions.dart';
 import 'generation_toggle_button.dart';
 
 /// 预览图下方的信息条（对齐官网结果区底部的 display/save 工具条）
@@ -45,10 +49,10 @@ class PreviewInfoBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // 种子要等 PNG 元数据解析完才知道，解析期间先不占位
-    final seed = ref
+    final metadata = ref
         .watch(generatedImageMetadataProvider(image))
-        .valueOrNull
-        ?.seed;
+        .valueOrNull;
+    final seed = metadata?.seed;
     final transparentBackground = ref.watch(
       generationParamsNotifierProvider.select(
         (params) => (
@@ -116,6 +120,8 @@ class PreviewInfoBar extends ConsumerWidget {
                         const SizedBox(width: 6),
                         _SeedPill(seed: seed),
                       ],
+                      const SizedBox(width: 6),
+                      _AddToCanvasButton(image: image, metadata: metadata),
                     ],
                   ),
                 );
@@ -290,6 +296,43 @@ class _SeedPill extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// 把当前预览图加入无限画布。
+///
+/// 放在种子胶囊右侧，是「加入画布」最直接的入口：不必打开右键菜单。
+/// 图片尚未落盘时由导入器先保存到图库再以相对路径引用。
+class _AddToCanvasButton extends ConsumerWidget {
+  const _AddToCanvasButton({required this.image, required this.metadata});
+
+  final GeneratedImage image;
+  final NaiImageMetadata? metadata;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final filePath = image.filePath;
+    final hasPath = filePath != null && filePath.isNotEmpty;
+    return _InfoPill(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      tooltip: context.l10n.infinite_canvas_addCurrentImage,
+      onTap: () => addImageToCanvas(
+        context: context,
+        ref: ref,
+        filePath: hasPath ? filePath : null,
+        bytes: hasPath ? null : image.bytes,
+        seed: metadata?.seed,
+        params: metadata == null
+            ? null
+            : CanvasNodeParams.fromImageMetadata(metadata!),
+        aspectRatio: CanvasNode.resolveAspectRatio(
+          width: metadata?.width,
+          height: metadata?.height,
+          fallback: image.aspectRatio,
+        ),
+      ),
+      child: const Icon(Icons.push_pin_outlined, size: 14),
     );
   }
 }

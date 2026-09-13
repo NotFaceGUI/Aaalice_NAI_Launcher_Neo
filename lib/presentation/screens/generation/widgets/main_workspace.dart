@@ -7,7 +7,7 @@ import '../../../providers/image_generation_provider.dart';
 import '../../../providers/layout_state_provider.dart';
 import '../../../providers/prompt_maximize_provider.dart';
 import 'generation_controls/generation_controls.dart';
-import 'image_preview.dart';
+import 'generation_center_workspace.dart';
 import 'prompt_input.dart';
 import 'prompt_input_controller.dart';
 import 'resize_handle.dart';
@@ -126,15 +126,15 @@ class MainWorkspace extends ConsumerWidget {
                 },
               ),
 
-            // 中间图像预览区（最大化时隐藏）
+            // 中间图像预览区（最大化时隐藏）；无限画布在同一位置切换
             if (!isPromptMaximized)
               if (useScrollableWorkspace)
                 const SizedBox(
                   height: _minPreviewAreaHeight,
-                  child: ImagePreviewWidget(),
+                  child: GenerationCenterWorkspace(),
                 )
               else
-                const Expanded(child: ImagePreviewWidget()),
+                const Expanded(child: GenerationCenterWorkspace()),
 
             // 底部生成控制区
             Container(

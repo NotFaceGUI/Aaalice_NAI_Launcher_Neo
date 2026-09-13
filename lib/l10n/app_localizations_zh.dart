@@ -14585,6 +14585,233 @@ class AppLocalizationsZh extends AppLocalizations {
 
     return '会员到期日期：$dateString';
   }
+
+  @override
+  String get infinite_canvas_title => '无限画布';
+
+  @override
+  String get infinite_canvas_open => '打开无限画布';
+
+  @override
+  String get infinite_canvas_close => '退出无限画布';
+
+  @override
+  String get infinite_canvas_emptyTitle => '画布还是空的';
+
+  @override
+  String get infinite_canvas_emptyHint => '生成图片会自动落到画布上；也可以在种子旁固定一个待办。';
+
+  @override
+  String get infinite_canvas_zoomIn => '放大';
+
+  @override
+  String get infinite_canvas_zoomOut => '缩小';
+
+  @override
+  String get infinite_canvas_zoomReset => '恢复实际大小';
+
+  @override
+  String get infinite_canvas_fitContent => '适应全部内容';
+
+  @override
+  String get infinite_canvas_newNote => '新建便签';
+
+  @override
+  String get infinite_canvas_addFromLibrary => '从图库添加';
+
+  @override
+  String get infinite_canvas_linkMode => '连线模式';
+
+  @override
+  String get infinite_canvas_linkModeHint => '依次点击两个节点即可连线';
+
+  @override
+  String get infinite_canvas_autoImport => '自动加入新结果';
+
+  @override
+  String get infinite_canvas_autoImportHint => '画布打开时，生成完成的结果自动成为画布节点';
+
+  @override
+  String get infinite_canvas_nodeImage => '图片';
+
+  @override
+  String get infinite_canvas_nodeSeedTodo => '种子待办';
+
+  @override
+  String get infinite_canvas_nodeNote => '便签';
+
+  @override
+  String get infinite_canvas_nodeMissingImage => '图像缺失';
+
+  @override
+  String get infinite_canvas_nodeMissingImageHint => '原文件已被移动或删除';
+
+  @override
+  String get infinite_canvas_notePlaceholder => '写点什么…';
+
+  @override
+  String get infinite_canvas_infoSeed => '种子';
+
+  @override
+  String get infinite_canvas_infoSize => '尺寸';
+
+  @override
+  String get infinite_canvas_infoModel => '模型';
+
+  @override
+  String get infinite_canvas_infoSampler => '采样器';
+
+  @override
+  String get infinite_canvas_infoCreated => '创建时间';
+
+  @override
+  String get infinite_canvas_infoPrompt => '提示词';
+
+  @override
+  String get infinite_canvas_todoPending => '待生成';
+
+  @override
+  String get infinite_canvas_todoDone => '已完成';
+
+  @override
+  String get infinite_canvas_todoMarkDone => '标记为已完成';
+
+  @override
+  String get infinite_canvas_todoMarkPending => '标记为未完成';
+
+  @override
+  String get infinite_canvas_todoLoadParams => '载入参数';
+
+  @override
+  String get infinite_canvas_todoLoadParamsHint => '把该待办的种子与提示词载回生成页';
+
+  @override
+  String get infinite_canvas_addImage => '加入画布';
+
+  @override
+  String get infinite_canvas_addedToCanvas => '已加入画布';
+
+  @override
+  String get infinite_canvas_addedAndSaved => '图片已保存到图库并加入画布';
+
+  @override
+  String get infinite_canvas_addOutsideRoot => '图片不在图库目录内，无法加入画布';
+
+  @override
+  String get infinite_canvas_addFailed => '加入画布失败';
+
+  @override
+  String get infinite_canvas_pinSeed => '把当前种子固定到画布';
+
+  @override
+  String get infinite_canvas_pinSeedNeedsValue => '先指定一个种子才能固定';
+
+  @override
+  String get infinite_canvas_seedPinned => '已把种子固定到画布';
+
+  @override
+  String get infinite_canvas_paramsLoaded => '已把参数载回生成页';
+
+  @override
+  String get infinite_canvas_linkLabel => '连线标注';
+
+  @override
+  String get infinite_canvas_linkLabelPlaceholder => '为这条连线写标注';
+
+  @override
+  String get infinite_canvas_linkEditLabel => '编辑标注';
+
+  @override
+  String get infinite_canvas_linkClearLabel => '清除标注';
+
+  @override
+  String get infinite_canvas_linkRemove => '删除连线';
+
+  @override
+  String get infinite_canvas_pickerTitle => '从图库添加到画布';
+
+  @override
+  String get infinite_canvas_pickerEmpty => '本地图库还没有图片';
+
+  @override
+  String get infinite_canvas_nodeBringToFront => '置于顶层';
+
+  @override
+  String get infinite_canvas_nodeRemove => '从画布移除';
+
+  @override
+  String get infinite_canvas_noteEdit => '编辑内容';
+
+  @override
+  String get infinite_canvas_linkStart => '从这里拉出连线';
+
+  @override
+  String get infinite_canvas_resize => '拖动调整尺寸';
+
+  @override
+  String get infinite_canvas_infoSteps => '步数';
+
+  @override
+  String get infinite_canvas_viewPrompt => '查看提示词';
+
+  @override
+  String get infinite_canvas_addCurrentImage => '把当前图片加入画布';
+
+  @override
+  String get infinite_canvas_clearCanvas => '清空画布';
+
+  @override
+  String get infinite_canvas_clearCanvasHint => '画布上的节点与连线会全部移除，图片本身不受影响。';
+
+  @override
+  String get infinite_canvas_clearCanvasDone => '已清空画布';
+
+  @override
+  String get infinite_canvas_infoNegativePrompt => '负向提示词';
+
+  @override
+  String get infinite_canvas_infoCfg => 'CFG 强度';
+
+  @override
+  String get infinite_canvas_paramsEmpty => '这个节点没有可载入的参数';
+
+  @override
+  String get infinite_canvas_paramsSelectAll => '全选';
+
+  @override
+  String get infinite_canvas_noteMarkdownHint => '支持 Markdown，双击便签即可编辑';
+
+  @override
+  String get infinite_canvas_generating => '正在生成';
+
+  @override
+  String get infinite_canvas_generatingHint => '完成后会落到画布上';
+
+  @override
+  String get infinite_canvas_boards => '画布列表';
+
+  @override
+  String get infinite_canvas_boardNew => '新建画布';
+
+  @override
+  String get infinite_canvas_boardRename => '重命名';
+
+  @override
+  String get infinite_canvas_boardDelete => '删除画布';
+
+  @override
+  String get infinite_canvas_boardDeleteHint => '该画布上的节点与连线会全部移除，图片本身不受影响。';
+
+  @override
+  String get infinite_canvas_boardUntitled => '未命名画布';
+
+  @override
+  String get infinite_canvas_boardNamePrefix => '画布';
+
+  @override
+  String infinite_canvas_boardNodeCount(int count) {
+    return '$count 个节点';
+  }
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -29168,5 +29395,232 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
     final String dateString = dateDateFormat.format(date);
 
     return '會員到期日期：$dateString';
+  }
+
+  @override
+  String get infinite_canvas_title => '無限畫布';
+
+  @override
+  String get infinite_canvas_open => '開啟無限畫布';
+
+  @override
+  String get infinite_canvas_close => '離開無限畫布';
+
+  @override
+  String get infinite_canvas_emptyTitle => '畫布還是空的';
+
+  @override
+  String get infinite_canvas_emptyHint => '生成圖片會自動落到畫布上；也可以在種子旁固定一個待辦。';
+
+  @override
+  String get infinite_canvas_zoomIn => '放大';
+
+  @override
+  String get infinite_canvas_zoomOut => '縮小';
+
+  @override
+  String get infinite_canvas_zoomReset => '恢復實際大小';
+
+  @override
+  String get infinite_canvas_fitContent => '適應全部內容';
+
+  @override
+  String get infinite_canvas_newNote => '新增便籤';
+
+  @override
+  String get infinite_canvas_addFromLibrary => '從圖庫加入';
+
+  @override
+  String get infinite_canvas_linkMode => '連線模式';
+
+  @override
+  String get infinite_canvas_linkModeHint => '依次點擊兩個節點即可連線';
+
+  @override
+  String get infinite_canvas_autoImport => '自動加入新結果';
+
+  @override
+  String get infinite_canvas_autoImportHint => '畫布開啟時，生成完成的結果自動成為畫布節點';
+
+  @override
+  String get infinite_canvas_nodeImage => '圖片';
+
+  @override
+  String get infinite_canvas_nodeSeedTodo => '種子待辦';
+
+  @override
+  String get infinite_canvas_nodeNote => '便籤';
+
+  @override
+  String get infinite_canvas_nodeMissingImage => '圖像缺失';
+
+  @override
+  String get infinite_canvas_nodeMissingImageHint => '原檔案已被移動或刪除';
+
+  @override
+  String get infinite_canvas_notePlaceholder => '寫點什麼…';
+
+  @override
+  String get infinite_canvas_infoSeed => '種子';
+
+  @override
+  String get infinite_canvas_infoSize => '尺寸';
+
+  @override
+  String get infinite_canvas_infoModel => '模型';
+
+  @override
+  String get infinite_canvas_infoSampler => '取樣器';
+
+  @override
+  String get infinite_canvas_infoCreated => '建立時間';
+
+  @override
+  String get infinite_canvas_infoPrompt => '提示詞';
+
+  @override
+  String get infinite_canvas_todoPending => '待生成';
+
+  @override
+  String get infinite_canvas_todoDone => '已完成';
+
+  @override
+  String get infinite_canvas_todoMarkDone => '標記為已完成';
+
+  @override
+  String get infinite_canvas_todoMarkPending => '標記為未完成';
+
+  @override
+  String get infinite_canvas_todoLoadParams => '載入參數';
+
+  @override
+  String get infinite_canvas_todoLoadParamsHint => '把該待辦的種子與提示詞載回生成頁';
+
+  @override
+  String get infinite_canvas_addImage => '加入畫布';
+
+  @override
+  String get infinite_canvas_addedToCanvas => '已加入畫布';
+
+  @override
+  String get infinite_canvas_addedAndSaved => '圖片已儲存到圖庫並加入畫布';
+
+  @override
+  String get infinite_canvas_addOutsideRoot => '圖片不在圖庫目錄內，無法加入畫布';
+
+  @override
+  String get infinite_canvas_addFailed => '加入畫布失敗';
+
+  @override
+  String get infinite_canvas_pinSeed => '把目前種子固定到畫布';
+
+  @override
+  String get infinite_canvas_pinSeedNeedsValue => '先指定一個種子才能固定';
+
+  @override
+  String get infinite_canvas_seedPinned => '已把種子固定到畫布';
+
+  @override
+  String get infinite_canvas_paramsLoaded => '已把參數載回生成頁';
+
+  @override
+  String get infinite_canvas_linkLabel => '連線標註';
+
+  @override
+  String get infinite_canvas_linkLabelPlaceholder => '為這條連線寫標註';
+
+  @override
+  String get infinite_canvas_linkEditLabel => '編輯標註';
+
+  @override
+  String get infinite_canvas_linkClearLabel => '清除標註';
+
+  @override
+  String get infinite_canvas_linkRemove => '刪除連線';
+
+  @override
+  String get infinite_canvas_pickerTitle => '從圖庫加入畫布';
+
+  @override
+  String get infinite_canvas_pickerEmpty => '本地圖庫還沒有圖片';
+
+  @override
+  String get infinite_canvas_nodeBringToFront => '置於頂層';
+
+  @override
+  String get infinite_canvas_nodeRemove => '從畫布移除';
+
+  @override
+  String get infinite_canvas_noteEdit => '編輯內容';
+
+  @override
+  String get infinite_canvas_linkStart => '從這裡拉出連線';
+
+  @override
+  String get infinite_canvas_resize => '拖動調整尺寸';
+
+  @override
+  String get infinite_canvas_infoSteps => '步數';
+
+  @override
+  String get infinite_canvas_viewPrompt => '檢視提示詞';
+
+  @override
+  String get infinite_canvas_addCurrentImage => '把目前圖片加入畫布';
+
+  @override
+  String get infinite_canvas_clearCanvas => '清空畫布';
+
+  @override
+  String get infinite_canvas_clearCanvasHint => '畫布上的節點與連線會全部移除，圖片本身不受影響。';
+
+  @override
+  String get infinite_canvas_clearCanvasDone => '已清空畫布';
+
+  @override
+  String get infinite_canvas_infoNegativePrompt => '負向提示詞';
+
+  @override
+  String get infinite_canvas_infoCfg => 'CFG 強度';
+
+  @override
+  String get infinite_canvas_paramsEmpty => '這個節點沒有可載入的參數';
+
+  @override
+  String get infinite_canvas_paramsSelectAll => '全選';
+
+  @override
+  String get infinite_canvas_noteMarkdownHint => '支援 Markdown，雙擊便籤即可編輯';
+
+  @override
+  String get infinite_canvas_generating => '正在生成';
+
+  @override
+  String get infinite_canvas_generatingHint => '完成後會落到畫布上';
+
+  @override
+  String get infinite_canvas_boards => '畫布列表';
+
+  @override
+  String get infinite_canvas_boardNew => '新增畫布';
+
+  @override
+  String get infinite_canvas_boardRename => '重新命名';
+
+  @override
+  String get infinite_canvas_boardDelete => '刪除畫布';
+
+  @override
+  String get infinite_canvas_boardDeleteHint => '該畫布上的節點與連線會全部移除，圖片本身不受影響。';
+
+  @override
+  String get infinite_canvas_boardUntitled => '未命名畫布';
+
+  @override
+  String get infinite_canvas_boardNamePrefix => '畫布';
+
+  @override
+  String infinite_canvas_boardNodeCount(int count) {
+    return '$count 個節點';
   }
 }

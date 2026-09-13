@@ -26556,6 +26556,456 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Subscription expiry: {date}'**
   String settings_subscriptionExpiresOn(DateTime date);
+
+  /// No description provided for @infinite_canvas_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Infinite Canvas'**
+  String get infinite_canvas_title;
+
+  /// No description provided for @infinite_canvas_open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open infinite canvas'**
+  String get infinite_canvas_open;
+
+  /// No description provided for @infinite_canvas_close.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave infinite canvas'**
+  String get infinite_canvas_close;
+
+  /// No description provided for @infinite_canvas_emptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The canvas is empty'**
+  String get infinite_canvas_emptyTitle;
+
+  /// No description provided for @infinite_canvas_emptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Finished generations land here automatically. You can also pin the current seed as a to-do.'**
+  String get infinite_canvas_emptyHint;
+
+  /// No description provided for @infinite_canvas_zoomIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom in'**
+  String get infinite_canvas_zoomIn;
+
+  /// No description provided for @infinite_canvas_zoomOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom out'**
+  String get infinite_canvas_zoomOut;
+
+  /// No description provided for @infinite_canvas_zoomReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to actual size'**
+  String get infinite_canvas_zoomReset;
+
+  /// No description provided for @infinite_canvas_fitContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Fit all content'**
+  String get infinite_canvas_fitContent;
+
+  /// No description provided for @infinite_canvas_newNote.
+  ///
+  /// In en, this message translates to:
+  /// **'New note'**
+  String get infinite_canvas_newNote;
+
+  /// No description provided for @infinite_canvas_addFromLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Add from library'**
+  String get infinite_canvas_addFromLibrary;
+
+  /// No description provided for @infinite_canvas_linkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Link mode'**
+  String get infinite_canvas_linkMode;
+
+  /// No description provided for @infinite_canvas_linkModeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Click two nodes in order to connect them'**
+  String get infinite_canvas_linkModeHint;
+
+  /// No description provided for @infinite_canvas_autoImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new results automatically'**
+  String get infinite_canvas_autoImport;
+
+  /// No description provided for @infinite_canvas_autoImportHint.
+  ///
+  /// In en, this message translates to:
+  /// **'While the canvas is open, finished generations become canvas nodes'**
+  String get infinite_canvas_autoImportHint;
+
+  /// No description provided for @infinite_canvas_nodeImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get infinite_canvas_nodeImage;
+
+  /// No description provided for @infinite_canvas_nodeSeedTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'Seed to-do'**
+  String get infinite_canvas_nodeSeedTodo;
+
+  /// No description provided for @infinite_canvas_nodeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get infinite_canvas_nodeNote;
+
+  /// No description provided for @infinite_canvas_nodeMissingImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Image missing'**
+  String get infinite_canvas_nodeMissingImage;
+
+  /// No description provided for @infinite_canvas_nodeMissingImageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The original file was moved or deleted'**
+  String get infinite_canvas_nodeMissingImageHint;
+
+  /// No description provided for @infinite_canvas_notePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Write something…'**
+  String get infinite_canvas_notePlaceholder;
+
+  /// No description provided for @infinite_canvas_infoSeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Seed'**
+  String get infinite_canvas_infoSeed;
+
+  /// No description provided for @infinite_canvas_infoSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get infinite_canvas_infoSize;
+
+  /// No description provided for @infinite_canvas_infoModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get infinite_canvas_infoModel;
+
+  /// No description provided for @infinite_canvas_infoSampler.
+  ///
+  /// In en, this message translates to:
+  /// **'Sampler'**
+  String get infinite_canvas_infoSampler;
+
+  /// No description provided for @infinite_canvas_infoCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get infinite_canvas_infoCreated;
+
+  /// No description provided for @infinite_canvas_infoPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Prompt'**
+  String get infinite_canvas_infoPrompt;
+
+  /// No description provided for @infinite_canvas_todoPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get infinite_canvas_todoPending;
+
+  /// No description provided for @infinite_canvas_todoDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get infinite_canvas_todoDone;
+
+  /// No description provided for @infinite_canvas_todoMarkDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as done'**
+  String get infinite_canvas_todoMarkDone;
+
+  /// No description provided for @infinite_canvas_todoMarkPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as not done'**
+  String get infinite_canvas_todoMarkPending;
+
+  /// No description provided for @infinite_canvas_todoLoadParams.
+  ///
+  /// In en, this message translates to:
+  /// **'Load parameters'**
+  String get infinite_canvas_todoLoadParams;
+
+  /// No description provided for @infinite_canvas_todoLoadParamsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Load this to-do seed and prompt back into the generation page'**
+  String get infinite_canvas_todoLoadParamsHint;
+
+  /// No description provided for @infinite_canvas_addImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to canvas'**
+  String get infinite_canvas_addImage;
+
+  /// No description provided for @infinite_canvas_addedToCanvas.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to canvas'**
+  String get infinite_canvas_addedToCanvas;
+
+  /// No description provided for @infinite_canvas_addedAndSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Image saved to the library and added to canvas'**
+  String get infinite_canvas_addedAndSaved;
+
+  /// No description provided for @infinite_canvas_addOutsideRoot.
+  ///
+  /// In en, this message translates to:
+  /// **'The image is outside the gallery folder and cannot be added'**
+  String get infinite_canvas_addOutsideRoot;
+
+  /// No description provided for @infinite_canvas_addFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add to canvas'**
+  String get infinite_canvas_addFailed;
+
+  /// No description provided for @infinite_canvas_pinSeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin the current seed to the canvas'**
+  String get infinite_canvas_pinSeed;
+
+  /// No description provided for @infinite_canvas_pinSeedNeedsValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a seed before pinning'**
+  String get infinite_canvas_pinSeedNeedsValue;
+
+  /// No description provided for @infinite_canvas_seedPinned.
+  ///
+  /// In en, this message translates to:
+  /// **'Seed pinned to the canvas'**
+  String get infinite_canvas_seedPinned;
+
+  /// No description provided for @infinite_canvas_paramsLoaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Parameters loaded into the generation page'**
+  String get infinite_canvas_paramsLoaded;
+
+  /// No description provided for @infinite_canvas_linkLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Link label'**
+  String get infinite_canvas_linkLabel;
+
+  /// No description provided for @infinite_canvas_linkLabelPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Label this link'**
+  String get infinite_canvas_linkLabelPlaceholder;
+
+  /// No description provided for @infinite_canvas_linkEditLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit label'**
+  String get infinite_canvas_linkEditLabel;
+
+  /// No description provided for @infinite_canvas_linkClearLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear label'**
+  String get infinite_canvas_linkClearLabel;
+
+  /// No description provided for @infinite_canvas_linkRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete link'**
+  String get infinite_canvas_linkRemove;
+
+  /// No description provided for @infinite_canvas_pickerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add from library to canvas'**
+  String get infinite_canvas_pickerTitle;
+
+  /// No description provided for @infinite_canvas_pickerEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'The local library has no images yet'**
+  String get infinite_canvas_pickerEmpty;
+
+  /// No description provided for @infinite_canvas_nodeBringToFront.
+  ///
+  /// In en, this message translates to:
+  /// **'Bring to front'**
+  String get infinite_canvas_nodeBringToFront;
+
+  /// No description provided for @infinite_canvas_nodeRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from canvas'**
+  String get infinite_canvas_nodeRemove;
+
+  /// No description provided for @infinite_canvas_noteEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit note'**
+  String get infinite_canvas_noteEdit;
+
+  /// No description provided for @infinite_canvas_linkStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag from here to connect'**
+  String get infinite_canvas_linkStart;
+
+  /// No description provided for @infinite_canvas_resize.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to resize'**
+  String get infinite_canvas_resize;
+
+  /// No description provided for @infinite_canvas_infoSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps'**
+  String get infinite_canvas_infoSteps;
+
+  /// No description provided for @infinite_canvas_viewPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'View prompt'**
+  String get infinite_canvas_viewPrompt;
+
+  /// No description provided for @infinite_canvas_addCurrentImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add current image to canvas'**
+  String get infinite_canvas_addCurrentImage;
+
+  /// No description provided for @infinite_canvas_clearCanvas.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear canvas'**
+  String get infinite_canvas_clearCanvas;
+
+  /// No description provided for @infinite_canvas_clearCanvasHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Removes every node and link from the canvas. The images themselves are untouched.'**
+  String get infinite_canvas_clearCanvasHint;
+
+  /// No description provided for @infinite_canvas_clearCanvasDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Canvas cleared'**
+  String get infinite_canvas_clearCanvasDone;
+
+  /// No description provided for @infinite_canvas_infoNegativePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Negative prompt'**
+  String get infinite_canvas_infoNegativePrompt;
+
+  /// No description provided for @infinite_canvas_infoCfg.
+  ///
+  /// In en, this message translates to:
+  /// **'CFG scale'**
+  String get infinite_canvas_infoCfg;
+
+  /// No description provided for @infinite_canvas_paramsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'This node has no parameters to load'**
+  String get infinite_canvas_paramsEmpty;
+
+  /// No description provided for @infinite_canvas_paramsSelectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all'**
+  String get infinite_canvas_paramsSelectAll;
+
+  /// No description provided for @infinite_canvas_noteMarkdownHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Markdown supported. Double-click the note to edit.'**
+  String get infinite_canvas_noteMarkdownHint;
+
+  /// No description provided for @infinite_canvas_generating.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating'**
+  String get infinite_canvas_generating;
+
+  /// No description provided for @infinite_canvas_generatingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Results land on the canvas when ready'**
+  String get infinite_canvas_generatingHint;
+
+  /// No description provided for @infinite_canvas_boards.
+  ///
+  /// In en, this message translates to:
+  /// **'Canvases'**
+  String get infinite_canvas_boards;
+
+  /// No description provided for @infinite_canvas_boardNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New canvas'**
+  String get infinite_canvas_boardNew;
+
+  /// No description provided for @infinite_canvas_boardRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get infinite_canvas_boardRename;
+
+  /// No description provided for @infinite_canvas_boardDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete canvas'**
+  String get infinite_canvas_boardDelete;
+
+  /// No description provided for @infinite_canvas_boardDeleteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Removes every node and link on this canvas. The images themselves are untouched.'**
+  String get infinite_canvas_boardDeleteHint;
+
+  /// No description provided for @infinite_canvas_boardUntitled.
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled canvas'**
+  String get infinite_canvas_boardUntitled;
+
+  /// No description provided for @infinite_canvas_boardNamePrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Canvas'**
+  String get infinite_canvas_boardNamePrefix;
+
+  /// No description provided for @infinite_canvas_boardNodeCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 node} other{{count} nodes}}'**
+  String infinite_canvas_boardNodeCount(int count);
 }
 
 class _AppLocalizationsDelegate

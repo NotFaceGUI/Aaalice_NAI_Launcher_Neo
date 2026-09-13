@@ -14847,4 +14847,236 @@ class AppLocalizationsJa extends AppLocalizations {
 
     return 'メンバーシップ有効期限：$dateString';
   }
+
+  @override
+  String get infinite_canvas_title => '無限キャンバス';
+
+  @override
+  String get infinite_canvas_open => '無限キャンバスを開く';
+
+  @override
+  String get infinite_canvas_close => '無限キャンバスを閉じる';
+
+  @override
+  String get infinite_canvas_emptyTitle => 'キャンバスはまだ空です';
+
+  @override
+  String get infinite_canvas_emptyHint =>
+      '生成した画像は自動でここに並びます。シードの横のピンでタスクとして残すこともできます。';
+
+  @override
+  String get infinite_canvas_zoomIn => '拡大';
+
+  @override
+  String get infinite_canvas_zoomOut => '縮小';
+
+  @override
+  String get infinite_canvas_zoomReset => '実際のサイズに戻す';
+
+  @override
+  String get infinite_canvas_fitContent => '全体を表示';
+
+  @override
+  String get infinite_canvas_newNote => '付箋を作成';
+
+  @override
+  String get infinite_canvas_addFromLibrary => 'ライブラリから追加';
+
+  @override
+  String get infinite_canvas_linkMode => '接続モード';
+
+  @override
+  String get infinite_canvas_linkModeHint => '2つのノードを順にクリックすると接続できます';
+
+  @override
+  String get infinite_canvas_autoImport => '新しい結果を自動追加';
+
+  @override
+  String get infinite_canvas_autoImportHint =>
+      'キャンバスを開いている間、生成完了した結果が自動でノードになります';
+
+  @override
+  String get infinite_canvas_nodeImage => '画像';
+
+  @override
+  String get infinite_canvas_nodeSeedTodo => 'シードタスク';
+
+  @override
+  String get infinite_canvas_nodeNote => '付箋';
+
+  @override
+  String get infinite_canvas_nodeMissingImage => '画像が見つかりません';
+
+  @override
+  String get infinite_canvas_nodeMissingImageHint => '元のファイルが移動または削除されました';
+
+  @override
+  String get infinite_canvas_notePlaceholder => 'メモを入力…';
+
+  @override
+  String get infinite_canvas_infoSeed => 'シード';
+
+  @override
+  String get infinite_canvas_infoSize => 'サイズ';
+
+  @override
+  String get infinite_canvas_infoModel => 'モデル';
+
+  @override
+  String get infinite_canvas_infoSampler => 'サンプラー';
+
+  @override
+  String get infinite_canvas_infoCreated => '作成日時';
+
+  @override
+  String get infinite_canvas_infoPrompt => 'プロンプト';
+
+  @override
+  String get infinite_canvas_todoPending => '未生成';
+
+  @override
+  String get infinite_canvas_todoDone => '完了';
+
+  @override
+  String get infinite_canvas_todoMarkDone => '完了にする';
+
+  @override
+  String get infinite_canvas_todoMarkPending => '未完了に戻す';
+
+  @override
+  String get infinite_canvas_todoLoadParams => 'パラメータを読み込む';
+
+  @override
+  String get infinite_canvas_todoLoadParamsHint => 'このタスクのシードとプロンプトを生成ページに戻します';
+
+  @override
+  String get infinite_canvas_addImage => 'キャンバスに追加';
+
+  @override
+  String get infinite_canvas_addedToCanvas => 'キャンバスに追加しました';
+
+  @override
+  String get infinite_canvas_addedAndSaved => '画像をライブラリに保存してキャンバスに追加しました';
+
+  @override
+  String get infinite_canvas_addOutsideRoot => '画像がギャラリーフォルダ外のため追加できません';
+
+  @override
+  String get infinite_canvas_addFailed => 'キャンバスへの追加に失敗しました';
+
+  @override
+  String get infinite_canvas_pinSeed => '現在のシードをキャンバスに固定';
+
+  @override
+  String get infinite_canvas_pinSeedNeedsValue => '先にシードを指定してください';
+
+  @override
+  String get infinite_canvas_seedPinned => 'シードをキャンバスに固定しました';
+
+  @override
+  String get infinite_canvas_paramsLoaded => 'パラメータを生成ページに読み込みました';
+
+  @override
+  String get infinite_canvas_linkLabel => '接続のラベル';
+
+  @override
+  String get infinite_canvas_linkLabelPlaceholder => 'この接続にラベルを付ける';
+
+  @override
+  String get infinite_canvas_linkEditLabel => 'ラベルを編集';
+
+  @override
+  String get infinite_canvas_linkClearLabel => 'ラベルを消去';
+
+  @override
+  String get infinite_canvas_linkRemove => '接続を削除';
+
+  @override
+  String get infinite_canvas_pickerTitle => 'ライブラリからキャンバスに追加';
+
+  @override
+  String get infinite_canvas_pickerEmpty => 'ローカルライブラリに画像がありません';
+
+  @override
+  String get infinite_canvas_nodeBringToFront => '最前面へ移動';
+
+  @override
+  String get infinite_canvas_nodeRemove => 'キャンバスから削除';
+
+  @override
+  String get infinite_canvas_noteEdit => '内容を編集';
+
+  @override
+  String get infinite_canvas_linkStart => 'ここからドラッグして接続';
+
+  @override
+  String get infinite_canvas_resize => 'ドラッグでサイズ変更';
+
+  @override
+  String get infinite_canvas_infoSteps => 'ステップ';
+
+  @override
+  String get infinite_canvas_viewPrompt => 'プロンプトを表示';
+
+  @override
+  String get infinite_canvas_addCurrentImage => '現在の画像をキャンバスに追加';
+
+  @override
+  String get infinite_canvas_clearCanvas => 'キャンバスを空にする';
+
+  @override
+  String get infinite_canvas_clearCanvasHint =>
+      'キャンバス上のノードと接続をすべて削除します。画像自体は残ります。';
+
+  @override
+  String get infinite_canvas_clearCanvasDone => 'キャンバスを空にしました';
+
+  @override
+  String get infinite_canvas_infoNegativePrompt => 'ネガティブプロンプト';
+
+  @override
+  String get infinite_canvas_infoCfg => 'CFG スケール';
+
+  @override
+  String get infinite_canvas_paramsEmpty => 'このノードに読み込めるパラメータがありません';
+
+  @override
+  String get infinite_canvas_paramsSelectAll => 'すべて選択';
+
+  @override
+  String get infinite_canvas_noteMarkdownHint =>
+      'Markdown 対応。付箋をダブルクリックで編集できます';
+
+  @override
+  String get infinite_canvas_generating => '生成中';
+
+  @override
+  String get infinite_canvas_generatingHint => '完了するとキャンバスに配置されます';
+
+  @override
+  String get infinite_canvas_boards => 'キャンバス一覧';
+
+  @override
+  String get infinite_canvas_boardNew => 'キャンバスを作成';
+
+  @override
+  String get infinite_canvas_boardRename => '名前を変更';
+
+  @override
+  String get infinite_canvas_boardDelete => 'キャンバスを削除';
+
+  @override
+  String get infinite_canvas_boardDeleteHint =>
+      'このキャンバス上のノードと接続をすべて削除します。画像自体は残ります。';
+
+  @override
+  String get infinite_canvas_boardUntitled => '無題のキャンバス';
+
+  @override
+  String get infinite_canvas_boardNamePrefix => 'キャンバス';
+
+  @override
+  String infinite_canvas_boardNodeCount(int count) {
+    return '$count ノード';
+  }
 }

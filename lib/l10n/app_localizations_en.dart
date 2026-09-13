@@ -15255,4 +15255,251 @@ class AppLocalizationsEn extends AppLocalizations {
 
     return 'Subscription expiry: $dateString';
   }
+
+  @override
+  String get infinite_canvas_title => 'Infinite Canvas';
+
+  @override
+  String get infinite_canvas_open => 'Open infinite canvas';
+
+  @override
+  String get infinite_canvas_close => 'Leave infinite canvas';
+
+  @override
+  String get infinite_canvas_emptyTitle => 'The canvas is empty';
+
+  @override
+  String get infinite_canvas_emptyHint =>
+      'Finished generations land here automatically. You can also pin the current seed as a to-do.';
+
+  @override
+  String get infinite_canvas_zoomIn => 'Zoom in';
+
+  @override
+  String get infinite_canvas_zoomOut => 'Zoom out';
+
+  @override
+  String get infinite_canvas_zoomReset => 'Reset to actual size';
+
+  @override
+  String get infinite_canvas_fitContent => 'Fit all content';
+
+  @override
+  String get infinite_canvas_newNote => 'New note';
+
+  @override
+  String get infinite_canvas_addFromLibrary => 'Add from library';
+
+  @override
+  String get infinite_canvas_linkMode => 'Link mode';
+
+  @override
+  String get infinite_canvas_linkModeHint =>
+      'Click two nodes in order to connect them';
+
+  @override
+  String get infinite_canvas_autoImport => 'Add new results automatically';
+
+  @override
+  String get infinite_canvas_autoImportHint =>
+      'While the canvas is open, finished generations become canvas nodes';
+
+  @override
+  String get infinite_canvas_nodeImage => 'Image';
+
+  @override
+  String get infinite_canvas_nodeSeedTodo => 'Seed to-do';
+
+  @override
+  String get infinite_canvas_nodeNote => 'Note';
+
+  @override
+  String get infinite_canvas_nodeMissingImage => 'Image missing';
+
+  @override
+  String get infinite_canvas_nodeMissingImageHint =>
+      'The original file was moved or deleted';
+
+  @override
+  String get infinite_canvas_notePlaceholder => 'Write something…';
+
+  @override
+  String get infinite_canvas_infoSeed => 'Seed';
+
+  @override
+  String get infinite_canvas_infoSize => 'Size';
+
+  @override
+  String get infinite_canvas_infoModel => 'Model';
+
+  @override
+  String get infinite_canvas_infoSampler => 'Sampler';
+
+  @override
+  String get infinite_canvas_infoCreated => 'Created';
+
+  @override
+  String get infinite_canvas_infoPrompt => 'Prompt';
+
+  @override
+  String get infinite_canvas_todoPending => 'Pending';
+
+  @override
+  String get infinite_canvas_todoDone => 'Done';
+
+  @override
+  String get infinite_canvas_todoMarkDone => 'Mark as done';
+
+  @override
+  String get infinite_canvas_todoMarkPending => 'Mark as not done';
+
+  @override
+  String get infinite_canvas_todoLoadParams => 'Load parameters';
+
+  @override
+  String get infinite_canvas_todoLoadParamsHint =>
+      'Load this to-do seed and prompt back into the generation page';
+
+  @override
+  String get infinite_canvas_addImage => 'Add to canvas';
+
+  @override
+  String get infinite_canvas_addedToCanvas => 'Added to canvas';
+
+  @override
+  String get infinite_canvas_addedAndSaved =>
+      'Image saved to the library and added to canvas';
+
+  @override
+  String get infinite_canvas_addOutsideRoot =>
+      'The image is outside the gallery folder and cannot be added';
+
+  @override
+  String get infinite_canvas_addFailed => 'Failed to add to canvas';
+
+  @override
+  String get infinite_canvas_pinSeed => 'Pin the current seed to the canvas';
+
+  @override
+  String get infinite_canvas_pinSeedNeedsValue => 'Set a seed before pinning';
+
+  @override
+  String get infinite_canvas_seedPinned => 'Seed pinned to the canvas';
+
+  @override
+  String get infinite_canvas_paramsLoaded =>
+      'Parameters loaded into the generation page';
+
+  @override
+  String get infinite_canvas_linkLabel => 'Link label';
+
+  @override
+  String get infinite_canvas_linkLabelPlaceholder => 'Label this link';
+
+  @override
+  String get infinite_canvas_linkEditLabel => 'Edit label';
+
+  @override
+  String get infinite_canvas_linkClearLabel => 'Clear label';
+
+  @override
+  String get infinite_canvas_linkRemove => 'Delete link';
+
+  @override
+  String get infinite_canvas_pickerTitle => 'Add from library to canvas';
+
+  @override
+  String get infinite_canvas_pickerEmpty =>
+      'The local library has no images yet';
+
+  @override
+  String get infinite_canvas_nodeBringToFront => 'Bring to front';
+
+  @override
+  String get infinite_canvas_nodeRemove => 'Remove from canvas';
+
+  @override
+  String get infinite_canvas_noteEdit => 'Edit note';
+
+  @override
+  String get infinite_canvas_linkStart => 'Drag from here to connect';
+
+  @override
+  String get infinite_canvas_resize => 'Drag to resize';
+
+  @override
+  String get infinite_canvas_infoSteps => 'Steps';
+
+  @override
+  String get infinite_canvas_viewPrompt => 'View prompt';
+
+  @override
+  String get infinite_canvas_addCurrentImage => 'Add current image to canvas';
+
+  @override
+  String get infinite_canvas_clearCanvas => 'Clear canvas';
+
+  @override
+  String get infinite_canvas_clearCanvasHint =>
+      'Removes every node and link from the canvas. The images themselves are untouched.';
+
+  @override
+  String get infinite_canvas_clearCanvasDone => 'Canvas cleared';
+
+  @override
+  String get infinite_canvas_infoNegativePrompt => 'Negative prompt';
+
+  @override
+  String get infinite_canvas_infoCfg => 'CFG scale';
+
+  @override
+  String get infinite_canvas_paramsEmpty =>
+      'This node has no parameters to load';
+
+  @override
+  String get infinite_canvas_paramsSelectAll => 'Select all';
+
+  @override
+  String get infinite_canvas_noteMarkdownHint =>
+      'Markdown supported. Double-click the note to edit.';
+
+  @override
+  String get infinite_canvas_generating => 'Generating';
+
+  @override
+  String get infinite_canvas_generatingHint =>
+      'Results land on the canvas when ready';
+
+  @override
+  String get infinite_canvas_boards => 'Canvases';
+
+  @override
+  String get infinite_canvas_boardNew => 'New canvas';
+
+  @override
+  String get infinite_canvas_boardRename => 'Rename';
+
+  @override
+  String get infinite_canvas_boardDelete => 'Delete canvas';
+
+  @override
+  String get infinite_canvas_boardDeleteHint =>
+      'Removes every node and link on this canvas. The images themselves are untouched.';
+
+  @override
+  String get infinite_canvas_boardUntitled => 'Untitled canvas';
+
+  @override
+  String get infinite_canvas_boardNamePrefix => 'Canvas';
+
+  @override
+  String infinite_canvas_boardNodeCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count nodes',
+      one: '1 node',
+    );
+    return '$_temp0';
+  }
 }

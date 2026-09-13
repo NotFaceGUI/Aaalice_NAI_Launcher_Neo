@@ -80,6 +80,11 @@ class StorageKeys {
 
   // Device-local editor preferences; intentionally absent from cloud sync.
   static const String promptTagMode = 'prompt_tag_mode';
+  // Infinite canvas viewport and toggles describe this screen, not the artwork;
+  // the canvas document itself lives in the gallery root sidecar.
+  static const String infiniteCanvasViewport = 'infinite_canvas_viewport_v1';
+  static const String infiniteCanvasAutoImport = 'infinite_canvas_auto_import';
+  static const String infiniteCanvasOpen = 'infinite_canvas_open';
   // Mouse interaction preference stays local to the device's input setup.
   static const String imageComparisonFollowMouse =
       'image_comparison_follow_mouse';

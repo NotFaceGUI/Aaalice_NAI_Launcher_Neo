@@ -7,7 +7,7 @@ import '../../widgets/common/keyboard_dismiss_region.dart';
 import 'mobile_generation_controller.dart';
 import 'mobile_generation_gestures.dart';
 import 'mobile_generation_view_data.dart';
-import 'widgets/image_preview.dart';
+import 'widgets/generation_center_workspace.dart';
 import 'widgets/prompt_input.dart';
 import 'widgets/prompt_input_controller.dart';
 
@@ -88,7 +88,7 @@ class _MobileGenerationWorkspaceState extends State<MobileGenerationWorkspace> {
                           children: [
                             const Expanded(
                               flex: 6,
-                              child: ImagePreviewWidget(),
+                              child: GenerationCenterWorkspace(),
                             ),
                             VerticalDivider(
                               width: 1,
@@ -136,7 +136,7 @@ class _MobileGenerationWorkspaceState extends State<MobileGenerationWorkspace> {
                               ),
                             ),
                           ),
-                          const Expanded(child: ImagePreviewWidget()),
+                          const Expanded(child: GenerationCenterWorkspace()),
                           if (data.generationState.isGenerating)
                             MobileGenerationProgress(
                               progress: data.generationState.progress,

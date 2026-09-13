@@ -14,12 +14,17 @@ import '../../../core/utils/image_save_utils.dart';
 import '../../../core/utils/image_share_sanitizer.dart';
 import '../../../core/utils/localization_extension.dart';
 import '../../../core/watermark/watermark_derivative_registry.dart';
+import '../../../data/models/canvas/canvas_node.dart';
+import '../../../data/models/canvas/canvas_node_params.dart';
+import '../../../data/models/gallery/nai_image_metadata.dart';
 import '../../../data/repositories/gallery_folder_repository.dart';
+import '../../../data/services/image_metadata_service.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../providers/mosaic_settings_provider.dart';
 import '../../providers/share_image_settings_provider.dart';
 import '../../providers/copy_drag_watermark_provider.dart';
 import '../../providers/watermark_settings_provider.dart';
+import '../../screens/generation/canvas/canvas_actions.dart';
 import '../../screens/mosaic/mosaic_editor_launcher.dart';
 import '../../screens/dlss/dlss_enhancement_panel.dart';
 import '../../screens/dlss/dlss_error_view.dart';
@@ -56,6 +61,14 @@ class ImageCardActionScope extends InheritedWidget {
 
 class ImageCardActionCatalog {
   const ImageCardActionCatalog._();
+
+  /// 有内嵌元数据或磁盘路径的卡片才能加入画布
+  static bool _hasCanvasSource(ImageCardViewData data) {
+    final bytes = data.imageBytes;
+    if (bytes != null && bytes.isNotEmpty) return true;
+    final path = data.sourceFilePath;
+    return path != null && path.isNotEmpty;
+  }
 
   static List<ImageCardAction> build({
     required BuildContext context,
@@ -134,6 +147,14 @@ class ImageCardActionCatalog {
       l10n.agentChat_addResource,
       onAddToAgent,
     );
+    if (_hasCanvasSource(data)) {
+      add(
+        ImageCardActionId.addToCanvas,
+        Icons.auto_awesome_motion_outlined,
+        l10n.infinite_canvas_addImage,
+        coordinator.addToCanvas,
+      );
+    }
     add(
       ImageCardActionId.shareDiscord,
       Icons.send_rounded,
@@ -284,6 +305,49 @@ class ImageCardActionCoordinator {
 
   ImageCardViewData get _data => controller.data;
   ImageCardCapabilities get _capabilities => controller.capabilities;
+
+  /// 把这张图加入无限画布。
+  ///
+  /// 已经在图库里的直接引用；尚未落盘的先保存一次，再以图库相对路径引用，
+  /// 画布只保存路径而不复制图片字节。图内自带的 NovelAI 元数据会一并存成
+  /// 节点参数快照，便于之后把提示词与种子载回生成页。
+  Future<void> addToCanvas() async {
+    final path = _data.sourceFilePath;
+    final hasPath = path != null && path.isNotEmpty;
+    final sourceBytes = _data.imageBytes;
+
+    CanvasNodeParams? params;
+    NaiImageMetadata? metadata;
+    int? seed;
+    if (sourceBytes != null && sourceBytes.isNotEmpty) {
+      try {
+        metadata = await ImageMetadataService().getMetadataFromBytes(
+          sourceBytes,
+        );
+        if (metadata != null) {
+          seed = metadata.seed;
+          params = CanvasNodeParams.fromImageMetadata(metadata);
+        }
+      } catch (_) {
+        // 元数据解析失败不影响加入画布，节点仍带着图片
+      }
+    }
+
+    if (!context.mounted) return;
+    await addImageToCanvas(
+      context: context,
+      ref: ref,
+      filePath: hasPath ? path : null,
+      bytes: hasPath ? null : sourceBytes,
+      seed: seed,
+      params: params,
+      // 卡片自带的宽高可能缺失，元数据里的像素尺寸最可靠
+      aspectRatio: CanvasNode.resolveAspectRatio(
+        width: metadata?.width ?? _data.imageWidth,
+        height: metadata?.height ?? _data.imageHeight,
+      ),
+    );
+  }
 
   Future<void> openDlss() async {
     try {

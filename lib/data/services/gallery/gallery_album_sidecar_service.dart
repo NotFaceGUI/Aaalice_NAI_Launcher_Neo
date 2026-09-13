@@ -5,6 +5,7 @@ import 'package:path/path.dart' as p;
 
 import '../../../core/utils/app_logger.dart';
 import '../../models/gallery/gallery_album.dart';
+import 'gallery_path_utils.dart';
 
 /// 相簿 sidecar 的一次完整快照
 ///
@@ -104,31 +105,14 @@ class GalleryAlbumSidecarService {
   }
 
   /// 绝对路径 -> 相对图库根目录的 '/' 分隔路径；不在根目录下时返回 null
-  static String? toRelativePath(String rootPath, String absolutePath) {
-    final normalizedRoot = p.normalize(rootPath);
-    final normalized = p.normalize(absolutePath);
-    if (!p.isWithin(normalizedRoot, normalized)) return null;
-    return p.relative(normalized, from: normalizedRoot).replaceAll('\\', '/');
-  }
+  static String? toRelativePath(String rootPath, String absolutePath) =>
+      toGalleryRelativePath(rootPath, absolutePath);
 
   /// 相对路径 -> 绝对路径
-  static String toAbsolutePath(String rootPath, String relativePath) {
-    return p.joinAll([p.normalize(rootPath), ...relativePath.split('/')]);
-  }
+  static String toAbsolutePath(String rootPath, String relativePath) =>
+      toGalleryAbsolutePath(rootPath, relativePath);
 
   /// 校验成员/封面引用是否为图库根目录内的规范化相对路径。
-  ///
-  /// 拒绝绝对路径（POSIX 前导 / 或 Windows 盘符）、反斜杠与 .. 上跳段，
-  /// 防止越界引用或设备绝对路径（含盘符、用户名）进入 sidecar 与云同步。
-  static bool isValidRelativeMemberPath(String path) {
-    if (path.isEmpty || path.length > 1024) return false;
-    if (path.contains('\\')) return false;
-    if (path.startsWith('/')) return false;
-    if (RegExp(r'^[A-Za-z]:').hasMatch(path)) return false;
-    final segments = path.split('/');
-    for (final segment in segments) {
-      if (segment.isEmpty || segment == '.' || segment == '..') return false;
-    }
-    return true;
-  }
+  static bool isValidRelativeMemberPath(String path) =>
+      isValidGalleryRelativePath(path);
 }

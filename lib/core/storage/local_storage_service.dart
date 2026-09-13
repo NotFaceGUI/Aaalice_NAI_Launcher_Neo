@@ -1117,6 +1117,62 @@ class LocalStorageService {
   Future<void> setIncludePrereleaseUpdates(bool value) async {
     await setSetting(StorageKeys.includePrereleaseUpdates, value);
   }
+
+  // ==================== 无限画布（设备专属，不参与云同步） ====================
+
+  /// 无限画布视口：画布空间偏移与缩放。
+  ///
+  /// 视口描述"这台设备上次看到哪里"，属于设备状态而非画布内容，
+  /// 因此只存本地设置，不进入画布 sidecar 与云同步。
+  ({double offsetX, double offsetY, double scale})?
+  getInfiniteCanvasViewport() {
+    final raw = getSetting<List>(StorageKeys.infiniteCanvasViewport);
+    if (raw == null || raw.length != 3) return null;
+    final values = <double>[];
+    for (final value in raw) {
+      if (value is! num) return null;
+      final number = value.toDouble();
+      if (!number.isFinite) return null;
+      values.add(number);
+    }
+    return (offsetX: values[0], offsetY: values[1], scale: values[2]);
+  }
+
+  Future<void> setInfiniteCanvasViewport({
+    required double offsetX,
+    required double offsetY,
+    required double scale,
+  }) async {
+    await setSetting<List<double>>(StorageKeys.infiniteCanvasViewport, [
+      offsetX,
+      offsetY,
+      scale,
+    ]);
+  }
+
+  /// 画布打开时，生成完成的结果是否自动成为画布节点
+  bool getInfiniteCanvasAutoImport() =>
+      getSetting<bool>(
+        StorageKeys.infiniteCanvasAutoImport,
+        defaultValue: true,
+      ) ??
+      true;
+
+  Future<void> setInfiniteCanvasAutoImport(bool value) async {
+    await setSetting(StorageKeys.infiniteCanvasAutoImport, value);
+  }
+
+  /// 无限画布是否处于打开状态（重启后恢复上次的工作视图）
+  bool getInfiniteCanvasOpen() =>
+      getSetting<bool>(
+        StorageKeys.infiniteCanvasOpen,
+        defaultValue: false,
+      ) ??
+      false;
+
+  Future<void> setInfiniteCanvasOpen(bool value) async {
+    await setSetting(StorageKeys.infiniteCanvasOpen, value);
+  }
 }
 
 /// LocalStorageService Provider

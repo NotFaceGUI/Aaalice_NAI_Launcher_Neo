@@ -10,6 +10,7 @@ enum ImageCardActionId {
   viewDetail,
   save,
   copy,
+  addToCanvas,
   copyPrompt,
   copyPath,
   copySeed,

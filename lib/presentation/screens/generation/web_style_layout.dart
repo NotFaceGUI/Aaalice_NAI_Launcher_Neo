@@ -23,7 +23,7 @@ import '../../widgets/shortcuts/shortcut_aware_widget.dart';
 import 'handlers/generation_action_handlers.dart';
 import 'widgets/fixed_tags_sidebar_slot.dart';
 import 'widgets/generation_workspace_row.dart';
-import 'widgets/image_preview.dart';
+import 'widgets/generation_center_workspace.dart';
 import 'widgets/prompt_input_controller.dart';
 import 'widgets/resize_handle.dart';
 import 'widgets/right_panel.dart';
@@ -166,7 +166,7 @@ class _WebStyleGenerationLayoutState
               },
             ),
         ],
-        main: const ImagePreviewWidget(),
+        main: const GenerationCenterWorkspace(),
         rightPanelExpanded: layoutState.rightPanelExpanded,
         preferredRightPanelWidth: layoutState.rightPanelWidth,
         rightHandle: ResizeHandle(

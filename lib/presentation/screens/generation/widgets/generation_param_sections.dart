@@ -12,6 +12,7 @@ import '../../../widgets/common/themed_dropdown.dart';
 import '../../../widgets/common/model_family_icon.dart';
 import '../../../widgets/common/themed_input.dart';
 import '../../../widgets/common/themed_slider.dart';
+import '../canvas/canvas_actions.dart';
 import 'generation_toggle_button.dart';
 import 'size_selector.dart';
 
@@ -563,6 +564,23 @@ class _SeedSectionState extends ConsumerState<SeedSection> {
                         .isSeedLocked
                     ? theme.colorScheme.primary.withValues(alpha: 0.15)
                     : Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+            // 固定到画布：把当前种子留成画布上的待办节点。
+            // 随机种子（-1）没有可固定的值，禁用并说明原因。
+            IconButton(
+              icon: const Icon(Icons.push_pin_outlined, size: 20),
+              onPressed: seed >= 0
+                  ? () => pinCurrentSeedToCanvas(context: context, ref: ref)
+                  : null,
+              tooltip: seed >= 0
+                  ? context.l10n.infinite_canvas_pinSeed
+                  : context.l10n.infinite_canvas_pinSeedNeedsValue,
+              style: IconButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
