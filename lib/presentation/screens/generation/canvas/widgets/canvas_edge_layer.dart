@@ -175,11 +175,18 @@ class CanvasEdgePainter extends CustomPainter {
 
     final label = geometry.edge.label;
     if (label != null && label.isNotEmpty && progress >= 1) {
-      _paintLabel(
-        canvas,
-        CanvasEdgeMath.labelAnchor(start, end, horizontal: route.horizontal),
-        label,
+      // 标签与中点箭头同处一段，按曲线法线让开，避免压在一起
+      final arrow = CanvasEdgeMath.midArrow(
+        start,
+        end,
+        horizontal: route.horizontal,
       );
+      final normal = Offset(-arrow.direction.dy, arrow.direction.dx);
+      final clearance =
+          (baseArrowSize * scale).clamp(5.0, 20.0) * 0.5 +
+          (12 * scale).clamp(8.0, 40.0) +
+          4 * scale;
+      _paintLabel(canvas, arrow.position + normal * clearance, label);
     }
   }
 
@@ -215,16 +222,17 @@ class CanvasEdgePainter extends CustomPainter {
     double strokeWidth,
   ) {
     final size = (baseArrowSize * scale).clamp(5.0, 20.0);
-    // 沿曲线末端切线而不是两点连线：曲线中段转弯时两者方向不同
-    final direction = CanvasEdgeMath.endTangent(
+    // 画在线段中点并取该处切线方向：曲线中段往往已经转向，
+    // 用中点切线才能让箭头符合这一段实际的走向
+    final arrow = CanvasEdgeMath.midArrow(
       start,
       end,
       horizontal: route.horizontal,
     );
+    final direction = arrow.direction;
     if (direction == Offset.zero) return;
     final normal = Offset(-direction.dy, direction.dx);
-    // 尖端回退半个线宽，避免压住节点描边
-    final tip = end - direction * strokeWidth;
+    final tip = arrow.position + direction * (size * 0.5);
     final base = tip - direction * size;
     final path = Path()
       ..moveTo(tip.dx, tip.dy)

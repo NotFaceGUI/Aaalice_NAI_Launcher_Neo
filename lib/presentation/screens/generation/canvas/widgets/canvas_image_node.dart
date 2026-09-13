@@ -8,8 +8,10 @@ import '../../../../../core/utils/localization_extension.dart';
 import '../../../../../data/models/canvas/canvas_node.dart';
 import '../../../../../data/models/canvas/canvas_node_params.dart';
 import '../../../../providers/canvas/canvas_node_metadata_provider.dart';
+import '../../../../providers/preview_transparency_provider.dart';
 import '../../../../widgets/common/delayed_rich_tooltip.dart';
 import '../../../../widgets/common/rich_tooltip_surface.dart';
+import '../../../../widgets/common/transparency_background.dart';
 import 'canvas_node_info_panel.dart';
 
 /// 图片节点内容：缩略图、缺失占位与信息浮层。
@@ -140,6 +142,10 @@ class _CanvasImageNodeState extends ConsumerState<CanvasImageNode> {
     return Stack(
       fit: StackFit.expand,
       children: [
+        // 透明像素透出与预览相同的底色：直接共用预览区的透明背景开关
+        TransparencyBackgroundLayer(
+          style: ref.watch(previewTransparencyNotifierProvider),
+        ),
         if (prompt.isEmpty)
           image
         else

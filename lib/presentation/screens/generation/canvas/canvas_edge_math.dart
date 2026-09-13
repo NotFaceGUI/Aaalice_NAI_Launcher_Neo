@@ -111,10 +111,33 @@ class CanvasEdgeMath {
     return tangent?.position ?? Offset.lerp(start, end, 0.5)!;
   }
 
-  /// 末端切线方向（单位向量）。
+  /// 曲线中点处的箭头位置与方向。
   ///
-  /// 用曲线自身的走向而不是两点连线：直线弦方向与曲线末端切线不一致时，
-  /// 箭头会指向错误的方向。
+  /// 箭头画在线段中间并按该处切线取向，而不是贴在终点：终点方向容易和节点
+  /// 边界混在一起，中段又常常已经转向，用中点切线才能让箭头指向"这一段的走向"。
+  static ({Offset position, Offset direction}) midArrow(
+    Offset start,
+    Offset end, {
+    bool? horizontal,
+  }) {
+    final metric = path(
+      start,
+      end,
+      horizontal: horizontal,
+    ).computeMetrics().first;
+    final tangent = metric.getTangentForOffset(metric.length / 2);
+    if (tangent == null || tangent.vector == Offset.zero) {
+      final delta = end - start;
+      final length = delta.distance;
+      return (
+        position: Offset.lerp(start, end, 0.5)!,
+        direction: length == 0 ? Offset.zero : delta / length,
+      );
+    }
+    return (position: tangent.position, direction: tangent.vector);
+  }
+
+  /// 末端切线方向（单位向量）。
   static Offset endTangent(Offset start, Offset end, {bool? horizontal}) {
     final delta = end - start;
     final useHorizontal = horizontal ?? delta.dx.abs() >= delta.dy.abs();
