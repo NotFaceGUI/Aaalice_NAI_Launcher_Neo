@@ -1,9 +1,9 @@
 name: Online gallery live source contract
 
 on:
+  # No schedule: aitag.win sits behind Cloudflare and answers 403 to GitHub Actions
+  # runner IPs, so the weekly run failed every time. Trigger this manually instead.
   workflow_dispatch:
-  schedule:
-    - cron: '30 2 * * 1'
 
 permissions:
   contents: read
