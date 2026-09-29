@@ -15011,6 +15011,26 @@ class AppLocalizationsZh extends AppLocalizations {
   String get storyboard_exportFailed => '导出失败';
 
   @override
+  String get storyboard_exportPsd => '导出 PSD（分层）';
+
+  @override
+  String get storyboard_exportPsdLayerBackground => '背景';
+
+  @override
+  String get storyboard_exportPsdLayerMask => '遮罩';
+
+  @override
+  String get storyboard_exportPsdLayerImage => '原图';
+
+  @override
+  String get storyboard_exportPsdTooLarge =>
+      '导出 PSD 失败：文件超过 512 MiB，请减少分镜数量或页面尺寸。';
+
+  @override
+  String get storyboard_exportPsdCanvasTooLarge =>
+      '导出 PSD 失败：页面边长超过 30000 像素上限。';
+
+  @override
   String get storyboard_preview => '预览';
 
   @override
@@ -30136,6 +30156,26 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get storyboard_exportFailed => '匯出失敗';
+
+  @override
+  String get storyboard_exportPsd => '匯出 PSD（分層）';
+
+  @override
+  String get storyboard_exportPsdLayerBackground => '背景';
+
+  @override
+  String get storyboard_exportPsdLayerMask => '遮罩';
+
+  @override
+  String get storyboard_exportPsdLayerImage => '原圖';
+
+  @override
+  String get storyboard_exportPsdTooLarge =>
+      '匯出 PSD 失敗：檔案超過 512 MiB，請減少分鏡數量或頁面尺寸。';
+
+  @override
+  String get storyboard_exportPsdCanvasTooLarge =>
+      '匯出 PSD 失敗：頁面邊長超過 30000 像素上限。';
 
   @override
   String get storyboard_preview => '預覽';

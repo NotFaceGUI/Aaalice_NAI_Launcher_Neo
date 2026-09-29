@@ -4,12 +4,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/platform/platform_capabilities.dart';
 import '../../../../core/utils/app_logger.dart';
 import '../../../../core/utils/image_save_utils.dart';
 import '../../../../core/utils/localization_extension.dart';
 import '../../../../data/models/storyboard/storyboard_page.dart';
 import '../../../../data/models/storyboard/storyboard_panel.dart';
 import '../../../../data/services/storyboard/storyboard_page_exporter.dart';
+import '../../../../data/services/storyboard/storyboard_psd_exporter.dart';
 import '../../../adaptive/interaction_policy.dart';
 import '../../../providers/local_gallery_provider.dart';
 import '../../../providers/storyboard/storyboard_document_controller.dart';
@@ -25,6 +27,9 @@ import 'storyboard_page_settings_dialog.dart';
 /// 预设的统一间距：页边距与分镜间距都是 15px。
 const double kStoryboardPresetMargin = 15;
 const double kStoryboardPresetGutter = 15;
+
+/// 「导出」菜单里的动作；菜单项按平台增减，用枚举代替下标更不容易错位。
+enum _StoryboardExportAction { page, panel, psd }
 
 /// 画幅 + 版式的漫画分镜预设。
 ///
@@ -264,6 +269,48 @@ class StoryboardToolbar extends ConsumerWidget {
     }
   }
 
+  /// 导出分层 PSD：一个分镜页一个文件，背景与每个分镜各自成层。
+  ///
+  /// PSD 不是图库能显示的图片格式，因此只落盘，不进入图库即时列表。
+  Future<void> _exportPsd(
+    BuildContext context,
+    WidgetRef ref,
+    StoryboardPage page,
+    String galleryRoot,
+  ) async {
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    final doneText = context.l10n.storyboard_exportDone;
+    final failedText = context.l10n.storyboard_exportFailed;
+    final tooLargeText = context.l10n.storyboard_exportPsdTooLarge;
+    final canvasTooLargeText = context.l10n.storyboard_exportPsdCanvasTooLarge;
+    final labels = StoryboardPsdLabels(
+      background: context.l10n.storyboard_exportPsdLayerBackground,
+      maskSuffix: context.l10n.storyboard_exportPsdLayerMask,
+      imageSuffix: context.l10n.storyboard_exportPsdLayerImage,
+    );
+    try {
+      final bytes = await StoryboardPsdExporter.exportPage(
+        page: page,
+        galleryRoot: galleryRoot,
+        labels: labels,
+      );
+      await ImageSaveUtils.saveBytesToDatedPath(
+        rootPath: galleryRoot,
+        bytes: bytes,
+        preferredFileName: 'storyboard-page',
+        extension: 'psd',
+      );
+      messenger?.showSnackBar(SnackBar(content: Text(doneText)));
+    } on StoryboardPsdCanvasTooLargeException {
+      messenger?.showSnackBar(SnackBar(content: Text(canvasTooLargeText)));
+    } on StoryboardPsdTooLargeException {
+      messenger?.showSnackBar(SnackBar(content: Text(tooLargeText)));
+    } catch (error, stackTrace) {
+      AppLogger.e('导出分层 PSD 失败', error, stackTrace, 'StoryboardExport');
+      messenger?.showSnackBar(SnackBar(content: Text(failedText)));
+    }
+  }
+
   Future<void> _saveToGallery(
     WidgetRef ref,
     List<int> bytes,
@@ -390,7 +437,7 @@ class StoryboardToolbar extends ConsumerWidget {
               ],
             ),
             const ToolbarDivider(),
-            PopupMenuButton<int>(
+            PopupMenuButton<_StoryboardExportAction>(
               tooltip: context.l10n.storyboard_export,
               enabled: page != null && !generation.isRunning,
               icon: Icon(
@@ -401,7 +448,7 @@ class StoryboardToolbar extends ConsumerWidget {
                     : theme.colorScheme.onSurfaceVariant,
               ),
               color: overlaySurfaceColor(theme.colorScheme),
-              onSelected: (index) {
+              onSelected: (action) {
                 final target = page;
                 final root = galleryRoot;
                 if (target == null || generation.isRunning) return;
@@ -413,36 +460,48 @@ class StoryboardToolbar extends ConsumerWidget {
                   );
                   return;
                 }
-                if (index == 0) {
-                  unawaited(_exportPage(context, ref, target, root));
-                  return;
+                switch (action) {
+                  case _StoryboardExportAction.page:
+                    unawaited(_exportPage(context, ref, target, root));
+                  case _StoryboardExportAction.psd:
+                    unawaited(_exportPsd(context, ref, target, root));
+                  case _StoryboardExportAction.panel:
+                    final selected = selectedPanelId == null
+                        ? null
+                        : target.panelById(selectedPanelId);
+                    if (selected == null ||
+                        selected.selectedImage == null ||
+                        selected.selectedImage!.isEmpty) {
+                      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                        SnackBar(
+                          content: Text(context.l10n.storyboard_exportEmpty),
+                        ),
+                      );
+                      return;
+                    }
+                    unawaited(
+                      _exportPanel(context, ref, target, selected, root),
+                    );
                 }
-                final selected = selectedPanelId == null
-                    ? null
-                    : target.panelById(selectedPanelId);
-                if (selected == null ||
-                    selected.selectedImage == null ||
-                    selected.selectedImage!.isEmpty) {
-                  ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-                    SnackBar(
-                      content: Text(context.l10n.storyboard_exportEmpty),
-                    ),
-                  );
-                  return;
-                }
-                unawaited(_exportPanel(context, ref, target, selected, root));
               },
               itemBuilder: (context) => [
                 PopupMenuItem(
-                  value: 0,
+                  value: _StoryboardExportAction.page,
                   height: 40,
                   child: Text(context.l10n.storyboard_exportPage),
                 ),
                 PopupMenuItem(
-                  value: 1,
+                  value: _StoryboardExportAction.panel,
                   height: 40,
                   child: Text(context.l10n.storyboard_exportPanel),
                 ),
+                // PSD 需要在桌面端用 Photoshop / Krita 继续编辑，移动端不提供。
+                if (PlatformCapabilities.current.isDesktop)
+                  PopupMenuItem(
+                    value: _StoryboardExportAction.psd,
+                    height: 40,
+                    child: Text(context.l10n.storyboard_exportPsd),
+                  ),
               ],
             ),
             const ToolbarDivider(),

@@ -27379,6 +27379,42 @@ abstract class AppLocalizations {
   /// **'Export failed'**
   String get storyboard_exportFailed;
 
+  /// No description provided for @storyboard_exportPsd.
+  ///
+  /// In en, this message translates to:
+  /// **'Export layered PSD'**
+  String get storyboard_exportPsd;
+
+  /// No description provided for @storyboard_exportPsdLayerBackground.
+  ///
+  /// In en, this message translates to:
+  /// **'Background'**
+  String get storyboard_exportPsdLayerBackground;
+
+  /// No description provided for @storyboard_exportPsdLayerMask.
+  ///
+  /// In en, this message translates to:
+  /// **'Mask'**
+  String get storyboard_exportPsdLayerMask;
+
+  /// No description provided for @storyboard_exportPsdLayerImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get storyboard_exportPsdLayerImage;
+
+  /// No description provided for @storyboard_exportPsdTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'PSD export failed: the file would exceed 512 MiB. Reduce panels or the page size.'**
+  String get storyboard_exportPsdTooLarge;
+
+  /// No description provided for @storyboard_exportPsdCanvasTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'PSD export failed: the page side exceeds the 30000 px limit.'**
+  String get storyboard_exportPsdCanvasTooLarge;
+
   /// No description provided for @storyboard_preview.
   ///
   /// In en, this message translates to:

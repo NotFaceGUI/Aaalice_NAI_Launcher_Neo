@@ -1,14 +1,13 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'dart:ui' show Color, Offset, Rect, Size;
+import 'dart:ui' show Color, Rect, Size;
 
+import '../../../core/utils/storyboard/storyboard_fit_geometry.dart';
 import '../../../core/utils/storyboard/storyboard_geometry.dart';
-import '../../models/storyboard/storyboard_fit_mode.dart';
 import '../../models/storyboard/storyboard_page.dart';
 import '../../models/storyboard/storyboard_page_background.dart';
 import '../../models/storyboard/storyboard_panel.dart';
-import '../gallery/gallery_path_utils.dart';
+import 'storyboard_image_source.dart';
 
 /// 分镜页导出器：把整页（背景 + 全部分镜）或单个分镜合成为一张 PNG。
 ///
@@ -112,16 +111,18 @@ class StoryboardPageExporter {
       canvas.drawRect(rect, ui.Paint()..color = Color(background.colorArgb));
     }
     if (!background.hasImage) return;
-    final bytes = await _readImageBytes(galleryRoot, background.imagePath);
-    final image = bytes == null ? null : await _decode(bytes);
+    final image = await StoryboardImageSource.open(
+      galleryRoot: galleryRoot,
+      relativePath: background.imagePath,
+    );
     if (image == null) return;
     try {
-      final (src, dest) = _fitRects(
+      final (src, dest) = StoryboardFitGeometry.fitRects(
         imageSize: Size(image.width.toDouble(), image.height.toDouble()),
         dest: rect,
         fit: background.fit,
       );
-      canvas.drawImageRect(image, src, dest, _imagePaint());
+      canvas.drawImageRect(image, src, dest, imagePaint());
     } finally {
       image.dispose();
     }
@@ -133,8 +134,10 @@ class StoryboardPageExporter {
     String? galleryRoot,
   ) async {
     if (panel.selectedImage == null || panel.selectedImage!.isEmpty) return;
-    final bytes = await _readImageBytes(galleryRoot, panel.selectedImage);
-    final image = bytes == null ? null : await _decode(bytes);
+    final image = await StoryboardImageSource.open(
+      galleryRoot: galleryRoot,
+      relativePath: panel.selectedImage,
+    );
     if (image == null) return;
     try {
       final path = StoryboardGeometry.buildPanelPath(
@@ -144,89 +147,22 @@ class StoryboardPageExporter {
       );
       canvas.save();
       canvas.clipPath(path, doAntiAlias: true);
-      final (src, dest) = _fitRects(
+      final (src, dest) = StoryboardFitGeometry.fitRects(
         imageSize: Size(image.width.toDouble(), image.height.toDouble()),
         dest: panel.rect,
         fit: panel.fit,
       );
-      canvas.drawImageRect(image, src, dest, _imagePaint());
+      canvas.drawImageRect(image, src, dest, imagePaint());
       canvas.restore();
     } finally {
       image.dispose();
     }
   }
 
-  /// fit 语义与画布一致：cover 居中裁满（裁源图）、contain 完整放入、
-  /// stretch 拉伸。返回（源图裁切区, 目标区）。
-  static (Rect, Rect) _fitRects({
-    required Size imageSize,
-    required Rect dest,
-    required StoryboardFitMode fit,
-  }) {
-    final full = Rect.fromLTWH(
-      0,
-      0,
-      imageSize.width,
-      imageSize.height,
-    );
-    switch (fit) {
-      case StoryboardFitMode.stretch:
-        return (full, dest);
-      case StoryboardFitMode.contain:
-        final scale = (dest.width / imageSize.width).clamp(
-          0.0,
-          dest.height / imageSize.height,
-        );
-        final scaled = imageSize * scale;
-        final fitted = Offset(
-              dest.left + (dest.width - scaled.width) / 2,
-              dest.top + (dest.height - scaled.height) / 2,
-            ) &
-            scaled;
-        return (full, fitted);
-      case StoryboardFitMode.cover:
-        final destAspect = dest.width / dest.height;
-        var cropWidth = imageSize.width;
-        var cropHeight = cropWidth / destAspect;
-        if (cropHeight > imageSize.height) {
-          cropHeight = imageSize.height;
-          cropWidth = cropHeight * destAspect;
-        }
-        final src = Rect.fromCenter(
-          center: Offset(imageSize.width / 2, imageSize.height / 2),
-          width: cropWidth,
-          height: cropHeight,
-        );
-        return (src, dest);
-    }
-  }
-
   /// 绘制用画笔：`Paint()` 默认是最近邻插值（FilterQuality.none），成图缩放
-  /// 到分镜尺寸时会产生明显锯齿与摩尔纹；导出统一用高质量重采样。
-  static ui.Paint _imagePaint() => ui.Paint()
-    ..filterQuality = ui.FilterQuality.high;
-
-  static Future<Uint8List?> _readImageBytes(
-    String? galleryRoot,
-    String? relativePath,
-  ) async {
-    if (galleryRoot == null || galleryRoot.isEmpty) return null;
-    if (relativePath == null || relativePath.isEmpty) return null;
-    if (!isValidGalleryRelativePath(relativePath)) return null;
-    final file = File(toGalleryAbsolutePath(galleryRoot, relativePath));
-    if (!await file.exists()) return null;
-    return file.readAsBytes();
-  }
-
-  static Future<ui.Image?> _decode(Uint8List bytes) async {
-    final codec = await ui.instantiateImageCodec(bytes);
-    try {
-      final frame = await codec.getNextFrame();
-      return frame.image;
-    } finally {
-      codec.dispose();
-    }
-  }
+  /// 到分镜尺寸时会产生明显锯齿与摩尔纹；整页合成与分层导出共用高质量重采样。
+  static ui.Paint imagePaint() =>
+      ui.Paint()..filterQuality = ui.FilterQuality.high;
 }
 
 /// 用户取消导出；调用方据此静默结束，不当作错误提示。

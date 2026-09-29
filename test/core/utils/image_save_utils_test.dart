@@ -562,4 +562,39 @@ void main() {
     expect(await File(first).readAsBytes(), bytes);
     expect(await File(second).readAsBytes(), bytes);
   });
+
+  test('dated saves honor an explicit extension', () async {
+    final root = await Directory.systemTemp.createTemp('psd-image-save');
+    addTearDown(() => root.delete(recursive: true));
+    final bytes = Uint8List.fromList([0x38, 0x42, 0x50, 0x53]);
+    final now = DateTime(2026, 8, 31, 12, 30);
+
+    final layered = await ImageSaveUtils.saveBytesToDatedPath(
+      rootPath: root.path,
+      bytes: bytes,
+      preferredFileName: 'storyboard-page',
+      extension: 'psd',
+      now: now,
+    );
+    final conflict = await ImageSaveUtils.saveBytesToDatedPath(
+      rootPath: root.path,
+      bytes: bytes,
+      preferredFileName: 'storyboard-page',
+      extension: 'psd',
+      now: now,
+    );
+    // 扩展名里的分隔符与多点写法被清理掉，不会拼出第二段路径。
+    final sanitized = await ImageSaveUtils.saveBytesToDatedPath(
+      rootPath: root.path,
+      bytes: bytes,
+      preferredFileName: 'storyboard-page',
+      extension: '../psd',
+      now: now,
+    );
+
+    expect(p.basename(layered), 'storyboard-page.psd');
+    expect(p.basename(conflict), 'storyboard-page-2.psd');
+    expect(p.basename(sanitized), 'storyboard-page-3.psd');
+    expect(await File(layered).readAsBytes(), bytes);
+  });
 }

@@ -8,11 +8,13 @@
 | 文档模型 | `lib/data/models/storyboard/`（document / page / panel / background / resolution） |
 | 存储 | `lib/data/services/storyboard/storyboard_document_store.dart`（原子写 tmp + rename + `.bak`） |
 | 几何与间距约束 | `lib/core/utils/storyboard/storyboard_geometry.dart` |
+| 适配几何（合成与分层导出共用） | `lib/core/utils/storyboard/storyboard_fit_geometry.dart` |
 | 分辨率解析 | `lib/core/utils/storyboard/storyboard_resolution_resolver.dart` |
 | 画布与工具条 | `lib/presentation/screens/generation/storyboard/` |
 | 左侧参数面板分组 | `lib/presentation/widgets/storyboard/storyboard_settings_section.dart` |
 | 批量生成 | `lib/data/services/storyboard/storyboard_generation_planner.dart` + `lib/presentation/providers/storyboard/storyboard_generation_runner.dart` |
 | 导出 | `lib/data/services/storyboard/storyboard_page_exporter.dart` |
+| 分层 PSD 导出 | `lib/data/services/storyboard/storyboard_psd_exporter.dart` + `lib/data/services/storyboard/psd/` |
 | Agent 工具 | `lib/presentation/agent_chat/services/storyboard_toolbox.dart` |
 | 云同步 | `lib/data/cloud_sync/storyboard_cloud_sync_adapter.dart` |
 
@@ -43,7 +45,11 @@
 
 ## 导出
 
-工具条「导出」菜单：整页合成（背景 + 全部分镜按 zOrder 合成，页面像素直出）与单个分镜（外接矩形出图，多边形外透明）。产物经 `ImageSaveUtils.saveBytesToDatedPath` 进入图库当日目录。dart:ui 渲染在根 isolate 执行，面板原图逐张解码-绘制-释放。
+工具条「导出」菜单：整页合成（背景 + 全部分镜按 zOrder 合成，页面像素直出）、单个分镜（外接矩形出图，多边形外透明）与分层 PSD。产物经 `ImageSaveUtils.saveBytesToDatedPath` 进入图库当日目录，PSD 传 `extension: 'psd'`。dart:ui 渲染在根 isolate 执行，面板原图逐张解码-绘制-释放。
+
+分层 PSD（仅桌面端，移动端不显示该项）一个分镜页一个文件，画布等于页面像素，图层自下而上为「背景」与每个有图分镜的「NN 遮罩 + NN 原图」：遮罩是按分镜形状填充的不透明白色剪贴基底，原图是未裁剪的整张原图并标记为被剪贴层，移动或缩放即可重新取景，可见结果与整页 PNG 一致。实现分工：`lib/data/services/storyboard/psd/` 是只认识 PSD 结构的纯 Dart 写入器（`psd_packbits` PackBits 编码、`psd_rle_encoder` 像素→RLE 通道、`psd_document` 数据结构、`psd_writer` 按规范排字节），`storyboard_psd_exporter.dart` 负责页面语义与逐层绘制，两者共用 `StoryboardFitGeometry` 的适配数学与 `StoryboardImageSource` 的原图读取。
+
+写入器只支持版本 1、RGB/8-bit、正常混合、RLE；不写 ICC、图层效果、文本层或智能对象。页面边长超过 30000 或预计文件超过 512 MiB 时中止并提示，不静默降级。图层信息段按偶数上报长度，并且必须把补齐字节真的写进文件——RLE 通道数据长度可以是奇数，只改上报长度不写字节会让后面的蒙版段与图像数据段整体错位。图层边界收进画布：越界像素在 Photoshop 里既不可见也无从取回，收边后单层像素量不超过画布，可见结果不变。原图与合并预览取 `rawStraightRgba` 而不是 `rawRgba`（后者是预乘 alpha，PSD 通道保存直通 alpha）。
 
 ## Agent 工具
 

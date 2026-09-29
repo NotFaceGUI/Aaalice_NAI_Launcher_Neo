@@ -15717,6 +15717,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get storyboard_exportFailed => 'Export failed';
 
   @override
+  String get storyboard_exportPsd => 'Export layered PSD';
+
+  @override
+  String get storyboard_exportPsdLayerBackground => 'Background';
+
+  @override
+  String get storyboard_exportPsdLayerMask => 'Mask';
+
+  @override
+  String get storyboard_exportPsdLayerImage => 'Image';
+
+  @override
+  String get storyboard_exportPsdTooLarge =>
+      'PSD export failed: the file would exceed 512 MiB. Reduce panels or the page size.';
+
+  @override
+  String get storyboard_exportPsdCanvasTooLarge =>
+      'PSD export failed: the page side exceeds the 30000 px limit.';
+
+  @override
   String get storyboard_preview => 'Preview';
 
   @override

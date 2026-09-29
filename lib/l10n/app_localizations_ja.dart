@@ -15279,6 +15279,26 @@ class AppLocalizationsJa extends AppLocalizations {
   String get storyboard_exportFailed => '書き出しに失敗しました';
 
   @override
+  String get storyboard_exportPsd => 'PSD（レイヤー）を書き出す';
+
+  @override
+  String get storyboard_exportPsdLayerBackground => '背景';
+
+  @override
+  String get storyboard_exportPsdLayerMask => 'マスク';
+
+  @override
+  String get storyboard_exportPsdLayerImage => '画像';
+
+  @override
+  String get storyboard_exportPsdTooLarge =>
+      'PSD の書き出しに失敗しました：ファイルが 512 MiB を超えます。コマ数かページサイズを減らしてください。';
+
+  @override
+  String get storyboard_exportPsdCanvasTooLarge =>
+      'PSD の書き出しに失敗しました：ページの辺が 30000 ピクセルを超えています。';
+
+  @override
   String get storyboard_preview => 'プレビュー';
 
   @override
