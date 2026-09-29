@@ -291,3 +291,4 @@ flutter_windows.zip
 dist/*.zip
 dist/*.exe
 .kimi/
+.zcode/
