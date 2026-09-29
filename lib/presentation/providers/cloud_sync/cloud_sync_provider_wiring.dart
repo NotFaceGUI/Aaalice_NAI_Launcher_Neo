@@ -147,6 +147,9 @@ final cloudSyncApplicationServiceProvider =
                   includeGalleryAlbums:
                       contentSelection.includeGalleryAlbums &&
                       scope.contains(CloudSyncDataKind.galleries),
+                  includeStoryboard:
+                      contentSelection.includeStoryboard &&
+                      scope.contains(CloudSyncDataKind.galleries),
                 ),
                 agentSkills: agentSkills,
               );
@@ -239,6 +242,10 @@ bool isCloudSyncAdapterInScope(
   }
   if (id == 'gallery-albums') {
     return contentSelection.includeGalleryAlbums &&
+        scope.contains(CloudSyncDataKind.galleries);
+  }
+  if (id == 'storyboard-document') {
+    return contentSelection.includeStoryboard &&
         scope.contains(CloudSyncDataKind.galleries);
   }
   if (id == 'gallery-blacklist') {

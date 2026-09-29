@@ -13,6 +13,7 @@ import '../../../widgets/character/inline_character_section.dart';
 import 'collapsed_panel.dart';
 import 'generation_controls/generation_controls.dart';
 import 'generation_param_sections.dart';
+import '../../../widgets/storyboard/storyboard_settings_section.dart';
 import 'generation_workspace_header.dart';
 import 'img2img_panel.dart';
 import 'precise_reference_panel.dart';
@@ -226,6 +227,10 @@ class _WebLeftPanelState extends ConsumerState<WebLeftPanel>
 
                         // 角色区：内联在主提示词正下方（官网式，内容常显）
                         const InlineCharacterSection(),
+                        const SizedBox(height: 10),
+
+                        // 分镜设置紧跟角色；只在中央工作区处于分镜模式时渲染。
+                        const StoryboardSettingsSection(),
                         const SizedBox(height: 10),
 
                         // 功能面板：反推 / 图生图 / 风格迁移 / 精准参考

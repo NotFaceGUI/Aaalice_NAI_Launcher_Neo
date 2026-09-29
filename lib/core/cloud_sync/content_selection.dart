@@ -8,6 +8,7 @@ class CloudSyncContentSelection {
     this.includeOnlineGallerySettings = true,
     this.includeOnlineGalleryFavorites = true,
     this.includeGalleryAlbums = true,
+    this.includeStoryboard = true,
     this.includeAgentSystemPrompt = true,
     this.includeSkills = true,
     this.includeVibes = false,
@@ -15,7 +16,7 @@ class CloudSyncContentSelection {
     this.selectedSkillIds = const {},
   });
 
-  static const int currentSchemaVersion = 2;
+  static const int currentSchemaVersion = 3;
   static const int maxSelectedSkills = 500;
 
   final bool includeSettings;
@@ -24,6 +25,7 @@ class CloudSyncContentSelection {
   final bool includeOnlineGallerySettings;
   final bool includeOnlineGalleryFavorites;
   final bool includeGalleryAlbums;
+  final bool includeStoryboard;
   final bool includeAgentSystemPrompt;
   final bool includeSkills;
   final bool includeVibes;
@@ -37,6 +39,7 @@ class CloudSyncContentSelection {
     includeOnlineGallerySettings,
     includeOnlineGalleryFavorites,
     includeGalleryAlbums,
+    includeStoryboard,
     includeAgentSystemPrompt,
     includeSkills,
     includeVibes,
@@ -50,6 +53,7 @@ class CloudSyncContentSelection {
     bool? includeOnlineGallerySettings,
     bool? includeOnlineGalleryFavorites,
     bool? includeGalleryAlbums,
+    bool? includeStoryboard,
     bool? includeAgentSystemPrompt,
     bool? includeSkills,
     bool? includeVibes,
@@ -64,6 +68,7 @@ class CloudSyncContentSelection {
     includeOnlineGalleryFavorites:
         includeOnlineGalleryFavorites ?? this.includeOnlineGalleryFavorites,
     includeGalleryAlbums: includeGalleryAlbums ?? this.includeGalleryAlbums,
+    includeStoryboard: includeStoryboard ?? this.includeStoryboard,
     includeAgentSystemPrompt:
         includeAgentSystemPrompt ?? this.includeAgentSystemPrompt,
     includeSkills: includeSkills ?? this.includeSkills,
@@ -86,6 +91,7 @@ class CloudSyncContentSelection {
       'includeOnlineGallerySettings': includeOnlineGallerySettings,
       'includeOnlineGalleryFavorites': includeOnlineGalleryFavorites,
       'includeGalleryAlbums': includeGalleryAlbums,
+      'includeStoryboard': includeStoryboard,
       'includeAgentSystemPrompt': includeAgentSystemPrompt,
       'includeSkills': includeSkills,
       'includeVibes': includeVibes,
@@ -103,8 +109,9 @@ class CloudSyncContentSelection {
     }
     final version = value['version'] as int;
     if (version == 1) return _decodeV1(value);
+    if (version == 2) return _decodeV2(value);
     if (version != currentSchemaVersion ||
-        value.keys.any((key) => !_v2Keys.contains(key)) ||
+        value.keys.any((key) => !_v3Keys.contains(key)) ||
         _boolKeys.any((key) => value[key] is! bool) ||
         value['selectedSkillIds'] is! List) {
       throw const FormatException('Invalid cloud backup content selection.');
@@ -118,6 +125,7 @@ class CloudSyncContentSelection {
       includeOnlineGalleryFavorites:
           value['includeOnlineGalleryFavorites']! as bool,
       includeGalleryAlbums: value['includeGalleryAlbums']! as bool,
+      includeStoryboard: value['includeStoryboard']! as bool,
       includeAgentSystemPrompt: value['includeAgentSystemPrompt']! as bool,
       includeSkills: value['includeSkills']! as bool,
       includeVibes: value['includeVibes']! as bool,
@@ -146,6 +154,31 @@ class CloudSyncContentSelection {
     );
   }
 
+  /// v2 与 v3 的差异只有 includeStoryboard：旧快照按当时的默认语义
+  /// 补成"跟随新默认"，其余选项原样保留。
+  static CloudSyncContentSelection _decodeV2(Map<dynamic, dynamic> value) {
+    if (value.keys.any((key) => !_v2Keys.contains(key)) ||
+        _boolKeys.any((key) => key != 'includeStoryboard' && value[key] is! bool) ||
+        value['selectedSkillIds'] is! List) {
+      throw const FormatException('Invalid cloud backup content selection.');
+    }
+    return CloudSyncContentSelection(
+      includeSettings: value['includeSettings']! as bool,
+      includePromptsAndTags: value['includePromptsAndTags']! as bool,
+      includeTagThumbnails: value['includeTagThumbnails']! as bool,
+      includeOnlineGallerySettings:
+          value['includeOnlineGallerySettings']! as bool,
+      includeOnlineGalleryFavorites:
+          value['includeOnlineGalleryFavorites']! as bool,
+      includeGalleryAlbums: value['includeGalleryAlbums']! as bool,
+      includeAgentSystemPrompt: value['includeAgentSystemPrompt']! as bool,
+      includeSkills: value['includeSkills']! as bool,
+      includeVibes: value['includeVibes']! as bool,
+      includePreciseReferences: value['includePreciseReferences']! as bool,
+      selectedSkillIds: _decodeSkillIds(value['selectedSkillIds']! as List),
+    );
+  }
+
   static Set<String> _decodeSkillIds(List rawIds) {
     if (rawIds.length > maxSelectedSkills) {
       throw const FormatException('Too many selected Skills.');
@@ -166,12 +199,18 @@ class CloudSyncContentSelection {
     'includeOnlineGallerySettings',
     'includeOnlineGalleryFavorites',
     'includeGalleryAlbums',
+    'includeStoryboard',
     'includeAgentSystemPrompt',
     'includeSkills',
     'includeVibes',
     'includePreciseReferences',
   };
-  static const _v2Keys = {'version', ..._boolKeys, 'selectedSkillIds'};
+  static final _v2Keys = <String>{
+    'version',
+    ..._boolKeys.difference(const {'includeStoryboard'}),
+    'selectedSkillIds',
+  };
+  static const _v3Keys = {'version', ..._boolKeys, 'selectedSkillIds'};
 
   static final RegExp _skillId = RegExp(
     r'^(workspace|piUser|commonUser):[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$',

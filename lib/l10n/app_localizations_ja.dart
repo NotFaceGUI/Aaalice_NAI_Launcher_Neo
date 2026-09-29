@@ -13063,6 +13063,13 @@ class AppLocalizationsJa extends AppLocalizations {
       'ソース ID と復元に必要な情報のみを保存し、原画像は保存しません';
 
   @override
+  String get cloudSync_storyboard => 'コミックコマ割り';
+
+  @override
+  String get cloudSync_storyboardDescription =>
+      'コマ割りページ文書：レイアウト・プロンプト・相対パス参照のみ。画像本体は含みません。';
+
+  @override
   String get cloudSync_galleryAlbums => 'ローカルギャラリーのアルバム';
 
   @override
@@ -15079,4 +15086,318 @@ class AppLocalizationsJa extends AppLocalizations {
   String infinite_canvas_boardNodeCount(int count) {
     return '$count ノード';
   }
+
+  @override
+  String get storyboard_open => '絵コンテを開く';
+
+  @override
+  String get storyboard_close => '絵コンテを閉じる';
+
+  @override
+  String get storyboard_emptyTitle => 'このページにはまだコマがありません';
+
+  @override
+  String get storyboard_emptyHint => 'グリッドでコマをまとめて配置するか、ページ上でドラッグして作成します。';
+
+  @override
+  String storyboard_pageSizeLabel(int width, int height) {
+    return 'ページ $width x $height px';
+  }
+
+  @override
+  String storyboard_panelsLabel(int count) {
+    return '$count コマ';
+  }
+
+  @override
+  String get storyboard_toolSelect => '選択';
+
+  @override
+  String get storyboard_toolDraw => 'コマを描く';
+
+  @override
+  String get storyboard_undo => '元に戻す';
+
+  @override
+  String get storyboard_redo => 'やり直す';
+
+  @override
+  String get storyboard_gridTitle => 'グリッドでコマを作成';
+
+  @override
+  String get storyboard_gridRows => '行数';
+
+  @override
+  String get storyboard_gridColumns => '列数';
+
+  @override
+  String get storyboard_gridMargin => 'ページ余白';
+
+  @override
+  String get storyboard_gridGutter => 'コマ間隔';
+
+  @override
+  String get storyboard_gridApply => '生成';
+
+  @override
+  String storyboard_gridCreated(int count) {
+    return '$count 個のコマを作成しました';
+  }
+
+  @override
+  String get storyboard_gridTooSmall => 'この行数・列数と間隔を収めるにはページが小さすぎます。';
+
+  @override
+  String get storyboard_pageSettings => 'ページ設定';
+
+  @override
+  String get storyboard_pageWidth => '幅';
+
+  @override
+  String get storyboard_pageHeight => '高さ';
+
+  @override
+  String get storyboard_pageSizeHint =>
+      'ページサイズが最終出力解像度です。各コマは自身のレイアウト枠から生成解像度を求めます。';
+
+  @override
+  String get storyboard_background => '背景';
+
+  @override
+  String get storyboard_backgroundNone => 'なし';
+
+  @override
+  String get storyboard_backgroundColor => '単色';
+
+  @override
+  String get storyboard_backgroundImage => '画像';
+
+  @override
+  String get storyboard_chooseImage => '背景画像を選択';
+
+  @override
+  String get storyboard_panelSettings => 'コマ設定';
+
+  @override
+  String get storyboard_resolution => '生成解像度';
+
+  @override
+  String storyboard_layoutLabel(int width, int height) {
+    return 'レイアウト $width × $height';
+  }
+
+  @override
+  String storyboard_requestLabel(int width, int height) {
+    return 'リクエスト $width × $height';
+  }
+
+  @override
+  String get storyboard_fit => 'フィット';
+
+  @override
+  String get storyboard_fitCover => '覆って切り抜き';
+
+  @override
+  String get storyboard_fitContain => '全体を収める';
+
+  @override
+  String get storyboard_fitStretch => '引き伸ばし';
+
+  @override
+  String get storyboard_variants => '生成枚数';
+
+  @override
+  String get storyboard_shape => '形状';
+
+  @override
+  String get storyboard_convertToPolygon => '多角形に変換';
+
+  @override
+  String get storyboard_editVertices => '頂点を編集';
+
+  @override
+  String get storyboard_resetShape => '矩形に戻す';
+
+  @override
+  String get storyboard_duplicate => '複製';
+
+  @override
+  String get storyboard_bringToFront => '最前面へ';
+
+  @override
+  String get storyboard_sendToBack => '最背面へ';
+
+  @override
+  String get storyboard_lock => 'レイアウトを固定';
+
+  @override
+  String get storyboard_generate => '生成';
+
+  @override
+  String get storyboard_presetMenu => 'コマ割りプリセット';
+
+  @override
+  String get storyboard_presetFourPortrait => '4コマ・縦';
+
+  @override
+  String get storyboard_presetFourLandscape => '4コマ・横';
+
+  @override
+  String get storyboard_presetThreeStrip => '3分割・縦';
+
+  @override
+  String get storyboard_presetSixGrid => '6コマ・縦';
+
+  @override
+  String get storyboard_presetClassicTop => '上ワイド・縦';
+
+  @override
+  String get storyboard_presetLeftTall => '左大・縦';
+
+  @override
+  String get storyboard_presetTopBig => '上大・縦';
+
+  @override
+  String get storyboard_presetSquareMixed => '正方形・ミックス';
+
+  @override
+  String get storyboard_export => '書き出し';
+
+  @override
+  String get storyboard_exportPage => 'ページ全体を書き出す';
+
+  @override
+  String get storyboard_exportPanel => '選択中のコマを書き出す';
+
+  @override
+  String get storyboard_exportDone => 'ギャラリーに書き出しました';
+
+  @override
+  String get storyboard_exportEmpty => 'このコマにはまだ画像がありません。先に生成してください。';
+
+  @override
+  String get storyboard_exportFailed => '書き出しに失敗しました';
+
+  @override
+  String get storyboard_preview => 'プレビュー';
+
+  @override
+  String get storyboard_generateScopeAll => 'すべてのコマ';
+
+  @override
+  String get storyboard_generateScopeUngenerated => '未生成のコマのみ';
+
+  @override
+  String get storyboard_generateScopeSelected => '選択中のコマのみ';
+
+  @override
+  String storyboard_generateSummary(int requests, int anlas) {
+    return '$requests リクエスト · 約 $anlas Anlas';
+  }
+
+  @override
+  String storyboard_generateFree(int requests) {
+    return '$requests リクエスト · Anlas 消費なし（Opus 無料枠）';
+  }
+
+  @override
+  String get storyboard_generateConfirm => '生成を開始';
+
+  @override
+  String get storyboard_generateNoPrompt =>
+      '生成できるコマがありません。コマのプロンプトを入力するか、生成ページでプロンプトを設定してください。';
+
+  @override
+  String get storyboard_generateNothingToDo => 'この範囲のコマにはすでに画像があります。';
+
+  @override
+  String storyboard_generateRunning(int order) {
+    return 'コマ $order を生成中';
+  }
+
+  @override
+  String get storyboard_generateCancel => 'キャンセル';
+
+  @override
+  String storyboard_generateDone(int count) {
+    return '$count 枚生成しました';
+  }
+
+  @override
+  String storyboard_generateFailedCount(int count) {
+    return '$count 個のコマが失敗しました';
+  }
+
+  @override
+  String get storyboard_generateCancelled => 'キャンセルしました';
+
+  @override
+  String get storyboard_polygonMinPoints => '多角形には 3 つ以上の頂点が必要です。';
+
+  @override
+  String get storyboard_polygonEditHint =>
+      '頂点をドラッグで形を変更、頂点をクリックで削除、辺の中点をクリックで追加。';
+
+  @override
+  String get storyboard_backgroundPromptHint =>
+      '背景のプロンプトは左側で編集し、ツールバーの「生成」で出力します。';
+
+  @override
+  String get storyboard_selectionBackground => '背景';
+
+  @override
+  String get storyboard_spacing => 'レイアウト間隔';
+
+  @override
+  String get storyboard_gridReplace => '既存のコマを置き換える';
+
+  @override
+  String get storyboard_spacingHint =>
+      '間隔はグリッド生成で使われます。新しい間隔でページを組み直すには「既存のコマを置き換える」を選んでください。';
+
+  @override
+  String get storyboard_sectionTitle => '絵コンテ設定';
+
+  @override
+  String get storyboard_frameSize => '画面サイズ';
+
+  @override
+  String get storyboard_noSelection => 'コマが選択されていません';
+
+  @override
+  String get storyboard_ignoreSpacing => '間隔制限を無視';
+
+  @override
+  String get storyboard_enablePanel => 'コマを有効化';
+
+  @override
+  String get storyboard_disablePanel => 'コマを無効化';
+
+  @override
+  String get storyboard_noticeSnapped => '最も近い有効な解像度に合わせました。';
+
+  @override
+  String get storyboard_noticeClamped => '1 枚あたりの上限を超えるため、比例縮小しました。';
+
+  @override
+  String get storyboard_noticeUpscaled => 'コマが小さいため、大きめに生成して縮小します。';
+
+  @override
+  String get storyboard_restoreSpacing => '間隔制限を戻す';
+
+  @override
+  String get storyboard_unlock => 'レイアウトの固定を解除';
+
+  @override
+  String get storyboard_freeOnly => '課金なし';
+
+  @override
+  String get storyboard_freeOnlyHint =>
+      'すべてのコマを Opus 無料枠内で生成します。枠を超える部分は小さめに生成してから引き伸ばすため、Anlas は消費しません。';
+
+  @override
+  String get storyboard_fillLargest => '最大余白を埋める';
+
+  @override
+  String get storyboard_fillRemaining => '残りを埋める';
 }

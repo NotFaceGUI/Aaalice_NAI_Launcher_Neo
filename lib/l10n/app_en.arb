@@ -6393,6 +6393,8 @@
   "cloudSync_onlineGallerySettingsDescription": "Blacklist, filters, and user categories",
   "cloudSync_onlineGalleryFavorites": "Online gallery favorites",
   "cloudSync_onlineGalleryFavoritesDescription": "Stores source IDs and recovery fields only, never original images",
+  "cloudSync_storyboard": "Storyboard layouts",
+  "cloudSync_storyboardDescription": "Storyboard page documents: layout, prompts and relative path references — never the images themselves.",
   "cloudSync_galleryAlbums": "Local gallery albums",
   "cloudSync_galleryAlbumsDescription": "Stores album structure and image references, never original images",
   "cloudSync_optionalResources": "Optional resources (off by default)",
@@ -7055,5 +7057,183 @@
         "type": "int"
       }
     }
-  }
+  },
+  "storyboard_open": "Open storyboard",
+  "storyboard_close": "Leave storyboard",
+  "storyboard_emptyTitle": "This page has no panels yet",
+  "storyboard_emptyHint": "Lay out a grid of panels, or draw one by dragging on the page.",
+  "storyboard_pageSizeLabel": "Page {width} x {height} px",
+  "@storyboard_pageSizeLabel": {
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_panelsLabel": "{count, plural, =1{1 panel} other{{count} panels}}",
+  "@storyboard_panelsLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_toolSelect": "Select",
+  "storyboard_toolDraw": "Draw panel",
+  "storyboard_undo": "Undo",
+  "storyboard_redo": "Redo",
+  "storyboard_gridTitle": "Generate a grid of panels",
+  "storyboard_gridRows": "Rows",
+  "storyboard_gridColumns": "Columns",
+  "storyboard_gridMargin": "Page margin",
+  "storyboard_gridGutter": "Panel gap",
+  "storyboard_gridApply": "Generate",
+  "storyboard_gridCreated": "{count, plural, =1{Created 1 panel} other{Created {count} panels}}",
+  "@storyboard_gridCreated": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_gridTooSmall": "The page is too small for these rows, columns and gaps.",
+  "storyboard_pageSettings": "Page settings",
+  "storyboard_pageWidth": "Width",
+  "storyboard_pageHeight": "Height",
+  "storyboard_pageSizeHint": "The page size is the final output resolution. Each panel derives its generation size from its layout box.",
+  "storyboard_background": "Background",
+  "storyboard_backgroundNone": "None",
+  "storyboard_backgroundColor": "Solid color",
+  "storyboard_backgroundImage": "Image",
+  "storyboard_chooseImage": "Choose background image",
+  "storyboard_panelSettings": "Panel settings",
+  "storyboard_resolution": "Generation resolution",
+  "storyboard_layoutLabel": "Layout {width} × {height}",
+  "@storyboard_layoutLabel": {
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_requestLabel": "Request {width} × {height}",
+  "@storyboard_requestLabel": {
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_fit": "Fit",
+  "storyboard_fitCover": "Cover",
+  "storyboard_fitContain": "Contain",
+  "storyboard_fitStretch": "Stretch",
+  "storyboard_variants": "Images per run",
+  "storyboard_shape": "Shape",
+  "storyboard_convertToPolygon": "Convert to polygon",
+  "storyboard_editVertices": "Edit vertices",
+  "storyboard_resetShape": "Back to rectangle",
+  "storyboard_duplicate": "Duplicate",
+  "storyboard_bringToFront": "Bring to front",
+  "storyboard_sendToBack": "Send to back",
+  "storyboard_lock": "Lock layout",
+  "storyboard_generate": "Generate",
+  "storyboard_presetMenu": "Layout presets",
+  "storyboard_presetFourPortrait": "4 panels · portrait",
+  "storyboard_presetFourLandscape": "4 panels · landscape",
+  "storyboard_presetThreeStrip": "3 strips · portrait",
+  "storyboard_presetSixGrid": "6 panels · portrait",
+  "storyboard_presetClassicTop": "Top banner · portrait",
+  "storyboard_presetLeftTall": "Left focus · portrait",
+  "storyboard_presetTopBig": "Wide top · portrait",
+  "storyboard_presetSquareMixed": "Square · mixed",
+  "storyboard_export": "Export",
+  "storyboard_exportPage": "Export full page",
+  "storyboard_exportPanel": "Export selected panel",
+  "storyboard_exportDone": "Exported to gallery",
+  "storyboard_exportEmpty": "This panel has no image yet. Generate one first.",
+  "storyboard_exportFailed": "Export failed",
+  "storyboard_preview": "Preview",
+  "storyboard_generateScopeAll": "All panels",
+  "storyboard_generateScopeUngenerated": "Panels without an image",
+  "storyboard_generateScopeSelected": "Selected panel only",
+  "storyboard_generateSummary": "{requests, plural, =1{1 request} other{{requests} requests}} · about {anlas} Anlas",
+  "@storyboard_generateSummary": {
+    "placeholders": {
+      "requests": {
+        "type": "int"
+      },
+      "anlas": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateFree": "{requests, plural, =1{1 request} other{{requests} requests}} · no Anlas (Opus free tier)",
+  "@storyboard_generateFree": {
+    "placeholders": {
+      "requests": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateConfirm": "Start generating",
+  "storyboard_generateNoPrompt": "Nothing to generate: fill in a panel prompt, or set one on the generation page.",
+  "storyboard_generateNothingToDo": "Every panel in this scope already has an image.",
+  "storyboard_generateRunning": "Generating panel {order}",
+  "@storyboard_generateRunning": {
+    "placeholders": {
+      "order": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateCancel": "Cancel",
+  "storyboard_generateDone": "Generated {count} image(s)",
+  "@storyboard_generateDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateFailedCount": "{count} panel(s) failed",
+  "@storyboard_generateFailedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateCancelled": "Cancelled",
+  "storyboard_polygonMinPoints": "A polygon needs at least 3 vertices.",
+  "storyboard_polygonEditHint": "Drag a vertex to reshape, tap a vertex to remove it, tap an edge midpoint to add one.",
+  "storyboard_backgroundPromptHint": "The background prompt is edited on the left; use Generate in the toolbar to render it.",
+  "storyboard_selectionBackground": "Background",
+  "storyboard_spacing": "Layout spacing",
+  "storyboard_gridReplace": "Replace existing panels",
+  "storyboard_spacingHint": "Spacing applies to the grid generator. Use Replace existing panels there to re-lay out a page.",
+  "storyboard_sectionTitle": "Storyboard",
+  "storyboard_frameSize": "Frame size",
+  "storyboard_noSelection": "No panel selected",
+  "storyboard_ignoreSpacing": "Ignore spacing limits",
+  "storyboard_enablePanel": "Enable panel",
+  "storyboard_disablePanel": "Disable panel",
+  "storyboard_noticeSnapped": "Snapped to the nearest valid resolution.",
+  "storyboard_noticeClamped": "Over the per-image limit; scaled down proportionally.",
+  "storyboard_noticeUpscaled": "This panel is small, so it generates larger and scales back.",
+  "storyboard_restoreSpacing": "Restore spacing limits",
+  "storyboard_unlock": "Unlock layout",
+  "storyboard_freeOnly": "No paid generation",
+  "storyboard_freeOnlyHint": "Generate every panel inside the Opus free tier. Frames beyond it are generated smaller and scaled to fit, so no Anlas is spent.",
+  "storyboard_fillLargest": "Fill largest space",
+  "storyboard_fillRemaining": "Fill remaining space"
 }

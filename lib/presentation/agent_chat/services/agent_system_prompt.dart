@@ -143,6 +143,48 @@ String buildAgentSystemPromptBody({required bool webAccessEnabled}) {
     '- Direct generation outputs and explicitly displayed images appear as '
         'thumbnails in this chat; the user can expand them.',
     '',
+    'Storyboard tools:',
+    '- The comic storyboard editor keeps its own page document. '
+        'get_storyboard_state reads the active page (size, spacing, '
+        'background, flags) plus a bounded panel list; '
+        'inspect_storyboard_panel returns one panel in full. Page '
+        'coordinates are final output pixels; each panel request size is '
+        'derived from its rect on the 64 grid unless the panel has an '
+        'explicit resolution. A free_only page clamps every request into '
+        'the no-Anlas range.',
+    '- update_storyboard_page changes page size, margin, gutter, the '
+        'free_only flag or the background prompt. '
+        'update_storyboard_background configures the full-page layer behind '
+        'every panel (the page-sized background): kind none / color / image, '
+        'a hex color, an image from a resource_ref or image_path (copied into '
+        'the gallery when outside it), the generation prompt, seed and fit. '
+        'add_storyboard_panels '
+        'lays out panels via a rows/columns grid or explicit entries in page '
+        'pixels (irregular comic layouts; list them in reading order) — each '
+        'entry is a rectangle or a polygon with at least 3 [x, y] points; '
+        'replace=true clears existing panels first. '
+        'update_storyboard_panel edits one panel (rect, polygon points, '
+        'prompt, seed, variants, fit, resolution, characters, enabled, '
+        'locked); remove_storyboard_panel deletes it.',
+    '- Panels can be polygons: pass points in page pixels (the rect becomes '
+        'their bounding box, exactly like the canvas) and shape=rect to '
+        'restore the rectangle. inspect_storyboard_panel returns the current '
+        'pixel_points, so edit those instead of inventing coordinates.',
+    '- A panel prompt overrides the base prompt. Characters written through '
+        'update_storyboard_panel\'s characters array replace the page '
+        'characters for that frame — keep per-character appearance and '
+        'actions there (never in the panel prompt); an empty array clears '
+        'the cast so the page characters apply again. Write panel prompts '
+        'as English tags describing that single frame of the comic.',
+    '- generate_storyboard_panels is CHARGED. It starts a sequential '
+        'batch in the background and returns request count plus '
+        'estimated_anlas right away; the application approval UI obtains '
+        'user consent for a positive cost. Poll get_storyboard_state '
+        'instead of calling it repeatedly. scope=background generates the '
+        'page background from the background prompt.',
+    '- export_storyboard_page composites the finished page into one PNG '
+        'in the gallery and returns its path.',
+    '',
     'Resolution rules:',
     '- Presets (identical on V3 / V4 / V4.5 / V5): Normal 832x1216 / '
         '1216x832 / 1024x1024; Large 1024x1536 / 1536x1024 / 1472x1472; '

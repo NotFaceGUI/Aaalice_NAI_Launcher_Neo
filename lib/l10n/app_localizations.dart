@@ -23305,6 +23305,18 @@ abstract class AppLocalizations {
   /// **'Stores source IDs and recovery fields only, never original images'**
   String get cloudSync_onlineGalleryFavoritesDescription;
 
+  /// No description provided for @cloudSync_storyboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Storyboard layouts'**
+  String get cloudSync_storyboard;
+
+  /// No description provided for @cloudSync_storyboardDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Storyboard page documents: layout, prompts and relative path references — never the images themselves.'**
+  String get cloudSync_storyboardDescription;
+
   /// No description provided for @cloudSync_galleryAlbums.
   ///
   /// In en, this message translates to:
@@ -27006,6 +27018,582 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 node} other{{count} nodes}}'**
   String infinite_canvas_boardNodeCount(int count);
+
+  /// No description provided for @storyboard_open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open storyboard'**
+  String get storyboard_open;
+
+  /// No description provided for @storyboard_close.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave storyboard'**
+  String get storyboard_close;
+
+  /// No description provided for @storyboard_emptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This page has no panels yet'**
+  String get storyboard_emptyTitle;
+
+  /// No description provided for @storyboard_emptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Lay out a grid of panels, or draw one by dragging on the page.'**
+  String get storyboard_emptyHint;
+
+  /// No description provided for @storyboard_pageSizeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {width} x {height} px'**
+  String storyboard_pageSizeLabel(int width, int height);
+
+  /// No description provided for @storyboard_panelsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 panel} other{{count} panels}}'**
+  String storyboard_panelsLabel(int count);
+
+  /// No description provided for @storyboard_toolSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get storyboard_toolSelect;
+
+  /// No description provided for @storyboard_toolDraw.
+  ///
+  /// In en, this message translates to:
+  /// **'Draw panel'**
+  String get storyboard_toolDraw;
+
+  /// No description provided for @storyboard_undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get storyboard_undo;
+
+  /// No description provided for @storyboard_redo.
+  ///
+  /// In en, this message translates to:
+  /// **'Redo'**
+  String get storyboard_redo;
+
+  /// No description provided for @storyboard_gridTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate a grid of panels'**
+  String get storyboard_gridTitle;
+
+  /// No description provided for @storyboard_gridRows.
+  ///
+  /// In en, this message translates to:
+  /// **'Rows'**
+  String get storyboard_gridRows;
+
+  /// No description provided for @storyboard_gridColumns.
+  ///
+  /// In en, this message translates to:
+  /// **'Columns'**
+  String get storyboard_gridColumns;
+
+  /// No description provided for @storyboard_gridMargin.
+  ///
+  /// In en, this message translates to:
+  /// **'Page margin'**
+  String get storyboard_gridMargin;
+
+  /// No description provided for @storyboard_gridGutter.
+  ///
+  /// In en, this message translates to:
+  /// **'Panel gap'**
+  String get storyboard_gridGutter;
+
+  /// No description provided for @storyboard_gridApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate'**
+  String get storyboard_gridApply;
+
+  /// No description provided for @storyboard_gridCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Created 1 panel} other{Created {count} panels}}'**
+  String storyboard_gridCreated(int count);
+
+  /// No description provided for @storyboard_gridTooSmall.
+  ///
+  /// In en, this message translates to:
+  /// **'The page is too small for these rows, columns and gaps.'**
+  String get storyboard_gridTooSmall;
+
+  /// No description provided for @storyboard_pageSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Page settings'**
+  String get storyboard_pageSettings;
+
+  /// No description provided for @storyboard_pageWidth.
+  ///
+  /// In en, this message translates to:
+  /// **'Width'**
+  String get storyboard_pageWidth;
+
+  /// No description provided for @storyboard_pageHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get storyboard_pageHeight;
+
+  /// No description provided for @storyboard_pageSizeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The page size is the final output resolution. Each panel derives its generation size from its layout box.'**
+  String get storyboard_pageSizeHint;
+
+  /// No description provided for @storyboard_background.
+  ///
+  /// In en, this message translates to:
+  /// **'Background'**
+  String get storyboard_background;
+
+  /// No description provided for @storyboard_backgroundNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get storyboard_backgroundNone;
+
+  /// No description provided for @storyboard_backgroundColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Solid color'**
+  String get storyboard_backgroundColor;
+
+  /// No description provided for @storyboard_backgroundImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get storyboard_backgroundImage;
+
+  /// No description provided for @storyboard_chooseImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose background image'**
+  String get storyboard_chooseImage;
+
+  /// No description provided for @storyboard_panelSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Panel settings'**
+  String get storyboard_panelSettings;
+
+  /// No description provided for @storyboard_resolution.
+  ///
+  /// In en, this message translates to:
+  /// **'Generation resolution'**
+  String get storyboard_resolution;
+
+  /// No description provided for @storyboard_layoutLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Layout {width} × {height}'**
+  String storyboard_layoutLabel(int width, int height);
+
+  /// No description provided for @storyboard_requestLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Request {width} × {height}'**
+  String storyboard_requestLabel(int width, int height);
+
+  /// No description provided for @storyboard_fit.
+  ///
+  /// In en, this message translates to:
+  /// **'Fit'**
+  String get storyboard_fit;
+
+  /// No description provided for @storyboard_fitCover.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover'**
+  String get storyboard_fitCover;
+
+  /// No description provided for @storyboard_fitContain.
+  ///
+  /// In en, this message translates to:
+  /// **'Contain'**
+  String get storyboard_fitContain;
+
+  /// No description provided for @storyboard_fitStretch.
+  ///
+  /// In en, this message translates to:
+  /// **'Stretch'**
+  String get storyboard_fitStretch;
+
+  /// No description provided for @storyboard_variants.
+  ///
+  /// In en, this message translates to:
+  /// **'Images per run'**
+  String get storyboard_variants;
+
+  /// No description provided for @storyboard_shape.
+  ///
+  /// In en, this message translates to:
+  /// **'Shape'**
+  String get storyboard_shape;
+
+  /// No description provided for @storyboard_convertToPolygon.
+  ///
+  /// In en, this message translates to:
+  /// **'Convert to polygon'**
+  String get storyboard_convertToPolygon;
+
+  /// No description provided for @storyboard_editVertices.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit vertices'**
+  String get storyboard_editVertices;
+
+  /// No description provided for @storyboard_resetShape.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to rectangle'**
+  String get storyboard_resetShape;
+
+  /// No description provided for @storyboard_duplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
+  String get storyboard_duplicate;
+
+  /// No description provided for @storyboard_bringToFront.
+  ///
+  /// In en, this message translates to:
+  /// **'Bring to front'**
+  String get storyboard_bringToFront;
+
+  /// No description provided for @storyboard_sendToBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to back'**
+  String get storyboard_sendToBack;
+
+  /// No description provided for @storyboard_lock.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock layout'**
+  String get storyboard_lock;
+
+  /// No description provided for @storyboard_generate.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate'**
+  String get storyboard_generate;
+
+  /// No description provided for @storyboard_presetMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Layout presets'**
+  String get storyboard_presetMenu;
+
+  /// No description provided for @storyboard_presetFourPortrait.
+  ///
+  /// In en, this message translates to:
+  /// **'4 panels · portrait'**
+  String get storyboard_presetFourPortrait;
+
+  /// No description provided for @storyboard_presetFourLandscape.
+  ///
+  /// In en, this message translates to:
+  /// **'4 panels · landscape'**
+  String get storyboard_presetFourLandscape;
+
+  /// No description provided for @storyboard_presetThreeStrip.
+  ///
+  /// In en, this message translates to:
+  /// **'3 strips · portrait'**
+  String get storyboard_presetThreeStrip;
+
+  /// No description provided for @storyboard_presetSixGrid.
+  ///
+  /// In en, this message translates to:
+  /// **'6 panels · portrait'**
+  String get storyboard_presetSixGrid;
+
+  /// No description provided for @storyboard_presetClassicTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Top banner · portrait'**
+  String get storyboard_presetClassicTop;
+
+  /// No description provided for @storyboard_presetLeftTall.
+  ///
+  /// In en, this message translates to:
+  /// **'Left focus · portrait'**
+  String get storyboard_presetLeftTall;
+
+  /// No description provided for @storyboard_presetTopBig.
+  ///
+  /// In en, this message translates to:
+  /// **'Wide top · portrait'**
+  String get storyboard_presetTopBig;
+
+  /// No description provided for @storyboard_presetSquareMixed.
+  ///
+  /// In en, this message translates to:
+  /// **'Square · mixed'**
+  String get storyboard_presetSquareMixed;
+
+  /// No description provided for @storyboard_export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get storyboard_export;
+
+  /// No description provided for @storyboard_exportPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Export full page'**
+  String get storyboard_exportPage;
+
+  /// No description provided for @storyboard_exportPanel.
+  ///
+  /// In en, this message translates to:
+  /// **'Export selected panel'**
+  String get storyboard_exportPanel;
+
+  /// No description provided for @storyboard_exportDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Exported to gallery'**
+  String get storyboard_exportDone;
+
+  /// No description provided for @storyboard_exportEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'This panel has no image yet. Generate one first.'**
+  String get storyboard_exportEmpty;
+
+  /// No description provided for @storyboard_exportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed'**
+  String get storyboard_exportFailed;
+
+  /// No description provided for @storyboard_preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get storyboard_preview;
+
+  /// No description provided for @storyboard_generateScopeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All panels'**
+  String get storyboard_generateScopeAll;
+
+  /// No description provided for @storyboard_generateScopeUngenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'Panels without an image'**
+  String get storyboard_generateScopeUngenerated;
+
+  /// No description provided for @storyboard_generateScopeSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected panel only'**
+  String get storyboard_generateScopeSelected;
+
+  /// No description provided for @storyboard_generateSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{requests, plural, =1{1 request} other{{requests} requests}} · about {anlas} Anlas'**
+  String storyboard_generateSummary(int requests, int anlas);
+
+  /// No description provided for @storyboard_generateFree.
+  ///
+  /// In en, this message translates to:
+  /// **'{requests, plural, =1{1 request} other{{requests} requests}} · no Anlas (Opus free tier)'**
+  String storyboard_generateFree(int requests);
+
+  /// No description provided for @storyboard_generateConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Start generating'**
+  String get storyboard_generateConfirm;
+
+  /// No description provided for @storyboard_generateNoPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to generate: fill in a panel prompt, or set one on the generation page.'**
+  String get storyboard_generateNoPrompt;
+
+  /// No description provided for @storyboard_generateNothingToDo.
+  ///
+  /// In en, this message translates to:
+  /// **'Every panel in this scope already has an image.'**
+  String get storyboard_generateNothingToDo;
+
+  /// No description provided for @storyboard_generateRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating panel {order}'**
+  String storyboard_generateRunning(int order);
+
+  /// No description provided for @storyboard_generateCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get storyboard_generateCancel;
+
+  /// No description provided for @storyboard_generateDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Generated {count} image(s)'**
+  String storyboard_generateDone(int count);
+
+  /// No description provided for @storyboard_generateFailedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} panel(s) failed'**
+  String storyboard_generateFailedCount(int count);
+
+  /// No description provided for @storyboard_generateCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get storyboard_generateCancelled;
+
+  /// No description provided for @storyboard_polygonMinPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'A polygon needs at least 3 vertices.'**
+  String get storyboard_polygonMinPoints;
+
+  /// No description provided for @storyboard_polygonEditHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag a vertex to reshape, tap a vertex to remove it, tap an edge midpoint to add one.'**
+  String get storyboard_polygonEditHint;
+
+  /// No description provided for @storyboard_backgroundPromptHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The background prompt is edited on the left; use Generate in the toolbar to render it.'**
+  String get storyboard_backgroundPromptHint;
+
+  /// No description provided for @storyboard_selectionBackground.
+  ///
+  /// In en, this message translates to:
+  /// **'Background'**
+  String get storyboard_selectionBackground;
+
+  /// No description provided for @storyboard_spacing.
+  ///
+  /// In en, this message translates to:
+  /// **'Layout spacing'**
+  String get storyboard_spacing;
+
+  /// No description provided for @storyboard_gridReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace existing panels'**
+  String get storyboard_gridReplace;
+
+  /// No description provided for @storyboard_spacingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Spacing applies to the grid generator. Use Replace existing panels there to re-lay out a page.'**
+  String get storyboard_spacingHint;
+
+  /// No description provided for @storyboard_sectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Storyboard'**
+  String get storyboard_sectionTitle;
+
+  /// No description provided for @storyboard_frameSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Frame size'**
+  String get storyboard_frameSize;
+
+  /// No description provided for @storyboard_noSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'No panel selected'**
+  String get storyboard_noSelection;
+
+  /// No description provided for @storyboard_ignoreSpacing.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignore spacing limits'**
+  String get storyboard_ignoreSpacing;
+
+  /// No description provided for @storyboard_enablePanel.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable panel'**
+  String get storyboard_enablePanel;
+
+  /// No description provided for @storyboard_disablePanel.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable panel'**
+  String get storyboard_disablePanel;
+
+  /// No description provided for @storyboard_noticeSnapped.
+  ///
+  /// In en, this message translates to:
+  /// **'Snapped to the nearest valid resolution.'**
+  String get storyboard_noticeSnapped;
+
+  /// No description provided for @storyboard_noticeClamped.
+  ///
+  /// In en, this message translates to:
+  /// **'Over the per-image limit; scaled down proportionally.'**
+  String get storyboard_noticeClamped;
+
+  /// No description provided for @storyboard_noticeUpscaled.
+  ///
+  /// In en, this message translates to:
+  /// **'This panel is small, so it generates larger and scales back.'**
+  String get storyboard_noticeUpscaled;
+
+  /// No description provided for @storyboard_restoreSpacing.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore spacing limits'**
+  String get storyboard_restoreSpacing;
+
+  /// No description provided for @storyboard_unlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock layout'**
+  String get storyboard_unlock;
+
+  /// No description provided for @storyboard_freeOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'No paid generation'**
+  String get storyboard_freeOnly;
+
+  /// No description provided for @storyboard_freeOnlyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate every panel inside the Opus free tier. Frames beyond it are generated smaller and scaled to fit, so no Anlas is spent.'**
+  String get storyboard_freeOnlyHint;
+
+  /// No description provided for @storyboard_fillLargest.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill largest space'**
+  String get storyboard_fillLargest;
+
+  /// No description provided for @storyboard_fillRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill remaining space'**
+  String get storyboard_fillRemaining;
 }
 
 class _AppLocalizationsDelegate

@@ -1173,6 +1173,19 @@ class LocalStorageService {
   Future<void> setInfiniteCanvasOpen(bool value) async {
     await setSetting(StorageKeys.infiniteCanvasOpen, value);
   }
+
+  /// 生成页中央工作区的模式存储值。
+  ///
+  /// 返回 null 表示这台设备还没有写过新键，调用方应按旧的开关键迁移一次。
+  String? getGenerationCenterMode() {
+    final value = getSetting<String>(StorageKeys.generationCenterMode);
+    if (value == null || value.isEmpty) return null;
+    return value;
+  }
+
+  Future<void> setGenerationCenterMode(String value) async {
+    await setSetting(StorageKeys.generationCenterMode, value);
+  }
 }
 
 /// LocalStorageService Provider

@@ -13413,6 +13413,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Stores source IDs and recovery fields only, never original images';
 
   @override
+  String get cloudSync_storyboard => 'Storyboard layouts';
+
+  @override
+  String get cloudSync_storyboardDescription =>
+      'Storyboard page documents: layout, prompts and relative path references — never the images themselves.';
+
+  @override
   String get cloudSync_galleryAlbums => 'Local gallery albums';
 
   @override
@@ -15502,4 +15509,350 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get storyboard_open => 'Open storyboard';
+
+  @override
+  String get storyboard_close => 'Leave storyboard';
+
+  @override
+  String get storyboard_emptyTitle => 'This page has no panels yet';
+
+  @override
+  String get storyboard_emptyHint =>
+      'Lay out a grid of panels, or draw one by dragging on the page.';
+
+  @override
+  String storyboard_pageSizeLabel(int width, int height) {
+    return 'Page $width x $height px';
+  }
+
+  @override
+  String storyboard_panelsLabel(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count panels',
+      one: '1 panel',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyboard_toolSelect => 'Select';
+
+  @override
+  String get storyboard_toolDraw => 'Draw panel';
+
+  @override
+  String get storyboard_undo => 'Undo';
+
+  @override
+  String get storyboard_redo => 'Redo';
+
+  @override
+  String get storyboard_gridTitle => 'Generate a grid of panels';
+
+  @override
+  String get storyboard_gridRows => 'Rows';
+
+  @override
+  String get storyboard_gridColumns => 'Columns';
+
+  @override
+  String get storyboard_gridMargin => 'Page margin';
+
+  @override
+  String get storyboard_gridGutter => 'Panel gap';
+
+  @override
+  String get storyboard_gridApply => 'Generate';
+
+  @override
+  String storyboard_gridCreated(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Created $count panels',
+      one: 'Created 1 panel',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyboard_gridTooSmall =>
+      'The page is too small for these rows, columns and gaps.';
+
+  @override
+  String get storyboard_pageSettings => 'Page settings';
+
+  @override
+  String get storyboard_pageWidth => 'Width';
+
+  @override
+  String get storyboard_pageHeight => 'Height';
+
+  @override
+  String get storyboard_pageSizeHint =>
+      'The page size is the final output resolution. Each panel derives its generation size from its layout box.';
+
+  @override
+  String get storyboard_background => 'Background';
+
+  @override
+  String get storyboard_backgroundNone => 'None';
+
+  @override
+  String get storyboard_backgroundColor => 'Solid color';
+
+  @override
+  String get storyboard_backgroundImage => 'Image';
+
+  @override
+  String get storyboard_chooseImage => 'Choose background image';
+
+  @override
+  String get storyboard_panelSettings => 'Panel settings';
+
+  @override
+  String get storyboard_resolution => 'Generation resolution';
+
+  @override
+  String storyboard_layoutLabel(int width, int height) {
+    return 'Layout $width × $height';
+  }
+
+  @override
+  String storyboard_requestLabel(int width, int height) {
+    return 'Request $width × $height';
+  }
+
+  @override
+  String get storyboard_fit => 'Fit';
+
+  @override
+  String get storyboard_fitCover => 'Cover';
+
+  @override
+  String get storyboard_fitContain => 'Contain';
+
+  @override
+  String get storyboard_fitStretch => 'Stretch';
+
+  @override
+  String get storyboard_variants => 'Images per run';
+
+  @override
+  String get storyboard_shape => 'Shape';
+
+  @override
+  String get storyboard_convertToPolygon => 'Convert to polygon';
+
+  @override
+  String get storyboard_editVertices => 'Edit vertices';
+
+  @override
+  String get storyboard_resetShape => 'Back to rectangle';
+
+  @override
+  String get storyboard_duplicate => 'Duplicate';
+
+  @override
+  String get storyboard_bringToFront => 'Bring to front';
+
+  @override
+  String get storyboard_sendToBack => 'Send to back';
+
+  @override
+  String get storyboard_lock => 'Lock layout';
+
+  @override
+  String get storyboard_generate => 'Generate';
+
+  @override
+  String get storyboard_presetMenu => 'Layout presets';
+
+  @override
+  String get storyboard_presetFourPortrait => '4 panels · portrait';
+
+  @override
+  String get storyboard_presetFourLandscape => '4 panels · landscape';
+
+  @override
+  String get storyboard_presetThreeStrip => '3 strips · portrait';
+
+  @override
+  String get storyboard_presetSixGrid => '6 panels · portrait';
+
+  @override
+  String get storyboard_presetClassicTop => 'Top banner · portrait';
+
+  @override
+  String get storyboard_presetLeftTall => 'Left focus · portrait';
+
+  @override
+  String get storyboard_presetTopBig => 'Wide top · portrait';
+
+  @override
+  String get storyboard_presetSquareMixed => 'Square · mixed';
+
+  @override
+  String get storyboard_export => 'Export';
+
+  @override
+  String get storyboard_exportPage => 'Export full page';
+
+  @override
+  String get storyboard_exportPanel => 'Export selected panel';
+
+  @override
+  String get storyboard_exportDone => 'Exported to gallery';
+
+  @override
+  String get storyboard_exportEmpty =>
+      'This panel has no image yet. Generate one first.';
+
+  @override
+  String get storyboard_exportFailed => 'Export failed';
+
+  @override
+  String get storyboard_preview => 'Preview';
+
+  @override
+  String get storyboard_generateScopeAll => 'All panels';
+
+  @override
+  String get storyboard_generateScopeUngenerated => 'Panels without an image';
+
+  @override
+  String get storyboard_generateScopeSelected => 'Selected panel only';
+
+  @override
+  String storyboard_generateSummary(int requests, int anlas) {
+    String _temp0 = intl.Intl.pluralLogic(
+      requests,
+      locale: localeName,
+      other: '$requests requests',
+      one: '1 request',
+    );
+    return '$_temp0 · about $anlas Anlas';
+  }
+
+  @override
+  String storyboard_generateFree(int requests) {
+    String _temp0 = intl.Intl.pluralLogic(
+      requests,
+      locale: localeName,
+      other: '$requests requests',
+      one: '1 request',
+    );
+    return '$_temp0 · no Anlas (Opus free tier)';
+  }
+
+  @override
+  String get storyboard_generateConfirm => 'Start generating';
+
+  @override
+  String get storyboard_generateNoPrompt =>
+      'Nothing to generate: fill in a panel prompt, or set one on the generation page.';
+
+  @override
+  String get storyboard_generateNothingToDo =>
+      'Every panel in this scope already has an image.';
+
+  @override
+  String storyboard_generateRunning(int order) {
+    return 'Generating panel $order';
+  }
+
+  @override
+  String get storyboard_generateCancel => 'Cancel';
+
+  @override
+  String storyboard_generateDone(int count) {
+    return 'Generated $count image(s)';
+  }
+
+  @override
+  String storyboard_generateFailedCount(int count) {
+    return '$count panel(s) failed';
+  }
+
+  @override
+  String get storyboard_generateCancelled => 'Cancelled';
+
+  @override
+  String get storyboard_polygonMinPoints =>
+      'A polygon needs at least 3 vertices.';
+
+  @override
+  String get storyboard_polygonEditHint =>
+      'Drag a vertex to reshape, tap a vertex to remove it, tap an edge midpoint to add one.';
+
+  @override
+  String get storyboard_backgroundPromptHint =>
+      'The background prompt is edited on the left; use Generate in the toolbar to render it.';
+
+  @override
+  String get storyboard_selectionBackground => 'Background';
+
+  @override
+  String get storyboard_spacing => 'Layout spacing';
+
+  @override
+  String get storyboard_gridReplace => 'Replace existing panels';
+
+  @override
+  String get storyboard_spacingHint =>
+      'Spacing applies to the grid generator. Use Replace existing panels there to re-lay out a page.';
+
+  @override
+  String get storyboard_sectionTitle => 'Storyboard';
+
+  @override
+  String get storyboard_frameSize => 'Frame size';
+
+  @override
+  String get storyboard_noSelection => 'No panel selected';
+
+  @override
+  String get storyboard_ignoreSpacing => 'Ignore spacing limits';
+
+  @override
+  String get storyboard_enablePanel => 'Enable panel';
+
+  @override
+  String get storyboard_disablePanel => 'Disable panel';
+
+  @override
+  String get storyboard_noticeSnapped =>
+      'Snapped to the nearest valid resolution.';
+
+  @override
+  String get storyboard_noticeClamped =>
+      'Over the per-image limit; scaled down proportionally.';
+
+  @override
+  String get storyboard_noticeUpscaled =>
+      'This panel is small, so it generates larger and scales back.';
+
+  @override
+  String get storyboard_restoreSpacing => 'Restore spacing limits';
+
+  @override
+  String get storyboard_unlock => 'Unlock layout';
+
+  @override
+  String get storyboard_freeOnly => 'No paid generation';
+
+  @override
+  String get storyboard_freeOnlyHint =>
+      'Generate every panel inside the Opus free tier. Frames beyond it are generated smaller and scaled to fit, so no Anlas is spent.';
+
+  @override
+  String get storyboard_fillLargest => 'Fill largest space';
+
+  @override
+  String get storyboard_fillRemaining => 'Fill remaining space';
 }

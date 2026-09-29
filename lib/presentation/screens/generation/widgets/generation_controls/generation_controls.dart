@@ -7,10 +7,16 @@ import 'package:go_router/go_router.dart';
 
 import 'package:nai_launcher/core/platform/platform_capabilities.dart';
 import 'package:nai_launcher/core/utils/localization_extension.dart';
+import 'package:nai_launcher/presentation/providers/generation/generation_center_mode_provider.dart';
 import 'package:nai_launcher/presentation/providers/generation/image_workflow_controller.dart';
 import 'package:nai_launcher/presentation/providers/auth_provider.dart';
 import 'package:nai_launcher/presentation/providers/image_generation_provider.dart';
 import 'package:nai_launcher/presentation/providers/krita/krita_bridge_notifier.dart';
+import 'package:nai_launcher/presentation/providers/storyboard/storyboard_document_controller.dart';
+import 'package:nai_launcher/presentation/providers/storyboard/storyboard_editor_bridge.dart';
+import 'package:nai_launcher/presentation/providers/storyboard/storyboard_generation_runner.dart';
+import 'package:nai_launcher/presentation/providers/storyboard/storyboard_interaction_provider.dart';
+import 'package:nai_launcher/presentation/screens/generation/storyboard/storyboard_generate_dialog.dart';
 import 'package:nai_launcher/presentation/utils/asset_protection_guard.dart';
 import 'package:nai_launcher/presentation/widgets/common/app_toast.dart';
 import 'package:nai_launcher/presentation/widgets/common/draggable_number_input.dart';
@@ -50,8 +56,18 @@ class _GenerationControlsState extends ConsumerState<GenerationControls> {
     final isLauncherGenerating = generationState.isGenerating;
     final isGenerating = isLauncherGenerating || isKritaGenerating;
 
+    // 分镜模式接管：左侧生成按钮改跑分镜执行器，运行中也从按钮取消。
+    final isStoryboardMode =
+        ref.watch(generationCenterModeControllerProvider) ==
+        GenerationCenterMode.storyboard;
+    final isStoryboardGenerating =
+        isStoryboardMode &&
+        ref.watch(
+          storyboardGenerationRunnerProvider.select((state) => state.isRunning),
+        );
+
     // 生成中常驻显示取消入口（与移动端一致）
-    final showCancel = isLauncherGenerating;
+    final showCancel = isLauncherGenerating || isStoryboardGenerating;
 
     final randomMode = ref.watch(randomPromptModeProvider);
     final showRandomTools = ref.watch(randomPromptToolsVisibilityProvider);
@@ -97,13 +113,18 @@ class _GenerationControlsState extends ConsumerState<GenerationControls> {
         key: const ValueKey('generation-footer-primary-action'),
         child: GenerateButtonWithCost(
           height: 48,
-          isGenerating: isGenerating,
+          isGenerating: isGenerating || isStoryboardGenerating,
           showCancel: showCancel,
           generationState: generationState,
           cooldownRemainingSeconds: cooldownState.remainingSeconds,
           onGenerate: () => unawaited(_handleGenerate(context, ref)),
-          onCancel: () =>
-              ref.read(imageGenerationNotifierProvider.notifier).cancel(),
+          onCancel: () {
+            if (isStoryboardGenerating) {
+              ref.read(storyboardGenerationRunnerProvider.notifier).cancel();
+            } else {
+              ref.read(imageGenerationNotifierProvider.notifier).cancel();
+            }
+          },
           onSkipCurrent: () => ref
               .read(imageGenerationNotifierProvider.notifier)
               .skipCurrentRequest(),
@@ -117,6 +138,13 @@ class _GenerationControlsState extends ConsumerState<GenerationControls> {
   }
 
   Future<void> _handleGenerate(BuildContext context, WidgetRef ref) async {
+    // 分镜模式接管：左侧生成分派给分镜执行器，普通生成流程不走这里。
+    if (ref.read(generationCenterModeControllerProvider) ==
+        GenerationCenterMode.storyboard) {
+      await _handleStoryboardGenerate(context, ref);
+      return;
+    }
+
     if (!ref.read(authNotifierProvider).isAuthenticated) {
       await context.pushNamed('login');
       return;
@@ -138,6 +166,69 @@ class _GenerationControlsState extends ConsumerState<GenerationControls> {
 
     // 生成（抽卡模式逻辑在 generate 方法内部处理）
     ref.read(imageGenerationNotifierProvider.notifier).generate(params);
+  }
+
+  /// 分镜模式下的左侧生成。
+  ///
+  /// 选中分镜 → 先把编辑器写回该分镜快照，再只生成它；选中背景 → 生成页面
+  /// 背景；什么都没选 → 打开批量生成对话框选范围。流式预览由画布落在对应
+  /// 分镜格里。
+  Future<void> _handleStoryboardGenerate(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    if (!ref.read(authNotifierProvider).isAuthenticated) {
+      await context.pushNamed('login');
+      return;
+    }
+    final runner = ref.read(storyboardGenerationRunnerProvider.notifier);
+    if (runner.isRunning) return;
+    final page = ref
+        .read(storyboardDocumentControllerProvider)
+        .valueOrNull
+        ?.activePage;
+    if (page == null) return;
+    final interaction = ref.read(storyboardInteractionProvider);
+    final bridge = ref.read(storyboardEditorBridgeProvider);
+
+    if (interaction.backgroundSelected) {
+      var params = ref.read(generationParamsNotifierProvider);
+      if (params.prompt.trim().isEmpty) {
+        AppToast.warning(context, context.l10n.generation_pleaseInputPrompt);
+        return;
+      }
+      final confirmed = await AssetProtectionGuard.confirmHighAnlasCost(
+        context: context,
+        ref: ref,
+      );
+      if (!confirmed || !context.mounted) return;
+      await bridge.captureBackground();
+      params = ref.read(generationParamsNotifierProvider);
+      unawaited(runner.start(page: page, base: params, background: true));
+      return;
+    }
+
+    final panelId = interaction.selectedPanelId;
+    if (panelId == null) {
+      // 没有选中对象：交给批量生成对话框选范围。
+      await showStoryboardGenerateDialog(context, ref, page);
+      return;
+    }
+
+    var params = ref.read(generationParamsNotifierProvider);
+    if (params.prompt.trim().isEmpty) {
+      AppToast.warning(context, context.l10n.generation_pleaseInputPrompt);
+      return;
+    }
+    final confirmed = await AssetProtectionGuard.confirmHighAnlasCost(
+      context: context,
+      ref: ref,
+    );
+    if (!confirmed || !context.mounted) return;
+    // 生成前先把编辑器写回快照：刚改过的提示词/画幅/角色必须进入本次请求。
+    await bridge.captureIntoPanel(panelId);
+    params = ref.read(generationParamsNotifierProvider);
+    unawaited(runner.start(page: page, base: params, onlyPanelIds: [panelId]));
   }
 }
 

@@ -137,6 +137,15 @@ class _CloudSyncContentSelectionBodyState
                         _selection.copyWith(includeGalleryAlbums: value),
                       ),
                     ),
+                    _toggle(
+                      key: 'storyboard',
+                      title: context.l10n.cloudSync_storyboard,
+                      subtitle: context.l10n.cloudSync_storyboardDescription,
+                      value: _selection.includeStoryboard,
+                      onChanged: (value) => _update(
+                        _selection.copyWith(includeStoryboard: value),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 24),

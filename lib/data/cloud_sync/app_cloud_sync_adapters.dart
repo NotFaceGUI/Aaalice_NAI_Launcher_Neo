@@ -12,6 +12,7 @@ import '../models/prompt/tag_favorite.dart';
 import '../models/prompt/tag_template.dart';
 import '../repositories/gallery_folder_repository.dart';
 import '../services/precise_ref_library_storage_service.dart';
+import '../services/storyboard/storyboard_repository.dart';
 import '../services/tag_library_io_service.dart';
 import '../services/vibe_library_storage_service.dart';
 import '../repositories/online_gallery_local_favorites_repository.dart';
@@ -25,6 +26,7 @@ import 'gallery_album_cloud_sync_adapter.dart';
 import 'online_favorites_cloud_sync_adapter.dart';
 import 'portable_sync_record.dart';
 import 'precise_ref_cloud_sync_adapter.dart';
+import 'storyboard_cloud_sync_adapter.dart';
 import 'strict_hive_cloud_sync_adapter.dart';
 import 'vibe_library_cloud_sync_adapter.dart';
 import 'user_tag_library_cloud_sync_adapter.dart';
@@ -183,6 +185,11 @@ CloudSyncDataAdapterRegistry createAppCloudSyncAdapterRegistry({
     ),
     VibeLibraryCloudSyncAdapter(vibeLibrary),
     PreciseRefCloudSyncAdapter(preciseRefLibrary),
+    StoryboardDocumentCloudSyncAdapter(
+      loadDocument: () => StoryboardRepository().load(),
+      saveDocument: (document) => StoryboardRepository().save(document),
+      include: contentSelection.includeStoryboard,
+    ),
     FfdkjInstallIntentAdapter(
       isInstalled: isFfdkjInstalled,
       recordPendingIntent: recordPendingFfdkjInstallIntent,

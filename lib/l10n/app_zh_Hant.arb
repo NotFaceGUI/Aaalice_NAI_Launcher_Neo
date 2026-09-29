@@ -6740,6 +6740,8 @@
   "cloudSync_onlineGallerySettingsDescription": "黑名單、篩選和使用者分類",
   "cloudSync_onlineGalleryFavorites": "線上畫廊收藏",
   "cloudSync_onlineGalleryFavoritesDescription": "僅儲存來源 ID 與恢復所需資訊，不儲存原圖",
+  "cloudSync_storyboard": "漫畫分鏡排版",
+  "cloudSync_storyboardDescription": "分鏡頁面文檔：版面、提示詞與相對路徑引用，不含任何圖片本體。",
   "cloudSync_galleryAlbums": "本機畫廊相簿",
   "cloudSync_galleryAlbumsDescription": "只儲存相簿結構與圖片引用，不上傳原圖",
   "cloudSync_optionalResources": "可選資源（預設關閉）",
@@ -7402,5 +7404,183 @@
         "type": "int"
       }
     }
-  }
+  },
+  "storyboard_open": "開啟分鏡",
+  "storyboard_close": "離開分鏡",
+  "storyboard_emptyTitle": "這一頁還沒有分鏡",
+  "storyboard_emptyHint": "用網格快速排出分鏡，或直接在頁面上拖出一個。",
+  "storyboard_pageSizeLabel": "頁面 {width} x {height} px",
+  "@storyboard_pageSizeLabel": {
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_panelsLabel": "{count} 個分鏡",
+  "@storyboard_panelsLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_toolSelect": "選取",
+  "storyboard_toolDraw": "拉框新增",
+  "storyboard_undo": "復原",
+  "storyboard_redo": "重做",
+  "storyboard_gridTitle": "網格生成分鏡",
+  "storyboard_gridRows": "行數",
+  "storyboard_gridColumns": "列數",
+  "storyboard_gridMargin": "頁邊距",
+  "storyboard_gridGutter": "分鏡間距",
+  "storyboard_gridApply": "生成",
+  "storyboard_gridCreated": "已生成 {count} 個分鏡",
+  "@storyboard_gridCreated": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_gridTooSmall": "目前頁面放不下這組行列與間距，請減少行列數或邊距。",
+  "storyboard_pageSettings": "頁面設定",
+  "storyboard_pageWidth": "寬",
+  "storyboard_pageHeight": "高",
+  "storyboard_pageSizeHint": "頁面尺寸就是最終輸出解析度；每個分鏡依自己的版面框推導生成解析度。",
+  "storyboard_background": "背景",
+  "storyboard_backgroundNone": "不繪製",
+  "storyboard_backgroundColor": "純色",
+  "storyboard_backgroundImage": "圖片",
+  "storyboard_chooseImage": "選擇背景圖",
+  "storyboard_panelSettings": "分鏡設定",
+  "storyboard_resolution": "生成解析度",
+  "storyboard_layoutLabel": "版面 {width} × {height}",
+  "@storyboard_layoutLabel": {
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_requestLabel": "請求 {width} × {height}",
+  "@storyboard_requestLabel": {
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_fit": "適配方式",
+  "storyboard_fitCover": "填滿並裁切",
+  "storyboard_fitContain": "完整放入",
+  "storyboard_fitStretch": "拉伸",
+  "storyboard_variants": "生成張數",
+  "storyboard_shape": "形狀",
+  "storyboard_convertToPolygon": "轉為多邊形",
+  "storyboard_editVertices": "編輯頂點",
+  "storyboard_resetShape": "恢復矩形",
+  "storyboard_duplicate": "複製",
+  "storyboard_bringToFront": "置頂",
+  "storyboard_sendToBack": "置底",
+  "storyboard_lock": "鎖定版面",
+  "storyboard_generate": "生成",
+  "storyboard_presetMenu": "分鏡預設",
+  "storyboard_presetFourPortrait": "四格 · 豎版",
+  "storyboard_presetFourLandscape": "四格 · 橫版",
+  "storyboard_presetThreeStrip": "三條 · 豎版",
+  "storyboard_presetSixGrid": "六格 · 豎版",
+  "storyboard_presetClassicTop": "上通欄 · 豎版",
+  "storyboard_presetLeftTall": "左大右分 · 豎版",
+  "storyboard_presetTopBig": "上大下三 · 豎版",
+  "storyboard_presetSquareMixed": "方版 · 混排",
+  "storyboard_export": "匯出",
+  "storyboard_exportPage": "匯出整頁合成",
+  "storyboard_exportPanel": "匯出選取分鏡",
+  "storyboard_exportDone": "已匯出到圖庫",
+  "storyboard_exportEmpty": "該分鏡還沒有出圖，先生成再匯出。",
+  "storyboard_exportFailed": "匯出失敗",
+  "storyboard_preview": "預覽",
+  "storyboard_generateScopeAll": "全部分鏡",
+  "storyboard_generateScopeUngenerated": "僅未出圖的分鏡",
+  "storyboard_generateScopeSelected": "僅選取的分鏡",
+  "storyboard_generateSummary": "{requests} 次請求 · 預計 {anlas} Anlas",
+  "@storyboard_generateSummary": {
+    "placeholders": {
+      "requests": {
+        "type": "int"
+      },
+      "anlas": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateFree": "{requests} 次請求 · 不消耗 Anlas（Opus 免費額度）",
+  "@storyboard_generateFree": {
+    "placeholders": {
+      "requests": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateConfirm": "開始生成",
+  "storyboard_generateNoPrompt": "沒有可生成的分鏡：請先填寫分鏡提示詞，或在生成頁設定提示詞。",
+  "storyboard_generateNothingToDo": "該範圍內的分鏡都已有圖。",
+  "storyboard_generateRunning": "正在生成第 {order} 個分鏡",
+  "@storyboard_generateRunning": {
+    "placeholders": {
+      "order": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateCancel": "取消",
+  "storyboard_generateDone": "已生成 {count} 張",
+  "@storyboard_generateDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateFailedCount": "{count} 個分鏡失敗",
+  "@storyboard_generateFailedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateCancelled": "已取消",
+  "storyboard_polygonMinPoints": "多邊形至少需要 3 個頂點。",
+  "storyboard_polygonEditHint": "拖動頂點改形狀，點擊頂點刪除，點擊邊中點新增。",
+  "storyboard_backgroundPromptHint": "背景提示詞在左側編輯，用工具列的「生成」出圖。",
+  "storyboard_selectionBackground": "背景",
+  "storyboard_spacing": "排版間距",
+  "storyboard_gridReplace": "取代現有分鏡",
+  "storyboard_spacingHint": "間距供網格生成器使用；要用新間距重排整頁，請在網格中勾選「取代現有分鏡」。",
+  "storyboard_sectionTitle": "分鏡設定",
+  "storyboard_frameSize": "畫幅大小",
+  "storyboard_noSelection": "未選取分鏡",
+  "storyboard_ignoreSpacing": "不受間距約束",
+  "storyboard_enablePanel": "啟用分鏡",
+  "storyboard_disablePanel": "停用分鏡",
+  "storyboard_noticeSnapped": "已吸附到最接近的合法解析度。",
+  "storyboard_noticeClamped": "超過單張上限，已依比例縮小。",
+  "storyboard_noticeUpscaled": "該分鏡版面較小，會放大生成後再縮回使用。",
+  "storyboard_restoreSpacing": "恢復間距約束",
+  "storyboard_unlock": "解鎖版面",
+  "storyboard_freeOnly": "禁止收費",
+  "storyboard_freeOnlyHint": "所有分鏡都在 Opus 免費檔內出圖；超出免費範圍的畫幅自動縮小生成後再貼合，不會消耗 Anlas。",
+  "storyboard_fillLargest": "填充最大空白",
+  "storyboard_fillRemaining": "佔滿剩餘空間"
 }

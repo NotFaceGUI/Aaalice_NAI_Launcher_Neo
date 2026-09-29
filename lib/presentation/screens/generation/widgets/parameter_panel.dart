@@ -6,6 +6,7 @@ import '../../../providers/image_generation_provider.dart';
 import '../../../widgets/character/inline_character_section.dart';
 import '../../../widgets/common/draggable_number_input.dart';
 import '../../../widgets/generation/auto_save_toggle_chip.dart';
+import '../../../widgets/storyboard/storyboard_settings_section.dart';
 import 'generation_controls/batch_settings_button.dart';
 import 'generation_param_sections.dart';
 import 'img2img_panel.dart';
@@ -35,7 +36,6 @@ class ParameterPanel extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.all(12),
       children: [
-        // 模型选择
         const ModelSection(),
 
         const SizedBox(height: 16),
@@ -77,6 +77,9 @@ class ParameterPanel extends ConsumerWidget {
           const InlineCharacterSection(),
           const SizedBox(height: 8),
         ],
+
+        // 分镜设置紧跟角色；只在中央工作区处于分镜模式时渲染，其余模式不占位。
+        const StoryboardSettingsSection(),
 
         // 反推面板
         const ReversePromptPanel(),

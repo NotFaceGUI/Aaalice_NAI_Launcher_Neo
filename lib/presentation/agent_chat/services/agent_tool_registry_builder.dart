@@ -33,6 +33,7 @@ import 'manual_inpaint_toolbox.dart';
 import 'prompt_toolbox.dart';
 import 'queue_toolbox.dart';
 import 'reference_library_toolbox.dart';
+import 'storyboard_toolbox.dart';
 import 'tag_toolbox.dart';
 import 'tag_library_toolbox.dart';
 import 'web_access_toolbox.dart';
@@ -224,6 +225,7 @@ class AgentToolRegistryBuilder {
       ...GenerationImageWorkflowToolbox(workflowService).tools(),
       ...GenerationImageFavoriteToolbox(_ref).tools(),
       ...ImageResourceActionToolbox(imageActionService).tools(),
+      ...StoryboardToolbox(_ref).tools(),
       if (webAccessEnabled)
         ...WebAccessToolbox(
           config: _ref

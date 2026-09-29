@@ -10,6 +10,7 @@ enum AgentPermissionDomain {
   generationQueue,
   prompt,
   generation,
+  storyboard,
   settings,
   status,
   skills,

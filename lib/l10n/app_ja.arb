@@ -6418,6 +6418,8 @@
   "cloudSync_onlineGallerySettingsDescription": "ブラックリスト、フィルター、ユーザー分類",
   "cloudSync_onlineGalleryFavorites": "オンラインギャラリーのお気に入り",
   "cloudSync_onlineGalleryFavoritesDescription": "ソース ID と復元に必要な情報のみを保存し、原画像は保存しません",
+  "cloudSync_storyboard": "コミックコマ割り",
+  "cloudSync_storyboardDescription": "コマ割りページ文書：レイアウト・プロンプト・相対パス参照のみ。画像本体は含みません。",
   "cloudSync_galleryAlbums": "ローカルギャラリーのアルバム",
   "cloudSync_galleryAlbumsDescription": "アルバム構造と画像参照のみを保存し、原画像はアップロードしません",
   "cloudSync_optionalResources": "任意のリソース（既定はオフ）",
@@ -7080,5 +7082,183 @@
         "type": "int"
       }
     }
-  }
+  },
+  "storyboard_open": "絵コンテを開く",
+  "storyboard_close": "絵コンテを閉じる",
+  "storyboard_emptyTitle": "このページにはまだコマがありません",
+  "storyboard_emptyHint": "グリッドでコマをまとめて配置するか、ページ上でドラッグして作成します。",
+  "storyboard_pageSizeLabel": "ページ {width} x {height} px",
+  "@storyboard_pageSizeLabel": {
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_panelsLabel": "{count} コマ",
+  "@storyboard_panelsLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_toolSelect": "選択",
+  "storyboard_toolDraw": "コマを描く",
+  "storyboard_undo": "元に戻す",
+  "storyboard_redo": "やり直す",
+  "storyboard_gridTitle": "グリッドでコマを作成",
+  "storyboard_gridRows": "行数",
+  "storyboard_gridColumns": "列数",
+  "storyboard_gridMargin": "ページ余白",
+  "storyboard_gridGutter": "コマ間隔",
+  "storyboard_gridApply": "生成",
+  "storyboard_gridCreated": "{count} 個のコマを作成しました",
+  "@storyboard_gridCreated": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_gridTooSmall": "この行数・列数と間隔を収めるにはページが小さすぎます。",
+  "storyboard_pageSettings": "ページ設定",
+  "storyboard_pageWidth": "幅",
+  "storyboard_pageHeight": "高さ",
+  "storyboard_pageSizeHint": "ページサイズが最終出力解像度です。各コマは自身のレイアウト枠から生成解像度を求めます。",
+  "storyboard_background": "背景",
+  "storyboard_backgroundNone": "なし",
+  "storyboard_backgroundColor": "単色",
+  "storyboard_backgroundImage": "画像",
+  "storyboard_chooseImage": "背景画像を選択",
+  "storyboard_panelSettings": "コマ設定",
+  "storyboard_resolution": "生成解像度",
+  "storyboard_layoutLabel": "レイアウト {width} × {height}",
+  "@storyboard_layoutLabel": {
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_requestLabel": "リクエスト {width} × {height}",
+  "@storyboard_requestLabel": {
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_fit": "フィット",
+  "storyboard_fitCover": "覆って切り抜き",
+  "storyboard_fitContain": "全体を収める",
+  "storyboard_fitStretch": "引き伸ばし",
+  "storyboard_variants": "生成枚数",
+  "storyboard_shape": "形状",
+  "storyboard_convertToPolygon": "多角形に変換",
+  "storyboard_editVertices": "頂点を編集",
+  "storyboard_resetShape": "矩形に戻す",
+  "storyboard_duplicate": "複製",
+  "storyboard_bringToFront": "最前面へ",
+  "storyboard_sendToBack": "最背面へ",
+  "storyboard_lock": "レイアウトを固定",
+  "storyboard_generate": "生成",
+  "storyboard_presetMenu": "コマ割りプリセット",
+  "storyboard_presetFourPortrait": "4コマ・縦",
+  "storyboard_presetFourLandscape": "4コマ・横",
+  "storyboard_presetThreeStrip": "3分割・縦",
+  "storyboard_presetSixGrid": "6コマ・縦",
+  "storyboard_presetClassicTop": "上ワイド・縦",
+  "storyboard_presetLeftTall": "左大・縦",
+  "storyboard_presetTopBig": "上大・縦",
+  "storyboard_presetSquareMixed": "正方形・ミックス",
+  "storyboard_export": "書き出し",
+  "storyboard_exportPage": "ページ全体を書き出す",
+  "storyboard_exportPanel": "選択中のコマを書き出す",
+  "storyboard_exportDone": "ギャラリーに書き出しました",
+  "storyboard_exportEmpty": "このコマにはまだ画像がありません。先に生成してください。",
+  "storyboard_exportFailed": "書き出しに失敗しました",
+  "storyboard_preview": "プレビュー",
+  "storyboard_generateScopeAll": "すべてのコマ",
+  "storyboard_generateScopeUngenerated": "未生成のコマのみ",
+  "storyboard_generateScopeSelected": "選択中のコマのみ",
+  "storyboard_generateSummary": "{requests} リクエスト · 約 {anlas} Anlas",
+  "@storyboard_generateSummary": {
+    "placeholders": {
+      "requests": {
+        "type": "int"
+      },
+      "anlas": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateFree": "{requests} リクエスト · Anlas 消費なし（Opus 無料枠）",
+  "@storyboard_generateFree": {
+    "placeholders": {
+      "requests": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateConfirm": "生成を開始",
+  "storyboard_generateNoPrompt": "生成できるコマがありません。コマのプロンプトを入力するか、生成ページでプロンプトを設定してください。",
+  "storyboard_generateNothingToDo": "この範囲のコマにはすでに画像があります。",
+  "storyboard_generateRunning": "コマ {order} を生成中",
+  "@storyboard_generateRunning": {
+    "placeholders": {
+      "order": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateCancel": "キャンセル",
+  "storyboard_generateDone": "{count} 枚生成しました",
+  "@storyboard_generateDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateFailedCount": "{count} 個のコマが失敗しました",
+  "@storyboard_generateFailedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storyboard_generateCancelled": "キャンセルしました",
+  "storyboard_polygonMinPoints": "多角形には 3 つ以上の頂点が必要です。",
+  "storyboard_polygonEditHint": "頂点をドラッグで形を変更、頂点をクリックで削除、辺の中点をクリックで追加。",
+  "storyboard_backgroundPromptHint": "背景のプロンプトは左側で編集し、ツールバーの「生成」で出力します。",
+  "storyboard_selectionBackground": "背景",
+  "storyboard_spacing": "レイアウト間隔",
+  "storyboard_gridReplace": "既存のコマを置き換える",
+  "storyboard_spacingHint": "間隔はグリッド生成で使われます。新しい間隔でページを組み直すには「既存のコマを置き換える」を選んでください。",
+  "storyboard_sectionTitle": "絵コンテ設定",
+  "storyboard_frameSize": "画面サイズ",
+  "storyboard_noSelection": "コマが選択されていません",
+  "storyboard_ignoreSpacing": "間隔制限を無視",
+  "storyboard_enablePanel": "コマを有効化",
+  "storyboard_disablePanel": "コマを無効化",
+  "storyboard_noticeSnapped": "最も近い有効な解像度に合わせました。",
+  "storyboard_noticeClamped": "1 枚あたりの上限を超えるため、比例縮小しました。",
+  "storyboard_noticeUpscaled": "コマが小さいため、大きめに生成して縮小します。",
+  "storyboard_restoreSpacing": "間隔制限を戻す",
+  "storyboard_unlock": "レイアウトの固定を解除",
+  "storyboard_freeOnly": "課金なし",
+  "storyboard_freeOnlyHint": "すべてのコマを Opus 無料枠内で生成します。枠を超える部分は小さめに生成してから引き伸ばすため、Anlas は消費しません。",
+  "storyboard_fillLargest": "最大余白を埋める",
+  "storyboard_fillRemaining": "残りを埋める"
 }

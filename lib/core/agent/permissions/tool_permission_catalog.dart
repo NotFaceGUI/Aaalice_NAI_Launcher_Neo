@@ -147,6 +147,7 @@ AgentToolPermissionDescriptor describeAgentToolPermission(String toolName) {
     'submit_manual_inpaint_draft',
     'start_generation_queue',
     'resume_generation_queue',
+    'generate_storyboard_panels',
   };
   const destructive = {
     'delete_fixed_tag',
@@ -172,6 +173,8 @@ AgentToolPermissionDescriptor describeAgentToolPermission(String toolName) {
     'save_generated_image' => AgentPermissionDomain.file,
     'copy_generated_image_to_clipboard' ||
     'send_generated_image_to_krita' => AgentPermissionDomain.externalActions,
+    String() when toolName.contains('storyboard') =>
+      AgentPermissionDomain.storyboard,
     String()
         when toolName.contains('fixed_tag') ||
             toolName.contains('tag_library') =>

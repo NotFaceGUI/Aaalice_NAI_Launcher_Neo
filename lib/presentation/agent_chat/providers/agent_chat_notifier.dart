@@ -50,6 +50,7 @@ import '../services/agent_resource_resolver.dart';
 import '../services/generation_preparation_runtime.dart';
 import '../services/manual_inpaint_toolbox.dart';
 import '../services/queue_toolbox.dart';
+import '../services/storyboard_toolbox.dart';
 import '../services/agent_tool_permission_controller.dart';
 import '../services/agent_tool_registry_builder.dart';
 import '../services/agent_user_question_controller.dart';
@@ -936,6 +937,16 @@ class AgentChatNotifier extends StateNotifier<AgentChatState> {
         toolName == 'resume_generation_queue') {
       final id = args['queue_preparation_id'];
       return id is String ? _queueControlRuntime.get(id)?.estimatedAnlas : null;
+    }
+    if (toolName == 'generate_storyboard_panels') {
+      final scope = args['scope'] is String
+          ? args['scope'] as String
+          : (args['panel_id'] is String ? 'selected' : 'ungenerated');
+      return StoryboardToolbox.estimatePlannedAnlas(
+        _ref,
+        panelId: args['panel_id'] is String ? args['panel_id'] as String : null,
+        scope: scope,
+      );
     }
     return null;
   }

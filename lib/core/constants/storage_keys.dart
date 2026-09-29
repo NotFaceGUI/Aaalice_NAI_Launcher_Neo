@@ -85,6 +85,9 @@ class StorageKeys {
   static const String infiniteCanvasViewport = 'infinite_canvas_viewport_v1';
   static const String infiniteCanvasAutoImport = 'infinite_canvas_auto_import';
   static const String infiniteCanvasOpen = 'infinite_canvas_open';
+  // 中央工作区当前呈现的模式（preview / canvas / storyboard）。
+  // infiniteCanvasOpen 只在新键缺失时用于首次迁移，之后不再写入。
+  static const String generationCenterMode = 'generation_center_mode';
   // Mouse interaction preference stays local to the device's input setup.
   static const String imageComparisonFollowMouse =
       'image_comparison_follow_mouse';

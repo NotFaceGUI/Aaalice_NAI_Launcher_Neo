@@ -12840,6 +12840,13 @@ class AppLocalizationsZh extends AppLocalizations {
       '仅保存来源 ID 与恢复所需信息，不保存原图';
 
   @override
+  String get cloudSync_storyboard => '漫画分镜排版';
+
+  @override
+  String get cloudSync_storyboardDescription =>
+      '分镜页面文档：版面、提示词与相对路径引用，不含任何图片本体。';
+
+  @override
   String get cloudSync_galleryAlbums => '本地画廊相册';
 
   @override
@@ -14812,6 +14819,315 @@ class AppLocalizationsZh extends AppLocalizations {
   String infinite_canvas_boardNodeCount(int count) {
     return '$count 个节点';
   }
+
+  @override
+  String get storyboard_open => '打开分镜';
+
+  @override
+  String get storyboard_close => '退出分镜';
+
+  @override
+  String get storyboard_emptyTitle => '这一页还没有分镜';
+
+  @override
+  String get storyboard_emptyHint => '用网格快速排出分镜，或直接在页面上拖出一个。';
+
+  @override
+  String storyboard_pageSizeLabel(int width, int height) {
+    return '页面 $width x $height px';
+  }
+
+  @override
+  String storyboard_panelsLabel(int count) {
+    return '$count 个分镜';
+  }
+
+  @override
+  String get storyboard_toolSelect => '选择';
+
+  @override
+  String get storyboard_toolDraw => '拉框新建';
+
+  @override
+  String get storyboard_undo => '撤销';
+
+  @override
+  String get storyboard_redo => '重做';
+
+  @override
+  String get storyboard_gridTitle => '网格生成分镜';
+
+  @override
+  String get storyboard_gridRows => '行数';
+
+  @override
+  String get storyboard_gridColumns => '列数';
+
+  @override
+  String get storyboard_gridMargin => '页边距';
+
+  @override
+  String get storyboard_gridGutter => '分镜间距';
+
+  @override
+  String get storyboard_gridApply => '生成';
+
+  @override
+  String storyboard_gridCreated(int count) {
+    return '已生成 $count 个分镜';
+  }
+
+  @override
+  String get storyboard_gridTooSmall => '当前页面放不下这组行列与间距，请减少行列数或边距。';
+
+  @override
+  String get storyboard_pageSettings => '页面设置';
+
+  @override
+  String get storyboard_pageWidth => '宽';
+
+  @override
+  String get storyboard_pageHeight => '高';
+
+  @override
+  String get storyboard_pageSizeHint => '页面尺寸就是最终输出分辨率；每个分镜按自己的版面框推导生成分辨率。';
+
+  @override
+  String get storyboard_background => '背景';
+
+  @override
+  String get storyboard_backgroundNone => '不绘制';
+
+  @override
+  String get storyboard_backgroundColor => '纯色';
+
+  @override
+  String get storyboard_backgroundImage => '图片';
+
+  @override
+  String get storyboard_chooseImage => '选择背景图';
+
+  @override
+  String get storyboard_panelSettings => '分镜设置';
+
+  @override
+  String get storyboard_resolution => '生成分辨率';
+
+  @override
+  String storyboard_layoutLabel(int width, int height) {
+    return '版面 $width × $height';
+  }
+
+  @override
+  String storyboard_requestLabel(int width, int height) {
+    return '请求 $width × $height';
+  }
+
+  @override
+  String get storyboard_fit => '适配方式';
+
+  @override
+  String get storyboard_fitCover => '填满并裁切';
+
+  @override
+  String get storyboard_fitContain => '完整放入';
+
+  @override
+  String get storyboard_fitStretch => '拉伸';
+
+  @override
+  String get storyboard_variants => '生成张数';
+
+  @override
+  String get storyboard_shape => '形状';
+
+  @override
+  String get storyboard_convertToPolygon => '转为多边形';
+
+  @override
+  String get storyboard_editVertices => '编辑顶点';
+
+  @override
+  String get storyboard_resetShape => '恢复矩形';
+
+  @override
+  String get storyboard_duplicate => '复制';
+
+  @override
+  String get storyboard_bringToFront => '置顶';
+
+  @override
+  String get storyboard_sendToBack => '置底';
+
+  @override
+  String get storyboard_lock => '锁定版面';
+
+  @override
+  String get storyboard_generate => '生成';
+
+  @override
+  String get storyboard_presetMenu => '分镜预设';
+
+  @override
+  String get storyboard_presetFourPortrait => '四格 · 竖版';
+
+  @override
+  String get storyboard_presetFourLandscape => '四格 · 横版';
+
+  @override
+  String get storyboard_presetThreeStrip => '三条 · 竖版';
+
+  @override
+  String get storyboard_presetSixGrid => '六格 · 竖版';
+
+  @override
+  String get storyboard_presetClassicTop => '上通栏 · 竖版';
+
+  @override
+  String get storyboard_presetLeftTall => '左大右分 · 竖版';
+
+  @override
+  String get storyboard_presetTopBig => '上大下三 · 竖版';
+
+  @override
+  String get storyboard_presetSquareMixed => '方版 · 混排';
+
+  @override
+  String get storyboard_export => '导出';
+
+  @override
+  String get storyboard_exportPage => '导出整页合成';
+
+  @override
+  String get storyboard_exportPanel => '导出选中分镜';
+
+  @override
+  String get storyboard_exportDone => '已导出到图库';
+
+  @override
+  String get storyboard_exportEmpty => '该分镜还没有出图，先生成再导出。';
+
+  @override
+  String get storyboard_exportFailed => '导出失败';
+
+  @override
+  String get storyboard_preview => '预览';
+
+  @override
+  String get storyboard_generateScopeAll => '全部分镜';
+
+  @override
+  String get storyboard_generateScopeUngenerated => '仅未出图的分镜';
+
+  @override
+  String get storyboard_generateScopeSelected => '仅选中的分镜';
+
+  @override
+  String storyboard_generateSummary(int requests, int anlas) {
+    return '$requests 次请求 · 预计 $anlas Anlas';
+  }
+
+  @override
+  String storyboard_generateFree(int requests) {
+    return '$requests 次请求 · 不消耗 Anlas（Opus 免费额度）';
+  }
+
+  @override
+  String get storyboard_generateConfirm => '开始生成';
+
+  @override
+  String get storyboard_generateNoPrompt => '没有可生成的分镜：请先填写分镜提示词，或在生成页设置提示词。';
+
+  @override
+  String get storyboard_generateNothingToDo => '该范围内的分镜都已有图。';
+
+  @override
+  String storyboard_generateRunning(int order) {
+    return '正在生成第 $order 个分镜';
+  }
+
+  @override
+  String get storyboard_generateCancel => '取消';
+
+  @override
+  String storyboard_generateDone(int count) {
+    return '已生成 $count 张';
+  }
+
+  @override
+  String storyboard_generateFailedCount(int count) {
+    return '$count 个分镜失败';
+  }
+
+  @override
+  String get storyboard_generateCancelled => '已取消';
+
+  @override
+  String get storyboard_polygonMinPoints => '多边形至少需要 3 个顶点。';
+
+  @override
+  String get storyboard_polygonEditHint => '拖动顶点改形状，点击顶点删除，点击边中点新增。';
+
+  @override
+  String get storyboard_backgroundPromptHint => '背景提示词在左侧编辑，用工具条的「生成」出图。';
+
+  @override
+  String get storyboard_selectionBackground => '背景';
+
+  @override
+  String get storyboard_spacing => '排版间距';
+
+  @override
+  String get storyboard_gridReplace => '替换现有分镜';
+
+  @override
+  String get storyboard_spacingHint => '间距供网格生成器使用；要用新间距重排整页，请在网格里勾选「替换现有分镜」。';
+
+  @override
+  String get storyboard_sectionTitle => '分镜设置';
+
+  @override
+  String get storyboard_frameSize => '画幅大小';
+
+  @override
+  String get storyboard_noSelection => '未选中分镜';
+
+  @override
+  String get storyboard_ignoreSpacing => '不受间距约束';
+
+  @override
+  String get storyboard_enablePanel => '启用分镜';
+
+  @override
+  String get storyboard_disablePanel => '停用分镜';
+
+  @override
+  String get storyboard_noticeSnapped => '已吸附到最近的合法分辨率。';
+
+  @override
+  String get storyboard_noticeClamped => '超过单张上限，已按比例缩小。';
+
+  @override
+  String get storyboard_noticeUpscaled => '该分镜版面较小，会放大生成后再缩回使用。';
+
+  @override
+  String get storyboard_restoreSpacing => '恢复间距约束';
+
+  @override
+  String get storyboard_unlock => '解锁版面';
+
+  @override
+  String get storyboard_freeOnly => '禁止收费';
+
+  @override
+  String get storyboard_freeOnlyHint =>
+      '所有分镜都在 Opus 免费档内出图；超出免费范围的画幅自动缩小生成后再贴合，不会消耗 Anlas。';
+
+  @override
+  String get storyboard_fillLargest => '填充最大空白';
+
+  @override
+  String get storyboard_fillRemaining => '占满剩余空间';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -27651,6 +27967,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
       '僅儲存來源 ID 與恢復所需資訊，不儲存原圖';
 
   @override
+  String get cloudSync_storyboard => '漫畫分鏡排版';
+
+  @override
+  String get cloudSync_storyboardDescription =>
+      '分鏡頁面文檔：版面、提示詞與相對路徑引用，不含任何圖片本體。';
+
+  @override
   String get cloudSync_galleryAlbums => '本機畫廊相簿';
 
   @override
@@ -29623,4 +29946,313 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String infinite_canvas_boardNodeCount(int count) {
     return '$count 個節點';
   }
+
+  @override
+  String get storyboard_open => '開啟分鏡';
+
+  @override
+  String get storyboard_close => '離開分鏡';
+
+  @override
+  String get storyboard_emptyTitle => '這一頁還沒有分鏡';
+
+  @override
+  String get storyboard_emptyHint => '用網格快速排出分鏡，或直接在頁面上拖出一個。';
+
+  @override
+  String storyboard_pageSizeLabel(int width, int height) {
+    return '頁面 $width x $height px';
+  }
+
+  @override
+  String storyboard_panelsLabel(int count) {
+    return '$count 個分鏡';
+  }
+
+  @override
+  String get storyboard_toolSelect => '選取';
+
+  @override
+  String get storyboard_toolDraw => '拉框新增';
+
+  @override
+  String get storyboard_undo => '復原';
+
+  @override
+  String get storyboard_redo => '重做';
+
+  @override
+  String get storyboard_gridTitle => '網格生成分鏡';
+
+  @override
+  String get storyboard_gridRows => '行數';
+
+  @override
+  String get storyboard_gridColumns => '列數';
+
+  @override
+  String get storyboard_gridMargin => '頁邊距';
+
+  @override
+  String get storyboard_gridGutter => '分鏡間距';
+
+  @override
+  String get storyboard_gridApply => '生成';
+
+  @override
+  String storyboard_gridCreated(int count) {
+    return '已生成 $count 個分鏡';
+  }
+
+  @override
+  String get storyboard_gridTooSmall => '目前頁面放不下這組行列與間距，請減少行列數或邊距。';
+
+  @override
+  String get storyboard_pageSettings => '頁面設定';
+
+  @override
+  String get storyboard_pageWidth => '寬';
+
+  @override
+  String get storyboard_pageHeight => '高';
+
+  @override
+  String get storyboard_pageSizeHint => '頁面尺寸就是最終輸出解析度；每個分鏡依自己的版面框推導生成解析度。';
+
+  @override
+  String get storyboard_background => '背景';
+
+  @override
+  String get storyboard_backgroundNone => '不繪製';
+
+  @override
+  String get storyboard_backgroundColor => '純色';
+
+  @override
+  String get storyboard_backgroundImage => '圖片';
+
+  @override
+  String get storyboard_chooseImage => '選擇背景圖';
+
+  @override
+  String get storyboard_panelSettings => '分鏡設定';
+
+  @override
+  String get storyboard_resolution => '生成解析度';
+
+  @override
+  String storyboard_layoutLabel(int width, int height) {
+    return '版面 $width × $height';
+  }
+
+  @override
+  String storyboard_requestLabel(int width, int height) {
+    return '請求 $width × $height';
+  }
+
+  @override
+  String get storyboard_fit => '適配方式';
+
+  @override
+  String get storyboard_fitCover => '填滿並裁切';
+
+  @override
+  String get storyboard_fitContain => '完整放入';
+
+  @override
+  String get storyboard_fitStretch => '拉伸';
+
+  @override
+  String get storyboard_variants => '生成張數';
+
+  @override
+  String get storyboard_shape => '形狀';
+
+  @override
+  String get storyboard_convertToPolygon => '轉為多邊形';
+
+  @override
+  String get storyboard_editVertices => '編輯頂點';
+
+  @override
+  String get storyboard_resetShape => '恢復矩形';
+
+  @override
+  String get storyboard_duplicate => '複製';
+
+  @override
+  String get storyboard_bringToFront => '置頂';
+
+  @override
+  String get storyboard_sendToBack => '置底';
+
+  @override
+  String get storyboard_lock => '鎖定版面';
+
+  @override
+  String get storyboard_generate => '生成';
+
+  @override
+  String get storyboard_presetMenu => '分鏡預設';
+
+  @override
+  String get storyboard_presetFourPortrait => '四格 · 豎版';
+
+  @override
+  String get storyboard_presetFourLandscape => '四格 · 橫版';
+
+  @override
+  String get storyboard_presetThreeStrip => '三條 · 豎版';
+
+  @override
+  String get storyboard_presetSixGrid => '六格 · 豎版';
+
+  @override
+  String get storyboard_presetClassicTop => '上通欄 · 豎版';
+
+  @override
+  String get storyboard_presetLeftTall => '左大右分 · 豎版';
+
+  @override
+  String get storyboard_presetTopBig => '上大下三 · 豎版';
+
+  @override
+  String get storyboard_presetSquareMixed => '方版 · 混排';
+
+  @override
+  String get storyboard_export => '匯出';
+
+  @override
+  String get storyboard_exportPage => '匯出整頁合成';
+
+  @override
+  String get storyboard_exportPanel => '匯出選取分鏡';
+
+  @override
+  String get storyboard_exportDone => '已匯出到圖庫';
+
+  @override
+  String get storyboard_exportEmpty => '該分鏡還沒有出圖，先生成再匯出。';
+
+  @override
+  String get storyboard_exportFailed => '匯出失敗';
+
+  @override
+  String get storyboard_preview => '預覽';
+
+  @override
+  String get storyboard_generateScopeAll => '全部分鏡';
+
+  @override
+  String get storyboard_generateScopeUngenerated => '僅未出圖的分鏡';
+
+  @override
+  String get storyboard_generateScopeSelected => '僅選取的分鏡';
+
+  @override
+  String storyboard_generateSummary(int requests, int anlas) {
+    return '$requests 次請求 · 預計 $anlas Anlas';
+  }
+
+  @override
+  String storyboard_generateFree(int requests) {
+    return '$requests 次請求 · 不消耗 Anlas（Opus 免費額度）';
+  }
+
+  @override
+  String get storyboard_generateConfirm => '開始生成';
+
+  @override
+  String get storyboard_generateNoPrompt => '沒有可生成的分鏡：請先填寫分鏡提示詞，或在生成頁設定提示詞。';
+
+  @override
+  String get storyboard_generateNothingToDo => '該範圍內的分鏡都已有圖。';
+
+  @override
+  String storyboard_generateRunning(int order) {
+    return '正在生成第 $order 個分鏡';
+  }
+
+  @override
+  String get storyboard_generateCancel => '取消';
+
+  @override
+  String storyboard_generateDone(int count) {
+    return '已生成 $count 張';
+  }
+
+  @override
+  String storyboard_generateFailedCount(int count) {
+    return '$count 個分鏡失敗';
+  }
+
+  @override
+  String get storyboard_generateCancelled => '已取消';
+
+  @override
+  String get storyboard_polygonMinPoints => '多邊形至少需要 3 個頂點。';
+
+  @override
+  String get storyboard_polygonEditHint => '拖動頂點改形狀，點擊頂點刪除，點擊邊中點新增。';
+
+  @override
+  String get storyboard_backgroundPromptHint => '背景提示詞在左側編輯，用工具列的「生成」出圖。';
+
+  @override
+  String get storyboard_selectionBackground => '背景';
+
+  @override
+  String get storyboard_spacing => '排版間距';
+
+  @override
+  String get storyboard_gridReplace => '取代現有分鏡';
+
+  @override
+  String get storyboard_spacingHint => '間距供網格生成器使用；要用新間距重排整頁，請在網格中勾選「取代現有分鏡」。';
+
+  @override
+  String get storyboard_sectionTitle => '分鏡設定';
+
+  @override
+  String get storyboard_frameSize => '畫幅大小';
+
+  @override
+  String get storyboard_noSelection => '未選取分鏡';
+
+  @override
+  String get storyboard_ignoreSpacing => '不受間距約束';
+
+  @override
+  String get storyboard_enablePanel => '啟用分鏡';
+
+  @override
+  String get storyboard_disablePanel => '停用分鏡';
+
+  @override
+  String get storyboard_noticeSnapped => '已吸附到最接近的合法解析度。';
+
+  @override
+  String get storyboard_noticeClamped => '超過單張上限，已依比例縮小。';
+
+  @override
+  String get storyboard_noticeUpscaled => '該分鏡版面較小，會放大生成後再縮回使用。';
+
+  @override
+  String get storyboard_restoreSpacing => '恢復間距約束';
+
+  @override
+  String get storyboard_unlock => '解鎖版面';
+
+  @override
+  String get storyboard_freeOnly => '禁止收費';
+
+  @override
+  String get storyboard_freeOnlyHint =>
+      '所有分鏡都在 Opus 免費檔內出圖；超出免費範圍的畫幅自動縮小生成後再貼合，不會消耗 Anlas。';
+
+  @override
+  String get storyboard_fillLargest => '填充最大空白';
+
+  @override
+  String get storyboard_fillRemaining => '佔滿剩餘空間';
 }

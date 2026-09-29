@@ -19,6 +19,7 @@ import 'package:nai_launcher/presentation/agent_chat/services/image_resource_act
 import 'package:nai_launcher/presentation/agent_chat/services/image_presentation_toolbox.dart';
 import 'package:nai_launcher/presentation/agent_chat/services/queue_toolbox.dart';
 import 'package:nai_launcher/presentation/agent_chat/services/reference_library_toolbox.dart';
+import 'package:nai_launcher/presentation/agent_chat/services/storyboard_toolbox.dart';
 import 'package:nai_launcher/presentation/agent_chat/services/tag_toolbox.dart';
 import 'package:nai_launcher/presentation/agent_chat/services/user_question_toolbox.dart';
 import 'package:nai_launcher/presentation/agent_chat/services/agent_user_question_controller.dart';
@@ -72,6 +73,7 @@ void main() {
           clipboardWriter: (_) async {},
         ),
       ).tools(),
+      ...StoryboardToolbox(ref).tools(),
     ];
     final names = tools.map((tool) => tool.name).toList();
 
@@ -109,6 +111,15 @@ void main() {
         'save_generated_image',
         'copy_generated_image_to_clipboard',
         'send_generated_image_to_krita',
+        'get_storyboard_state',
+        'inspect_storyboard_panel',
+        'update_storyboard_page',
+        'update_storyboard_background',
+        'add_storyboard_panels',
+        'update_storyboard_panel',
+        'remove_storyboard_panel',
+        'generate_storyboard_panels',
+        'export_storyboard_page',
       ]),
     );
     for (final oldPreviewTool in const [

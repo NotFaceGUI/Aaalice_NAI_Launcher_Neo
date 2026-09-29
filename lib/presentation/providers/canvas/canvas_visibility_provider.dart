@@ -3,46 +3,35 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/storage/local_storage_service.dart';
-import '../character_position_canvas_provider.dart';
+import '../generation/generation_center_mode_provider.dart';
 
 part 'canvas_visibility_provider.g.dart';
 
 /// 无限画布是否占据生成页的中央工作区。
 ///
-/// 与"角色位置画布"互斥：两者都占用同一块中央区域，而角色位置画布是短暂
-/// 的专注操作，打开无限画布时先让它退出。反向不需要处理——角色位置画布的
-/// 入口只在图像预览区可见，无限画布打开时预览区并不呈现。
+/// 这是 [generationCenterModeControllerProvider] 的派生视图：中央工作区现在有
+/// 预览、画布、分镜三种模式，但画布侧的调用方（生成桥、画布工具条、把种子
+/// 固定到画布的动作）只关心"画布是不是当前视图"，保持这个 bool 门面可以让
+/// 它们不需要知道分镜的存在。
 ///
-/// 开关状态存本地设置：重启后回到上次的工作视图，但这是设备专属状态，
-/// 不进入画布 sidecar 与云同步。
+/// 开关状态由模式 provider 统一持久化，这里不再单独写存储。
 @Riverpod(keepAlive: true)
 class InfiniteCanvasVisibility extends _$InfiniteCanvasVisibility {
   @override
   bool build() {
-    return ref.watch(localStorageServiceProvider).getInfiniteCanvasOpen();
+    return ref.watch(generationCenterModeControllerProvider) ==
+        GenerationCenterMode.canvas;
   }
 
-  void open() => _apply(true);
+  void open() => ref
+      .read(generationCenterModeControllerProvider.notifier)
+      .show(GenerationCenterMode.canvas);
 
-  void close() => _apply(false);
+  void close() => ref
+      .read(generationCenterModeControllerProvider.notifier)
+      .showPreview();
 
-  void toggle() => _apply(!state);
-
-  void _apply(bool value) {
-    if (state == value) return;
-    if (value) {
-      final characterCanvas = ref.read(
-        characterPositionCanvasProvider.notifier,
-      );
-      if (ref.read(characterPositionCanvasProvider)) {
-        characterCanvas.close();
-      }
-    }
-    state = value;
-    unawaited(
-      ref.read(localStorageServiceProvider).setInfiniteCanvasOpen(value),
-    );
-  }
+  void toggle() => state ? close() : open();
 }
 
 /// 画布打开时，生成完成的结果是否自动成为画布节点。
