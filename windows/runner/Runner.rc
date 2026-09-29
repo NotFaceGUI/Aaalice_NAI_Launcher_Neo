@@ -95,7 +95,7 @@ BEGIN
             // 否则升级到本分支会读取空数据目录并丢失用户设置与缓存。
             // 仅 FileDescription 与版权信息可安全改动。
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "Aaalice NAI Launcher Neo" "\0"
+            VALUE "FileDescription", "NovelAI Launcher Neo" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "nai_launcher" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 NotFaceGUI. All rights reserved." "\0"

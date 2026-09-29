@@ -14,7 +14,7 @@
 这是 NovelAI 的 Flutter 跨平台客户端。主应用按 `core`、`data`、`presentation` 分层，平台工程、资源、测试和工具各自独立；新增代码应放入现有职责最接近的目录，不在仓库根目录堆放临时实现。
 
 ```text
-Aaalice_NAI_Launcher_Neo/
+NovelAI-Launcher-Neo/
 ├── lib/
 │   ├── core/               # 网络、存储、数据库、缓存、通用服务与基础能力
 │   ├── data/               # API 数据源、业务模型、仓库与领域服务
@@ -66,7 +66,7 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File .agents/skills/aaalice-hot-reload/
 pwsh -NoProfile -ExecutionPolicy Bypass -File .agents/skills/aaalice-runtime-verify/scripts/android_verify.ps1 -Name <scenario> -HotReload -Action "tap:x,y","wait:500"
 ```
 
-Windows release 产物位于 `build/windows/x64/runner/Release/`。macOS 使用 `flutter build macos --release`，产物位于 `build/macos/Build/Products/Release/Aaalice NAI Launcher.app`；本地 Keychain 反复授权时使用 `scripts/create_macos_dev_cert.sh` 与 `scripts/dev_run_macos_signed.sh debug`。Android 通用 APK 位于 `build/app/outputs/flutter-apk/app-release.apk`；推送 `v*` Tag 时由 `.github/workflows/release.yml` 构建并发布正式签名 APK，`.github/workflows/android-build.yml` 仅用于按需手动构建可安装 APK 与 SHA-256 Actions artifact。
+Windows release 产物位于 `build/windows/x64/runner/Release/`。macOS 使用 `flutter build macos --release`，产物位于 `build/macos/Build/Products/Release/NovelAI Launcher Neo.app`；本地 Keychain 反复授权时使用 `scripts/create_macos_dev_cert.sh` 与 `scripts/dev_run_macos_signed.sh debug`。Android 通用 APK 位于 `build/app/outputs/flutter-apk/app-release.apk`；推送 `v*` Tag 时由 `.github/workflows/release.yml` 构建并发布正式签名 APK，`.github/workflows/android-build.yml` 仅用于按需手动构建可安装 APK 与 SHA-256 Actions artifact。
 
 项目热重载与按需运行验收由 `.agents/skills/` 中的三个项目 skill 管理：`aaalice-dev-sessions` 负责让 Codex 创建、复用和关闭唯一的 `PC热重载` / `安卓热重载` 独立 PowerShell 窗口；`aaalice-hot-reload` 负责判定并触发 `r`、`R` 或完整重建，并读取两端控制台验证结果；`aaalice-runtime-verify` 在用户要求自动化验收时自动启动或复用所需会话，完成真实 UI 操作、逐张截图检查与增量日志验证。不得依赖外部终端编排器，不得另开第二个 `flutter run`、`flutter attach` 或新的 Codex task。
 

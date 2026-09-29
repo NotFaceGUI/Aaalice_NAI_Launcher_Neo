@@ -1,6 +1,6 @@
 ---
 name: aaalice-refactor-parity-loop
-description: 对 Aaalice NAI Launcher 的大型文件拆分型重构执行多子代理等价性闭环。当任务目标是把大型业务文件按职责拆分、同时保持功能、交互与布局不变时自动使用；不用于普通重构、功能开发、单点 Bug 修复或常规代码审查。
+description: 对 NovelAI Launcher Neo 的大型文件拆分型重构执行多子代理等价性闭环。当任务目标是把大型业务文件按职责拆分、同时保持功能、交互与布局不变时自动使用；不用于普通重构、功能开发、单点 Bug 修复或常规代码审查。
 ---
 
 # Aaalice 重构等价性闭环

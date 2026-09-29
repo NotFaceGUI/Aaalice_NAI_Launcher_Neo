@@ -1,6 +1,6 @@
 ---
 version: alpha
-name: Aaalice NAI Launcher
+name: NovelAI Launcher Neo
 description: Quiet Layered Utility for a local-first, cross-platform NovelAI creative workspace
 colors:
   primary: "#F0EAD6"
@@ -117,7 +117,7 @@ components:
     rounded: "{rounded.xl}"
 ---
 
-# Design System: Aaalice NAI Launcher
+# Design System: NovelAI Launcher Neo
 
 本文件维护产品视觉与交互契约；[PRODUCT.md](PRODUCT.md) 定义用户与产品边界，[自适应策略](docs/design/adaptive_ui_strategy.md) 定义共享 API 与状态保持，[覆盖清单](docs/design/adaptive_ui_inventory.md) 帮助选择本次验收场景。工程操作与授权规则见 [AGENTS.md](AGENTS.md)，不在设计文档复制工具参数或历史通过结论。
 
@@ -125,7 +125,7 @@ components:
 
 **Creative North Star: "Quiet Layered Utility / 静谧层叠工具界面"**
 
-Aaalice NAI Launcher 是高频创作工具，而不是视觉陈列品。Prompt、图像、参数、状态和操作是视觉主体；容器、主题装饰与品牌表达退到背景，只在帮助理解任务时出现。整体气质克制、专业、内容优先，默认状态安静，交互状态清楚而及时。
+NovelAI Launcher Neo 是高频创作工具，而不是视觉陈列品。Prompt、图像、参数、状态和操作是视觉主体；容器、主题装饰与品牌表达退到背景，只在帮助理解任务时出现。整体气质克制、专业、内容优先，默认状态安静，交互状态清楚而及时。
 
 系统以 Flutter Material 3 为行为基础，以 `ColorScheme`、`TextTheme`、`AppThemeExtension`、`PromptSemanticColors` 和公共组件表达稳定语义。主题可以改变颜色、字体、形状与轻量动效，但不能改变信息架构、操作顺序、密度边界、可访问性或桌面与 Android 的能力等价。frontmatter 记录 Grunge Collage 暗色主题的设计锚点，供阅读与设计参考，不是可直接复制的运行时配置；最终数值以 `ThemeComposer`、palette、typography、shape preset 和公共组件为准，变更时同步核对。其他主题沿用同一语义角色，不创建另一套组件规则。
 

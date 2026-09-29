@@ -317,8 +317,8 @@ jobs:
           $match = Select-String -Path pubspec.yaml -Pattern '^version:\s*(.+)$'
           $version = $match.Matches[0].Groups[1].Value.Trim() -replace '\+.*$', ''
           $required = @(
-            "dist/NAI_Launcher_Windows_${version}_Setup.exe",
-            "dist/NAI_Launcher_Windows_${version}_Portable.zip"
+            "dist/NovelAI_Launcher_Windows_${version}_Setup.exe",
+            "dist/NovelAI_Launcher_Windows_${version}_Portable.zip"
           )
           foreach ($path in $required) {
             if (!(Test-Path -LiteralPath $path)) {

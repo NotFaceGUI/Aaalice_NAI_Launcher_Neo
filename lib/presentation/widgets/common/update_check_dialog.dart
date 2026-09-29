@@ -481,7 +481,7 @@ class UpdateCheckDialog extends ConsumerWidget {
         : 'v${versionInfo.displayVersion}';
     final rawContentBase = Uri.parse(
       'https://raw.githubusercontent.com/NotFaceGUI/'
-      'Aaalice_NAI_Launcher_Neo/$versionTag/',
+      'NovelAI-Launcher-Neo/$versionTag/',
     );
     final codeBackground = colorScheme.surfaceContainerHighest;
     final codeForeground = _readableForeground(codeBackground);
@@ -608,7 +608,7 @@ class UpdateCheckDialog extends ConsumerWidget {
           : null;
     }
     return Uri.parse(
-      'https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/blob/'
+      'https://github.com/NotFaceGUI/NovelAI-Launcher-Neo/blob/'
       '$versionTag/',
     ).resolveUri(uri);
   }

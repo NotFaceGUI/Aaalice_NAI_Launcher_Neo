@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-09-04T05:47:22.549Z",
-  "title": "Design System: Aaalice NAI Launcher",
+  "title": "Design System: NovelAI Launcher Neo",
   "extensions": {
     "colorMeta": {
       "primary": {
@@ -214,7 +214,7 @@
   ],
   "narrative": {
     "northStar": "Quiet Layered Utility / 静谧层叠工具界面",
-    "overview": "Aaalice NAI Launcher 是高频创作工具，而不是视觉陈列品。Prompt、图像、参数、状态和操作是视觉主体；容器、主题装饰与品牌表达退到背景，只在帮助理解任务时出现。整体气质克制、专业、内容优先，默认状态安静，交互状态清楚而及时。\n\n系统以 Flutter Material 3 为行为基础，以 ColorScheme、TextTheme、AppThemeExtension 和公共组件表达稳定语义。主题可以改变颜色、字体、形状与轻量动效，但不能改变信息架构、操作顺序、密度边界、可访问性或桌面与 Android 的能力等价。默认 frontmatter 记录 Grunge Collage 暗色主题的真实锚点；其他主题必须沿用同一语义角色，而不是创建另一套组件规则。",
+    "overview": "NovelAI Launcher Neo 是高频创作工具，而不是视觉陈列品。Prompt、图像、参数、状态和操作是视觉主体；容器、主题装饰与品牌表达退到背景，只在帮助理解任务时出现。整体气质克制、专业、内容优先，默认状态安静，交互状态清楚而及时。\n\n系统以 Flutter Material 3 为行为基础，以 ColorScheme、TextTheme、AppThemeExtension 和公共组件表达稳定语义。主题可以改变颜色、字体、形状与轻量动效，但不能改变信息架构、操作顺序、密度边界、可访问性或桌面与 Android 的能力等价。默认 frontmatter 记录 Grunge Collage 暗色主题的真实锚点；其他主题必须沿用同一语义角色，而不是创建另一套组件规则。",
     "keyCharacteristics": [
       "内容优先，容器退后；先用排版、留白和低对比色面建立层级。",
       "克制、直接、状态清楚；状态变化不改变组件几何尺寸。",

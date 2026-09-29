@@ -93,7 +93,7 @@ jobs:
             exit 1
           fi
 
-          file_name="NAI_Launcher_Android_${version}_${GITHUB_SHA::7}.apk"
+          file_name="NovelAI_Launcher_Android_${version}_${GITHUB_SHA::7}.apk"
           output="dist/$file_name"
           mkdir -p dist
           cp "$apk" "$output"

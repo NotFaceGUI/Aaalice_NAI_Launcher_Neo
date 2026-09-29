@@ -1,6 +1,6 @@
 ---
 name: aaalice-runtime-verify
-description: 用户要求自动化运行验收、界面操作、截图检查或双端 UI 测试时，自动启动或复用 Aaalice NAI Launcher 热重载会话，通过项目级 Dart/Flutter MCP 验证应用；Android 系统界面按需使用 ADB。
+description: 用户要求自动化运行验收、界面操作、截图检查或双端 UI 测试时，自动启动或复用 NovelAI Launcher Neo 热重载会话，通过项目级 Dart/Flutter MCP 验证应用；Android 系统界面按需使用 ADB。
 ---
 
 # Aaalice 双端运行时验收

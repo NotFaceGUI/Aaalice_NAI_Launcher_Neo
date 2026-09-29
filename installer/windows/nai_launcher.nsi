@@ -14,11 +14,11 @@
 !endif
 
 !ifndef INSTALL_DIR
-  !define INSTALL_DIR "$LOCALAPPDATA\Programs\Aaalice NAI Launcher Neo"
+  !define INSTALL_DIR "$LOCALAPPDATA\Programs\NovelAI Launcher Neo"
 !endif
 
 !ifndef APP_NAME
-  !define APP_NAME "Aaalice NAI Launcher Neo"
+  !define APP_NAME "NovelAI Launcher Neo"
 !endif
 
 !ifndef APP_EXE
@@ -30,7 +30,7 @@
 !endif
 
 !ifndef UNINSTALL_KEY
-  !define UNINSTALL_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Aaalice NAI Launcher Neo"
+  !define UNINSTALL_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\NovelAI Launcher Neo"
 !endif
 
 !ifndef PROCESS_QUERY_ACCESS

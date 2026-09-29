@@ -159,7 +159,7 @@ void main() {
     expect(source, contains('VALUE "ProductName", "nai_launcher" "\\0"'));
     expect(
       source,
-      contains('VALUE "FileDescription", "Aaalice NAI Launcher Neo" "\\0"'),
+      contains('VALUE "FileDescription", "NovelAI Launcher Neo" "\\0"'),
     );
   });
 

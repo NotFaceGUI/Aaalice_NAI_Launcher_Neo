@@ -1,13 +1,13 @@
 ---
 name: aaalice-dev-sessions
-description: 管理 Aaalice NAI Launcher 项目专用的 Windows 与 Android Flutter 开发会话。用户提到 PC热重载、安卓热重载、启动/关闭/重建独立命令行窗口、模拟器启动异常或检查双端会话时使用。
+description: 管理 NovelAI Launcher Neo 项目专用的 Windows 与 Android Flutter 开发会话。用户提到 PC热重载、安卓热重载、启动/关闭/重建独立命令行窗口、模拟器启动异常或检查双端会话时使用。
 ---
 
 # Aaalice 双端开发会话
 
 运行环境需要 Windows、PowerShell 7、Flutter 与 Android SDK。会话由 Codex 启动的独立 PowerShell 窗口承载，不使用外部终端编排器、`flutter attach` 或新的 Codex task。
 
-只管理当前 Aaalice NAI Launcher worktree；每个平台最多保留一个 `flutter run`。用户要求自动化验收时，启动或复用所需会话属于已授权的准备步骤，无需另问是否启动；就绪后继续由 [aaalice-runtime-verify](../aaalice-runtime-verify/SKILL.md) 操作和检查界面，不能停在“窗口已打开”。
+只管理当前 NovelAI Launcher Neo worktree；每个平台最多保留一个 `flutter run`。用户要求自动化验收时，启动或复用所需会话属于已授权的准备步骤，无需另问是否启动；就绪后继续由 [aaalice-runtime-verify](../aaalice-runtime-verify/SKILL.md) 操作和检查界面，不能停在“窗口已打开”。
 
 ## 前置检查
 

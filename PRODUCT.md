@@ -49,7 +49,8 @@ NAI Launcher 的核心定位是**本地优先的一体化 NovelAI 创作工作�
 
 ## Brand Commitments
 
-- 用户可见产品名称为 **NAI Launcher**；仓库和平台工程使用 **Aaalice NAI Launcher** 标识。
+- 用户可见产品名称为 **NovelAI Launcher Neo**：窗口标题、安装程序与应用名、安装目录、快捷方式、安装包文件名和各平台应用名统一使用同一名称。
+- 平台工程标识保持既有取值，不随显示名变动：Windows 的 CompanyName/ProductName（决定 %APPDATA% 数据目录）、Android applicationId、macOS bundle id、可执行文件名 nai_launcher 与图库相册路径。改动这些标识会让用户数据丢失或无法覆盖升级。
 - 产品必须明确声明自己是 NovelAI 的第三方客户端，而非 NovelAI 官方产品。
 - 产品图标位于 `assets/icons/Icon.png`，各平台图标从 `assets/icons/` 及对应平台工程维护。
 - 面向用户的表达保持直接、清楚、可操作，不夸大功能、授权、隐私或平台支持状态。

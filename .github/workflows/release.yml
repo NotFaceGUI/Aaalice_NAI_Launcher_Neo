@@ -295,7 +295,7 @@ jobs:
         shell: pwsh
         run: |
           ./scripts/verify_windows_portable_package.ps1 `
-            -ArchivePath 'dist/NAI_Launcher_Windows_${{ needs.prepare.outputs.version }}_Portable.zip' `
+            -ArchivePath 'dist/NovelAI_Launcher_Windows_${{ needs.prepare.outputs.version }}_Portable.zip' `
             -ExpectedVersion '${{ needs.prepare.outputs.version }}'
 
       - name: Sign Windows installer
@@ -310,7 +310,7 @@ jobs:
             exit 0
           }
           ./scripts/sign_windows_binary.ps1 `
-            -Path 'dist/NAI_Launcher_Windows_${{ needs.prepare.outputs.version }}_Setup.exe' `
+            -Path 'dist/NovelAI_Launcher_Windows_${{ needs.prepare.outputs.version }}_Setup.exe' `
             -CertificatePath $certificatePath `
             -CertificatePassword $env:WINDOWS_SIGNING_CERT_PASSWORD
 
@@ -324,8 +324,8 @@ jobs:
         with:
           name: windows-release
           path: |
-            dist/NAI_Launcher_Windows_*_Setup.exe
-            dist/NAI_Launcher_Windows_*_Portable.zip
+            dist/NovelAI_Launcher_Windows_*_Setup.exe
+            dist/NovelAI_Launcher_Windows_*_Portable.zip
           if-no-files-found: error
 
   build-macos:
@@ -401,13 +401,13 @@ jobs:
           version="${{ needs.prepare.outputs.version }}"
           mkdir -p dist
           cd "build/macos/Build/Products/Release"
-          ditto -c -k --sequesterRsrc --keepParent "Aaalice NAI Launcher Neo.app" "$GITHUB_WORKSPACE/dist/NAI_Launcher_macOS_${version}_Portable.zip"
+          ditto -c -k --sequesterRsrc --keepParent "NovelAI Launcher Neo.app" "$GITHUB_WORKSPACE/dist/NovelAI_Launcher_macOS_${version}_Portable.zip"
 
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v4
         with:
           name: macos-release
-          path: dist/NAI_Launcher_macOS_*_Portable.zip
+          path: dist/NovelAI_Launcher_macOS_*_Portable.zip
           if-no-files-found: error
 
   build-android:
@@ -577,7 +577,7 @@ jobs:
           fi
 
           mkdir -p dist
-          cp "$apk" "dist/NAI_Launcher_Android_${{ needs.prepare.outputs.version }}.apk"
+          cp "$apk" "dist/NovelAI_Launcher_Android_${{ needs.prepare.outputs.version }}.apk"
 
       - name: Remove Android signing key
         if: ${{ always() }}
@@ -587,7 +587,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-release
-          path: dist/NAI_Launcher_Android_*.apk
+          path: dist/NovelAI_Launcher_Android_*.apk
           if-no-files-found: error
 
   publish:

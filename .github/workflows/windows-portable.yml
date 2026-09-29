@@ -120,7 +120,7 @@ jobs:
             -SkipFlutterBuild `
             -PortableOnly
           $archive = [IO.Path]::GetFullPath(
-            (Join-Path $env:GITHUB_WORKSPACE "dist/NAI_Launcher_Windows_${version}_Portable.zip")
+            (Join-Path $env:GITHUB_WORKSPACE "dist/NovelAI_Launcher_Windows_${version}_Portable.zip")
           )
           ./scripts/verify_windows_portable_package.ps1 `
             -ArchivePath $archive `

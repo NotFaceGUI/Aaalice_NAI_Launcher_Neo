@@ -1,6 +1,6 @@
 ---
 name: aaalice-hot-reload
-description: 为 Aaalice NAI Launcher 修改代码后选择并执行 Windows/Android 的 r 热重载、R 热重启或完整重建，并验证结果。已有开发会话运行时，代码修改完成后自动使用；用户要求热重载、热重启、修改后刷新或查看 Flutter 日志时也使用。
+description: 为 NovelAI Launcher Neo 修改代码后选择并执行 Windows/Android 的 r 热重载、R 热重启或完整重建，并验证结果。已有开发会话运行时，代码修改完成后自动使用；用户要求热重载、热重启、修改后刷新或查看 Flutter 日志时也使用。
 ---
 
 # Aaalice 双端热重载

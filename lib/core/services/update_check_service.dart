@@ -218,7 +218,7 @@ class UpdateCheckService {
   static const String defaultOwner = 'NotFaceGUI';
 
   /// 默认仓库名称
-  static const String defaultRepo = 'Aaalice_NAI_Launcher_Neo';
+  static const String defaultRepo = 'NovelAI-Launcher-Neo';
 
   /// 前台使用期间定期发现启动后发布的新版本。
   static const Duration defaultCheckInterval = Duration(minutes: 30);
