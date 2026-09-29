@@ -10,6 +10,11 @@ on:
         description: "Release tag to build, for example v1.0.0"
         required: true
         type: string
+      build_all_platforms:
+        description: "同时构建 macOS 与 Android（默认只构建 Windows）"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -330,6 +335,8 @@ jobs:
 
   build-macos:
     name: Build macOS
+    # 默认只出 Windows；需要 macOS / Android 安装包时在手动触发时勾选 build_all_platforms。
+    if: ${{ inputs.build_all_platforms == true }}
     runs-on: macos-latest
     needs: prepare
 
@@ -412,6 +419,8 @@ jobs:
 
   build-android:
     name: Build Android
+    # 默认只出 Windows；需要 macOS / Android 安装包时在手动触发时勾选 build_all_platforms。
+    if: ${{ inputs.build_all_platforms == true }}
     runs-on: ubuntu-latest
     needs: prepare
     env:
@@ -593,6 +602,9 @@ jobs:
   publish:
     name: Publish GitHub Release
     runs-on: ubuntu-latest
+    # macOS 与 Android 默认被跳过，跳过不等于失败；Windows 必须先构建成功，
+    # 真正跑过的平台也必须成功，避免把不完整的资产当成正式发布。
+    if: ${{ always() && needs.prepare.result == 'success' && needs.build-windows.result == 'success' && (needs.build-macos.result == 'success' || needs.build-macos.result == 'skipped') && (needs.build-android.result == 'success' || needs.build-android.result == 'skipped') }}
     needs:
       - prepare
       - build-windows
