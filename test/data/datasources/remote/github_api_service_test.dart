@@ -87,6 +87,99 @@ void main() {
     );
   });
 
+  test('renamed repository asset urls are still accepted', () async {
+    // 仓库改名后 CI 用规范新名生成资产地址，而客户端可能仍配置旧仓库名：
+    // 两者只差仓库名时不能判定元数据无效，否则所有已安装客户端都读不了更新。
+    final adapter = _StableReleaseDioAdapter(
+      manifestEndpoint:
+          'https://github.com/NotFaceGUI/Aaalice_NAI_Launcher_Neo/'
+          'releases/latest/download/release_manifest.json',
+      manifestOverride: {
+        'version': '4.3.5+50',
+        'tag': 'v4.3.5',
+        'releaseNotes': '### Fixed\n\n- Renamed repository.',
+        'assets': [
+          {
+            'platform': 'windows',
+            'type': 'windows-installer',
+            'fileName': 'NovelAI_Launcher_Windows_4.3.5+50_Setup.exe',
+            'downloadUrl':
+                'https://github.com/NotFaceGUI/NovelAI-Launcher-Neo/releases/'
+                'download/v4.3.5/NovelAI_Launcher_Windows_4.3.5%2B50_Setup.exe',
+            'sha256': _StableReleaseDioAdapter.setupSha256,
+            'size': 456,
+          },
+        ],
+      },
+    );
+    final dio = Dio(BaseOptions(baseUrl: GitHubApiService.defaultBaseUrl))
+      ..httpClientAdapter = adapter;
+    final service = GitHubApiService(dio: dio);
+
+    final info = await service.fetchLatestRelease(
+      owner: 'NotFaceGUI',
+      repo: 'Aaalice_NAI_Launcher_Neo',
+      currentVersion: '4.3.4+49',
+      platform: 'windows-installer',
+    );
+
+    expect(info.version, '4.3.5+50');
+    expect(
+      info.primaryAsset?.fileName,
+      'NovelAI_Launcher_Windows_4.3.5+50_Setup.exe',
+    );
+    expect(info.primaryAsset?.sha256, _StableReleaseDioAdapter.setupSha256);
+    expect(info.downloadUrl, contains('/NovelAI-Launcher-Neo/releases/download/'));
+  });
+
+  test('manifest assets pointing outside the owner or tag are rejected', () async {
+    // 放宽仓库名不等于放开来源：owner、tag、文件名与哈希仍然必须自洽。
+    for (final downloadUrl in <String>[
+      'https://github.com/OtherOwner/NovelAI-Launcher-Neo/releases/'
+          'download/v1.8.1/NAI_Launcher_Windows_1.8.1%2B32_Setup.exe',
+      'https://github.com/Aaalice233/Aaalice_NAI_Launcher/releases/'
+          'download/v1.8.2/NAI_Launcher_Windows_1.8.1%2B32_Setup.exe',
+      'https://example.com/Aaalice233/Aaalice_NAI_Launcher/releases/'
+          'download/v1.8.1/NAI_Launcher_Windows_1.8.1%2B32_Setup.exe',
+    ]) {
+      final adapter = _StableReleaseDioAdapter(
+        manifestOverride: {
+          'version': '1.8.1+32',
+          'tag': 'v1.8.1',
+          'assets': [
+            {
+              'platform': 'windows',
+              'type': 'windows-installer',
+              'fileName': 'NAI_Launcher_Windows_1.8.1+32_Setup.exe',
+              'downloadUrl': downloadUrl,
+              'sha256': _StableReleaseDioAdapter.setupSha256,
+              'size': 123,
+            },
+          ],
+        },
+      );
+      final dio = Dio(BaseOptions(baseUrl: GitHubApiService.defaultBaseUrl))
+        ..httpClientAdapter = adapter;
+      final service = GitHubApiService(dio: dio);
+
+      await expectLater(
+        service.fetchLatestRelease(
+          owner: 'Aaalice233',
+          repo: 'Aaalice_NAI_Launcher',
+          currentVersion: '1.8.0',
+        ),
+        throwsA(
+          isA<GitHubApiException>().having(
+            (error) => error.type,
+            'type',
+            GitHubReleaseErrorType.invalidResponse,
+          ),
+        ),
+        reason: '应拒绝：$downloadUrl',
+      );
+    }
+  });
+
   test('prerelease lookup follows the GitHub release list contract', () async {
     final adapter = _MixedReleaseDioAdapter();
     final dio = Dio(BaseOptions(baseUrl: GitHubApiService.defaultBaseUrl))
@@ -217,10 +310,17 @@ class _StableReleaseDioAdapter implements HttpClientAdapter {
   static const setupSha256 =
       '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
 
-  _StableReleaseDioAdapter({this.manifestOverride, this.releases});
+  _StableReleaseDioAdapter({
+    this.manifestOverride,
+    this.releases,
+    String? manifestEndpoint,
+  }) : manifestEndpoint = manifestEndpoint ?? manifestUrl;
 
   final Map<String, dynamic>? manifestOverride;
   final List<dynamic>? releases;
+
+  /// 清单地址；默认与既有用例一致，个别用例可以指向另一个仓库名。
+  final String manifestEndpoint;
   RequestOptions? manifestRequest;
   int apiRequests = 0;
 
@@ -240,7 +340,7 @@ class _StableReleaseDioAdapter implements HttpClientAdapter {
         },
       );
     }
-    if (options.uri.toString() == manifestUrl) {
+    if (options.uri.toString() == manifestEndpoint) {
       manifestRequest = options;
       return ResponseBody.fromString(
         jsonEncode(

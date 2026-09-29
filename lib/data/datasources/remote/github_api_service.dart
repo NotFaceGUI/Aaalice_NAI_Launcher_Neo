@@ -235,7 +235,7 @@ class GitHubApiService {
         );
       }
       final asset = ReleaseAssetInfo.fromManifestAsset(rawAsset);
-      _validateManifestAsset(asset, owner: owner, repo: repo, tag: tag);
+      _validateManifestAsset(asset, owner: owner, tag: tag);
       assets.add(asset);
     }
 
@@ -267,23 +267,34 @@ class GitHubApiService {
     );
   }
 
+  /// 校验清单里的下载地址只能指向本项目的 GitHub Release 资产。
+  ///
+  /// 路径只固定 owner、`releases/download/<tag>/` 与文件名，**不要求仓库名与
+  /// 调用方配置逐字一致**：仓库改名后 GitHub 会把旧地址重定向到新仓库，而
+  /// Release 元数据由 CI 按改名后的规范名生成。逐字比较会让所有已安装客户端
+  /// 读不了更新元数据（2026-09 仓库由 Aaalice_NAI_Launcher_Neo 改名为
+  /// NovelAI-Launcher-Neo 时就出现过这种情况）。
   void _validateManifestAsset(
     ReleaseAssetInfo asset, {
     required String owner,
-    required String repo,
     required String tag,
   }) {
     final uri = Uri.tryParse(asset.downloadUrl);
-    final expectedPathPrefix = '/$owner/$repo/releases/download/$tag/';
+    final segments = uri?.pathSegments ?? const <String>[];
+    final validPath =
+        segments.length == 6 &&
+        segments[0] == owner &&
+        segments[2] == 'releases' &&
+        segments[3] == 'download' &&
+        segments[4] == tag &&
+        segments.last == asset.fileName;
     final validHash = RegExp(r'^[a-fA-F0-9]{64}$').hasMatch(asset.sha256 ?? '');
     if (asset.fileName.isEmpty ||
         asset.type == ReleaseAssetType.unknown ||
         uri == null ||
         uri.scheme != 'https' ||
         uri.host.toLowerCase() != 'github.com' ||
-        !uri.path.startsWith(expectedPathPrefix) ||
-        uri.pathSegments.isEmpty ||
-        uri.pathSegments.last != asset.fileName ||
+        !validPath ||
         !validHash ||
         (asset.size ?? 0) <= 0) {
       throw GitHubApiException(
