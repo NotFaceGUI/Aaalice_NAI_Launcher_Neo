@@ -145,11 +145,27 @@ class CameraAnglePreset {
   /// 低版本同样有效。
   List<String> get promptTags {
     final scale = strength.clamp(minStrength, maxStrength).toDouble();
+    // 不使用 null-aware 集合元素：CI 固定的 Flutter 版本还不支持该语法。
+    final azimuth = _weightedTag(
+      pose.azimuthTag,
+      1 + 0.5 * pose.azimuthEmphasis,
+      scale,
+    );
+    final elevation = _weightedTag(
+      pose.elevationTag,
+      1 + 0.4 * pose.elevationEmphasis,
+      scale,
+    );
+    final roll = _weightedTag(
+      pose.rollTag,
+      1 + 0.5 * pose.rollEmphasis,
+      scale,
+    );
     return [
-      ?_weightedTag(pose.azimuthTag, 1 + 0.5 * pose.azimuthEmphasis, scale),
-      ?_weightedTag(pose.elevationTag, 1 + 0.4 * pose.elevationEmphasis, scale),
+      if (azimuth != null) azimuth,
+      if (elevation != null) elevation,
       _weightedTag(pose.shotTag, 1, scale)!,
-      ?_weightedTag(pose.rollTag, 1 + 0.5 * pose.rollEmphasis, scale),
+      if (roll != null) roll,
       for (final effect in CameraLensEffect.values)
         if (effects.contains(effect)) _weightedTag(effect.tag, 1, scale)!,
     ];
