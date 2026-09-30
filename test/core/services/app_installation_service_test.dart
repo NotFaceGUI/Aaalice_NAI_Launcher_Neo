@@ -43,6 +43,48 @@ void main() {
   });
 
   group('安装版判定依据', () {
+    test('应用目录里有卸载程序就判为安装版（与目录名、注册表无关）', () async {
+      final root = await Directory.systemTemp.createTemp('launcher-');
+      addTearDown(() => root.delete(recursive: true));
+      final installDir = Directory(
+        '${root.path}${Platform.pathSeparator}Renamed Launcher',
+      );
+      await installDir.create(recursive: true);
+      final executablePath =
+          '${installDir.path}${Platform.pathSeparator}nai_launcher.exe';
+      await File(executablePath).writeAsString('stub');
+      await File(
+        '${installDir.path}${Platform.pathSeparator}'
+        '${AppInstallationService.uninstallerFileName}',
+      ).writeAsString('stub');
+
+      expect(
+        AppInstallationService.isInstalledWindowsApp(
+          executablePath: executablePath,
+        ),
+        isTrue,
+      );
+    });
+
+    test('没有卸载程序且注册表没有对应登记时判为便携版', () async {
+      final root = await Directory.systemTemp.createTemp('portable-');
+      addTearDown(() => root.delete(recursive: true));
+      final portableDir = Directory(
+        '${root.path}${Platform.pathSeparator}Portable',
+      );
+      await portableDir.create(recursive: true);
+      final executablePath =
+          '${portableDir.path}${Platform.pathSeparator}nai_launcher.exe';
+      await File(executablePath).writeAsString('stub');
+
+      expect(
+        AppInstallationService.isInstalledWindowsApp(
+          executablePath: executablePath,
+        ),
+        isFalse,
+      );
+    });
+
     test('指向旧目录的登记不算当前安装位置', () {
       // 真实数据：品牌改名后，运行中的 exe 在「NovelAI Launcher Neo」，
       // 而注册表里也可能留着指向旧目录的条目。旧条目若被采信，安装版会被

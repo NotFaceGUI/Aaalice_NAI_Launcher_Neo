@@ -69,10 +69,16 @@ class AppInstallationService {
   /// 残留的旧键（指向旧目录）不会再把新目录误判成安装版。
   bool _isInstalledWindowsApp() {
     if (!Platform.isWindows) return false;
-    final executablePath = Platform.resolvedExecutable;
+    return isInstalledWindowsApp(
+      executablePath: Platform.resolvedExecutable,
+    );
+  }
+
+  /// 与 [Platform.resolvedExecutable] 解耦的判定实现，便于用真实路径校验。
+  static bool isInstalledWindowsApp({required String executablePath}) {
     final directory = _parentDirectory(executablePath);
     if (directory != null && hasUninstallerInDirectory(directory)) return true;
-    final installLocation = readWindowsInstallLocation();
+    final installLocation = readWindowsInstallLocationFor(executablePath);
     if (installLocation == null || installLocation.isEmpty) return false;
     return isExecutableInsideInstallDir(
       executablePath: executablePath,
@@ -99,10 +105,13 @@ class AppInstallationService {
   }
 
   /// 读取当前卸载项登记的安装位置。
-  ///
-  /// 只有登记的目录确实包含当前可执行文件时才采信，避免残留键或手工搬动目录
-  /// 之后读到过期位置。
-  String? readWindowsInstallLocation() {
+  String? readWindowsInstallLocation() => readWindowsInstallLocationFor(
+    Platform.resolvedExecutable,
+  );
+
+  /// 只有登记的目录确实包含 [executablePath] 时才采信，避免残留键或手工
+  /// 搬动目录之后读到过期位置。
+  static String? readWindowsInstallLocationFor(String executablePath) {
     if (!Platform.isWindows) return null;
     RegistryKey? key;
     try {
@@ -113,7 +122,7 @@ class AppInstallationService {
       final location = key.getValueAsString('InstallLocation');
       if (location == null || location.isEmpty) return null;
       return isExecutableInsideInstallDir(
-        executablePath: Platform.resolvedExecutable,
+        executablePath: executablePath,
         installLocation: location,
       )
           ? location
