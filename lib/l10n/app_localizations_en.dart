@@ -15875,4 +15875,164 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get storyboard_fillRemaining => 'Fill remaining space';
+
+  @override
+  String get cameraAngle_title => 'Camera angle';
+
+  @override
+  String get cameraAngle_buttonLabel => 'Angle';
+
+  @override
+  String get cameraAngle_statusOn => 'Inserted';
+
+  @override
+  String get cameraAngle_statusOff => 'Not inserted';
+
+  @override
+  String get cameraAngle_promptPreviewLabel => 'Prompt to insert';
+
+  @override
+  String get cameraAngle_openEditorHint =>
+      'Click to open the camera editor: drag to orbit, scroll to dolly';
+
+  @override
+  String get cameraAngle_padLabel => 'Visual camera control';
+
+  @override
+  String get cameraAngle_padHint =>
+      'Drag to orbit, scroll or pinch to dolly, double-tap to reset; arrow keys and +/- do the same';
+
+  @override
+  String get cameraAngle_dragHint => 'Drag to orbit · Scroll to dolly';
+
+  @override
+  String get cameraAngle_azimuthShort => 'Azimuth';
+
+  @override
+  String get cameraAngle_elevationShort => 'Pitch';
+
+  @override
+  String get cameraAngle_rollShort => 'Tilt';
+
+  @override
+  String get cameraAngle_distanceLabel => 'Shot distance';
+
+  @override
+  String get cameraAngle_poseSection => 'Camera pose';
+
+  @override
+  String get cameraAngle_poseDescription =>
+      'Drag the camera around the model; the shot distance sets close-up through wide shot';
+
+  @override
+  String get cameraAngle_reset => 'Reset';
+
+  @override
+  String get cameraAngle_rollLabel => 'Image tilt';
+
+  @override
+  String get cameraAngle_azimuthLabel => 'Horizontal direction';
+
+  @override
+  String get cameraAngle_elevationLabel => 'Vertical pitch';
+
+  @override
+  String get cameraAngle_sideNote =>
+      'Left and right both use the from_side tag: the Danbooru vocabulary separates front, side and back only.';
+
+  @override
+  String get cameraAngle_azimuthFront => 'Front';
+
+  @override
+  String get cameraAngle_azimuthLeft => 'Left';
+
+  @override
+  String get cameraAngle_azimuthRight => 'Right';
+
+  @override
+  String get cameraAngle_azimuthBack => 'Back';
+
+  @override
+  String get cameraAngle_elevationAbove => 'High angle';
+
+  @override
+  String get cameraAngle_elevationEye => 'Eye level';
+
+  @override
+  String get cameraAngle_elevationBelow => 'Low angle';
+
+  @override
+  String get cameraAngle_shotCloseUp => 'Close-up';
+
+  @override
+  String get cameraAngle_shotPortrait => 'Portrait';
+
+  @override
+  String get cameraAngle_shotUpperBody => 'Upper body';
+
+  @override
+  String get cameraAngle_shotCowboyShot => 'Cowboy shot';
+
+  @override
+  String get cameraAngle_shotFullBody => 'Full body';
+
+  @override
+  String get cameraAngle_shotWideShot => 'Wide shot';
+
+  @override
+  String get cameraAngle_effectsSection => 'Lens and optics';
+
+  @override
+  String get cameraAngle_effectsDescription =>
+      'Optional depth, distortion and lens tags; nothing is written while unselected';
+
+  @override
+  String get cameraAngle_effectLookingAtViewer => 'Looking at viewer';
+
+  @override
+  String get cameraAngle_effectDepthOfField => 'Depth of field';
+
+  @override
+  String get cameraAngle_effectBlurryBackground => 'Blurry background';
+
+  @override
+  String get cameraAngle_effectFisheye => 'Fisheye';
+
+  @override
+  String get cameraAngle_effectLensFlare => 'Lens flare';
+
+  @override
+  String get cameraAngle_effectChromaticAberration => 'Chromatic aberration';
+
+  @override
+  String get cameraAngle_effectMotionBlur => 'Motion blur';
+
+  @override
+  String get cameraAngle_effectZoomLayer => 'Zoom layer';
+
+  @override
+  String get cameraAngle_effectVanishingPoint => 'Vanishing point';
+
+  @override
+  String get cameraAngle_effectForeshortening => 'Foreshortening';
+
+  @override
+  String get cameraAngle_promptSection => 'Prompt fragment';
+
+  @override
+  String get cameraAngle_promptDescription =>
+      'Written at the start of the prompt; turning it off removes it right away';
+
+  @override
+  String get cameraAngle_strengthLabel => 'Prompt strength';
+
+  @override
+  String get cameraAngle_strengthHint =>
+      '1× writes plain tags; numerical emphasis needs V4 or newer models.';
+
+  @override
+  String get cameraAngle_promptEmpty => 'This pose adds no extra tags.';
+
+  @override
+  String get cameraAngle_sceneSection => 'Camera view';
 }

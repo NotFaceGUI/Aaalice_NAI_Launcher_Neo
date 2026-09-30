@@ -254,6 +254,9 @@ class StorageKeys {
       'fixed_tags_negative_panel_expanded';
   static const String fixedTagCategoriesData = 'fixed_tag_categories_data';
 
+  // Camera Angle (视角控制相关)
+  static const String cameraAnglePreset = 'camera_angle_preset';
+
   // Tag Library (词库相关)
   static const String tagLibraryUserBox = 'tag_library_user';
   static const String tagLibraryEntriesData = 'tag_library_entries_data';

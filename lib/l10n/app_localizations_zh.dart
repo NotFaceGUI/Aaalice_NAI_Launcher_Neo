@@ -15148,6 +15148,160 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get storyboard_fillRemaining => '占满剩余空间';
+
+  @override
+  String get cameraAngle_title => '视角控制';
+
+  @override
+  String get cameraAngle_buttonLabel => '视角';
+
+  @override
+  String get cameraAngle_statusOn => '已写入';
+
+  @override
+  String get cameraAngle_statusOff => '未写入';
+
+  @override
+  String get cameraAngle_promptPreviewLabel => '将插入的提示词';
+
+  @override
+  String get cameraAngle_openEditorHint => '点击打开视角编辑器：拖动旋转机位、滚轮推拉距离';
+
+  @override
+  String get cameraAngle_padLabel => '可视化机位控制';
+
+  @override
+  String get cameraAngle_padHint => '拖动旋转机位，滚轮或双指缩放距离，双击复位；方向键与 +/- 等效';
+
+  @override
+  String get cameraAngle_dragHint => '拖动旋转 · 滚轮缩放';
+
+  @override
+  String get cameraAngle_azimuthShort => '方位';
+
+  @override
+  String get cameraAngle_elevationShort => '俯仰';
+
+  @override
+  String get cameraAngle_rollShort => '倾斜';
+
+  @override
+  String get cameraAngle_distanceLabel => '取景距离';
+
+  @override
+  String get cameraAngle_poseSection => '视角姿态';
+
+  @override
+  String get cameraAngle_poseDescription => '拖动模型周围的机位；取景距离决定特写到远景的景别';
+
+  @override
+  String get cameraAngle_reset => '复位';
+
+  @override
+  String get cameraAngle_rollLabel => '画面倾斜';
+
+  @override
+  String get cameraAngle_azimuthLabel => '水平方位';
+
+  @override
+  String get cameraAngle_elevationLabel => '垂直俯仰';
+
+  @override
+  String get cameraAngle_sideNote =>
+      '左右机位共用 from_side 标签：Danbooru 词表只区分正面、侧面与背面。';
+
+  @override
+  String get cameraAngle_azimuthFront => '正面';
+
+  @override
+  String get cameraAngle_azimuthLeft => '左侧';
+
+  @override
+  String get cameraAngle_azimuthRight => '右侧';
+
+  @override
+  String get cameraAngle_azimuthBack => '背面';
+
+  @override
+  String get cameraAngle_elevationAbove => '俯视';
+
+  @override
+  String get cameraAngle_elevationEye => '平视';
+
+  @override
+  String get cameraAngle_elevationBelow => '仰视';
+
+  @override
+  String get cameraAngle_shotCloseUp => '特写';
+
+  @override
+  String get cameraAngle_shotPortrait => '半身像';
+
+  @override
+  String get cameraAngle_shotUpperBody => '上半身';
+
+  @override
+  String get cameraAngle_shotCowboyShot => '牛仔镜头';
+
+  @override
+  String get cameraAngle_shotFullBody => '全身';
+
+  @override
+  String get cameraAngle_shotWideShot => '远景';
+
+  @override
+  String get cameraAngle_effectsSection => '镜头语言';
+
+  @override
+  String get cameraAngle_effectsDescription => '可叠加的景深、畸变与成像标签，未选中时不写入';
+
+  @override
+  String get cameraAngle_effectLookingAtViewer => '看向镜头';
+
+  @override
+  String get cameraAngle_effectDepthOfField => '景深';
+
+  @override
+  String get cameraAngle_effectBlurryBackground => '背景虚化';
+
+  @override
+  String get cameraAngle_effectFisheye => '鱼眼';
+
+  @override
+  String get cameraAngle_effectLensFlare => '镜头光晕';
+
+  @override
+  String get cameraAngle_effectChromaticAberration => '色差';
+
+  @override
+  String get cameraAngle_effectMotionBlur => '动态模糊';
+
+  @override
+  String get cameraAngle_effectZoomLayer => '变焦拉近';
+
+  @override
+  String get cameraAngle_effectVanishingPoint => '消失点';
+
+  @override
+  String get cameraAngle_effectForeshortening => '透视缩短';
+
+  @override
+  String get cameraAngle_promptSection => '提示词片段';
+
+  @override
+  String get cameraAngle_promptDescription => '写在正面提示词开头；关闭后立即从提示词移除';
+
+  @override
+  String get cameraAngle_strengthLabel => '提示词强度';
+
+  @override
+  String get cameraAngle_strengthHint => '1× 输出纯标签；数值强调需要 V4 及以上模型。';
+
+  @override
+  String get cameraAngle_promptEmpty => '当前姿态不产生额外标签。';
+
+  @override
+  String get cameraAngle_sceneSection => '摄像机画面';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -30295,4 +30449,158 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get storyboard_fillRemaining => '佔滿剩餘空間';
+
+  @override
+  String get cameraAngle_title => '視角控制';
+
+  @override
+  String get cameraAngle_buttonLabel => '視角';
+
+  @override
+  String get cameraAngle_statusOn => '已寫入';
+
+  @override
+  String get cameraAngle_statusOff => '未寫入';
+
+  @override
+  String get cameraAngle_promptPreviewLabel => '將插入的提示詞';
+
+  @override
+  String get cameraAngle_openEditorHint => '點擊開啟視角編輯器：拖動旋轉機位、滾輪推拉距離';
+
+  @override
+  String get cameraAngle_padLabel => '視覺化機位控制';
+
+  @override
+  String get cameraAngle_padHint => '拖動旋轉機位，滾輪或雙指縮放距離，雙擊復位；方向鍵與 +/- 等效';
+
+  @override
+  String get cameraAngle_dragHint => '拖動旋轉 · 滾輪縮放';
+
+  @override
+  String get cameraAngle_azimuthShort => '方位';
+
+  @override
+  String get cameraAngle_elevationShort => '俯仰';
+
+  @override
+  String get cameraAngle_rollShort => '傾斜';
+
+  @override
+  String get cameraAngle_distanceLabel => '取景距離';
+
+  @override
+  String get cameraAngle_poseSection => '視角姿態';
+
+  @override
+  String get cameraAngle_poseDescription => '拖動模型周圍的機位；取景距離決定特寫到遠景的景別';
+
+  @override
+  String get cameraAngle_reset => '復位';
+
+  @override
+  String get cameraAngle_rollLabel => '畫面傾斜';
+
+  @override
+  String get cameraAngle_azimuthLabel => '水平方位';
+
+  @override
+  String get cameraAngle_elevationLabel => '垂直俯仰';
+
+  @override
+  String get cameraAngle_sideNote =>
+      '左右機位共用 from_side 標籤：Danbooru 詞表只區分正面、側面與背面。';
+
+  @override
+  String get cameraAngle_azimuthFront => '正面';
+
+  @override
+  String get cameraAngle_azimuthLeft => '左側';
+
+  @override
+  String get cameraAngle_azimuthRight => '右側';
+
+  @override
+  String get cameraAngle_azimuthBack => '背面';
+
+  @override
+  String get cameraAngle_elevationAbove => '俯視';
+
+  @override
+  String get cameraAngle_elevationEye => '平視';
+
+  @override
+  String get cameraAngle_elevationBelow => '仰視';
+
+  @override
+  String get cameraAngle_shotCloseUp => '特寫';
+
+  @override
+  String get cameraAngle_shotPortrait => '半身像';
+
+  @override
+  String get cameraAngle_shotUpperBody => '上半身';
+
+  @override
+  String get cameraAngle_shotCowboyShot => '牛仔鏡頭';
+
+  @override
+  String get cameraAngle_shotFullBody => '全身';
+
+  @override
+  String get cameraAngle_shotWideShot => '遠景';
+
+  @override
+  String get cameraAngle_effectsSection => '鏡頭語言';
+
+  @override
+  String get cameraAngle_effectsDescription => '可疊加的景深、畸變與成像標籤，未選中時不寫入';
+
+  @override
+  String get cameraAngle_effectLookingAtViewer => '看向鏡頭';
+
+  @override
+  String get cameraAngle_effectDepthOfField => '景深';
+
+  @override
+  String get cameraAngle_effectBlurryBackground => '背景虛化';
+
+  @override
+  String get cameraAngle_effectFisheye => '魚眼';
+
+  @override
+  String get cameraAngle_effectLensFlare => '鏡頭光暈';
+
+  @override
+  String get cameraAngle_effectChromaticAberration => '色差';
+
+  @override
+  String get cameraAngle_effectMotionBlur => '動態模糊';
+
+  @override
+  String get cameraAngle_effectZoomLayer => '變焦拉近';
+
+  @override
+  String get cameraAngle_effectVanishingPoint => '消失點';
+
+  @override
+  String get cameraAngle_effectForeshortening => '透視縮短';
+
+  @override
+  String get cameraAngle_promptSection => '提示詞片段';
+
+  @override
+  String get cameraAngle_promptDescription => '寫在正面提示詞開頭；關閉後立即從提示詞移除';
+
+  @override
+  String get cameraAngle_strengthLabel => '提示詞強度';
+
+  @override
+  String get cameraAngle_strengthHint => '1× 輸出純標籤；數值強調需要 V4 及以上模型。';
+
+  @override
+  String get cameraAngle_promptEmpty => '當前姿態不產生額外標籤。';
+
+  @override
+  String get cameraAngle_sceneSection => '攝影機畫面';
 }

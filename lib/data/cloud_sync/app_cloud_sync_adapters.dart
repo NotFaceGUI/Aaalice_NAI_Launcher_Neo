@@ -294,6 +294,7 @@ const portablePromptSettingKeys = <String>{
   StorageKeys.fixedTagsData,
   StorageKeys.fixedTagLinksData,
   StorageKeys.fixedTagCategoriesData,
+  StorageKeys.cameraAnglePreset,
 };
 
 const portableOnlineGallerySettingKeys = <String>{

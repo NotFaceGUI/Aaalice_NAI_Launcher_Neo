@@ -27630,6 +27630,312 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fill remaining space'**
   String get storyboard_fillRemaining;
+
+  /// No description provided for @cameraAngle_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera angle'**
+  String get cameraAngle_title;
+
+  /// No description provided for @cameraAngle_buttonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Angle'**
+  String get cameraAngle_buttonLabel;
+
+  /// No description provided for @cameraAngle_statusOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Inserted'**
+  String get cameraAngle_statusOn;
+
+  /// No description provided for @cameraAngle_statusOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Not inserted'**
+  String get cameraAngle_statusOff;
+
+  /// No description provided for @cameraAngle_promptPreviewLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Prompt to insert'**
+  String get cameraAngle_promptPreviewLabel;
+
+  /// No description provided for @cameraAngle_openEditorHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Click to open the camera editor: drag to orbit, scroll to dolly'**
+  String get cameraAngle_openEditorHint;
+
+  /// No description provided for @cameraAngle_padLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Visual camera control'**
+  String get cameraAngle_padLabel;
+
+  /// No description provided for @cameraAngle_padHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to orbit, scroll or pinch to dolly, double-tap to reset; arrow keys and +/- do the same'**
+  String get cameraAngle_padHint;
+
+  /// No description provided for @cameraAngle_dragHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to orbit · Scroll to dolly'**
+  String get cameraAngle_dragHint;
+
+  /// No description provided for @cameraAngle_azimuthShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Azimuth'**
+  String get cameraAngle_azimuthShort;
+
+  /// No description provided for @cameraAngle_elevationShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Pitch'**
+  String get cameraAngle_elevationShort;
+
+  /// No description provided for @cameraAngle_rollShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Tilt'**
+  String get cameraAngle_rollShort;
+
+  /// No description provided for @cameraAngle_distanceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Shot distance'**
+  String get cameraAngle_distanceLabel;
+
+  /// No description provided for @cameraAngle_poseSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera pose'**
+  String get cameraAngle_poseSection;
+
+  /// No description provided for @cameraAngle_poseDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag the camera around the model; the shot distance sets close-up through wide shot'**
+  String get cameraAngle_poseDescription;
+
+  /// No description provided for @cameraAngle_reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get cameraAngle_reset;
+
+  /// No description provided for @cameraAngle_rollLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Image tilt'**
+  String get cameraAngle_rollLabel;
+
+  /// No description provided for @cameraAngle_azimuthLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Horizontal direction'**
+  String get cameraAngle_azimuthLabel;
+
+  /// No description provided for @cameraAngle_elevationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Vertical pitch'**
+  String get cameraAngle_elevationLabel;
+
+  /// No description provided for @cameraAngle_sideNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Left and right both use the from_side tag: the Danbooru vocabulary separates front, side and back only.'**
+  String get cameraAngle_sideNote;
+
+  /// No description provided for @cameraAngle_azimuthFront.
+  ///
+  /// In en, this message translates to:
+  /// **'Front'**
+  String get cameraAngle_azimuthFront;
+
+  /// No description provided for @cameraAngle_azimuthLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get cameraAngle_azimuthLeft;
+
+  /// No description provided for @cameraAngle_azimuthRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get cameraAngle_azimuthRight;
+
+  /// No description provided for @cameraAngle_azimuthBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get cameraAngle_azimuthBack;
+
+  /// No description provided for @cameraAngle_elevationAbove.
+  ///
+  /// In en, this message translates to:
+  /// **'High angle'**
+  String get cameraAngle_elevationAbove;
+
+  /// No description provided for @cameraAngle_elevationEye.
+  ///
+  /// In en, this message translates to:
+  /// **'Eye level'**
+  String get cameraAngle_elevationEye;
+
+  /// No description provided for @cameraAngle_elevationBelow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low angle'**
+  String get cameraAngle_elevationBelow;
+
+  /// No description provided for @cameraAngle_shotCloseUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Close-up'**
+  String get cameraAngle_shotCloseUp;
+
+  /// No description provided for @cameraAngle_shotPortrait.
+  ///
+  /// In en, this message translates to:
+  /// **'Portrait'**
+  String get cameraAngle_shotPortrait;
+
+  /// No description provided for @cameraAngle_shotUpperBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Upper body'**
+  String get cameraAngle_shotUpperBody;
+
+  /// No description provided for @cameraAngle_shotCowboyShot.
+  ///
+  /// In en, this message translates to:
+  /// **'Cowboy shot'**
+  String get cameraAngle_shotCowboyShot;
+
+  /// No description provided for @cameraAngle_shotFullBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Full body'**
+  String get cameraAngle_shotFullBody;
+
+  /// No description provided for @cameraAngle_shotWideShot.
+  ///
+  /// In en, this message translates to:
+  /// **'Wide shot'**
+  String get cameraAngle_shotWideShot;
+
+  /// No description provided for @cameraAngle_effectsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Lens and optics'**
+  String get cameraAngle_effectsSection;
+
+  /// No description provided for @cameraAngle_effectsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional depth, distortion and lens tags; nothing is written while unselected'**
+  String get cameraAngle_effectsDescription;
+
+  /// No description provided for @cameraAngle_effectLookingAtViewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking at viewer'**
+  String get cameraAngle_effectLookingAtViewer;
+
+  /// No description provided for @cameraAngle_effectDepthOfField.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth of field'**
+  String get cameraAngle_effectDepthOfField;
+
+  /// No description provided for @cameraAngle_effectBlurryBackground.
+  ///
+  /// In en, this message translates to:
+  /// **'Blurry background'**
+  String get cameraAngle_effectBlurryBackground;
+
+  /// No description provided for @cameraAngle_effectFisheye.
+  ///
+  /// In en, this message translates to:
+  /// **'Fisheye'**
+  String get cameraAngle_effectFisheye;
+
+  /// No description provided for @cameraAngle_effectLensFlare.
+  ///
+  /// In en, this message translates to:
+  /// **'Lens flare'**
+  String get cameraAngle_effectLensFlare;
+
+  /// No description provided for @cameraAngle_effectChromaticAberration.
+  ///
+  /// In en, this message translates to:
+  /// **'Chromatic aberration'**
+  String get cameraAngle_effectChromaticAberration;
+
+  /// No description provided for @cameraAngle_effectMotionBlur.
+  ///
+  /// In en, this message translates to:
+  /// **'Motion blur'**
+  String get cameraAngle_effectMotionBlur;
+
+  /// No description provided for @cameraAngle_effectZoomLayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom layer'**
+  String get cameraAngle_effectZoomLayer;
+
+  /// No description provided for @cameraAngle_effectVanishingPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Vanishing point'**
+  String get cameraAngle_effectVanishingPoint;
+
+  /// No description provided for @cameraAngle_effectForeshortening.
+  ///
+  /// In en, this message translates to:
+  /// **'Foreshortening'**
+  String get cameraAngle_effectForeshortening;
+
+  /// No description provided for @cameraAngle_promptSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Prompt fragment'**
+  String get cameraAngle_promptSection;
+
+  /// No description provided for @cameraAngle_promptDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Written at the start of the prompt; turning it off removes it right away'**
+  String get cameraAngle_promptDescription;
+
+  /// No description provided for @cameraAngle_strengthLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Prompt strength'**
+  String get cameraAngle_strengthLabel;
+
+  /// No description provided for @cameraAngle_strengthHint.
+  ///
+  /// In en, this message translates to:
+  /// **'1× writes plain tags; numerical emphasis needs V4 or newer models.'**
+  String get cameraAngle_strengthHint;
+
+  /// No description provided for @cameraAngle_promptEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'This pose adds no extra tags.'**
+  String get cameraAngle_promptEmpty;
+
+  /// No description provided for @cameraAngle_sceneSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera view'**
+  String get cameraAngle_sceneSection;
 }
 
 class _AppLocalizationsDelegate

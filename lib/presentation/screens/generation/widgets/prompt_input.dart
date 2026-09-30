@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constants/api_constants.dart';
+import '../../../../core/utils/camera_angle_prompt_inserter.dart';
 import '../../../../core/utils/localization_extension.dart';
+import '../../../providers/camera_angle_provider.dart';
 import '../../../providers/image_generation_provider.dart';
 import '../../../providers/pending_prompt_provider.dart';
 import '../../../providers/prompt_maximize_provider.dart';
 import '../../../providers/prompt_token_counter_provider.dart';
 import '../../../providers/queue_execution_provider.dart';
 import '../../../widgets/prompt/prompt_footer_style.dart';
+import '../../../widgets/prompt/prompt_tag_count_badge.dart';
 import 'prompt_input_controller.dart';
 import 'prompt_input_coordinator.dart';
 import 'prompt_input_editor.dart';
 import 'prompt_input_footer.dart';
 import 'prompt_input_models.dart';
 import 'prompt_input_toolbar.dart';
-import 'prompt_type_switch.dart';
 
 class PromptInputWidget extends ConsumerStatefulWidget {
   const PromptInputWidget({
@@ -120,6 +122,35 @@ class _PromptInputWidgetState extends ConsumerState<PromptInputWidget> {
     if (mounted) setState(() {});
   }
 
+  /// 把视角控制的片段同步进正面提示词。
+  ///
+  /// 旧片段只在真正存在于文本中时才移除，因此用户手动改写过的提示词不会被
+  /// 模糊匹配误删；移除与插入后立刻回写参数，保证生成请求使用同一份文本。
+  void _syncCameraAnglePrompt() {
+    final state = ref.read(cameraAnglePresetNotifierProvider);
+    final desired = state.preset.enabled ? state.preset.promptFragment : '';
+    final applied = state.appliedFragment;
+    if (desired == applied) return;
+
+    final current = _controller.promptController.text;
+    var next = current;
+    if (applied.isNotEmpty) {
+      next = CameraAnglePromptInserter.remove(next, applied);
+    }
+    if (desired.isNotEmpty) {
+      next = CameraAnglePromptInserter.insert(next, desired);
+    }
+    if (next != current) {
+      _controller.promptController.text = next;
+      _coordinator.updatePrompt(next);
+      // 视角片段写进正面提示词，让编辑器停在同一份文本上，改动立即可见。
+      if (desired.isNotEmpty && _controller.isNegativeMode) {
+        _controller.setNegativeMode(false);
+      }
+    }
+    ref.read(cameraAnglePresetNotifierProvider.notifier).markApplied(desired);
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen(
@@ -150,6 +181,18 @@ class _PromptInputWidgetState extends ConsumerState<PromptInputWidget> {
         if (!mounted) return;
         _coordinator.consumePendingPrompt();
         setState(() {});
+      });
+    });
+    ref.listen(cameraAnglePresetNotifierProvider, (previous, next) {
+      if (previous?.preset == next.preset &&
+          previous?.appliedFragment == next.appliedFragment) {
+        return;
+      }
+      // 状态来自弹窗手势或工具栏开关，统一在帧末写入提示词编辑器，
+      // 避免在构建阶段直接改写文本控制器。
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        _syncCameraAnglePrompt();
       });
     });
 

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/autocomplete/autocomplete_settings.dart' as autocomplete;
 import '../../agent_settings/providers/agent_settings_provider.dart';
 import '../../prompt_assistant/providers/prompt_assistant_config_provider.dart';
+import '../camera_angle_provider.dart';
 import '../composition_guide_provider.dart';
 import '../dlss_provider.dart';
 import '../fixed_tags_provider.dart';
@@ -69,6 +70,7 @@ Future<void> refreshCloudSyncRuntime(Ref ref, Set<String> adapterIds) async {
     ref.invalidate(imagesPerRequestProvider);
     ref.invalidate(qualityPresetNotifierProvider);
     ref.invalidate(ucPresetNotifierProvider);
+    ref.invalidate(cameraAnglePresetNotifierProvider);
     ref.invalidate(quickTagCloudUserServiceProvider);
     ref.invalidate(quickTagCloudFilterProvider);
   }

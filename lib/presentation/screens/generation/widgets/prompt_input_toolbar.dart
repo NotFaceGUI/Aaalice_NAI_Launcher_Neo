@@ -9,6 +9,7 @@ import '../../../providers/image_generation_provider.dart';
 import '../../../providers/prompt_regex_rules_provider.dart';
 import '../../../widgets/character/character_prompt_button.dart';
 import '../../../widgets/common/horizontal_action_strip.dart';
+import '../../../widgets/prompt/camera_angle_button.dart';
 import '../../../widgets/prompt/fixed_tags_button.dart';
 import '../../../widgets/prompt/quality_tags_selector.dart';
 import '../../../widgets/prompt/regex_rules_dialog.dart';
@@ -64,8 +65,11 @@ class PromptInputToolbar extends ConsumerWidget {
         final usesCompactSingleRow =
             viewData.autoGrow && constraints.maxWidth >= 360 && !usesLargeText;
         if (usesCompactSingleRow) {
+          // 这一行固定放模式切换加五个工具入口，标签密度按行宽分档：
+          // 宽度不足以让全部文字按钮与模式切换并存时整体退化为图标，
+          // 避免把控制项挪到第二行或让模式切换被压到不可读。
           final showUtilityLabels =
-              constraints.maxWidth >= (viewData.showMaximizeButton ? 520 : 450);
+              constraints.maxWidth >= (viewData.showMaximizeButton ? 580 : 530);
           return SizedBox(
             key: const ValueKey('generation_prompt_compact_single_row'),
             height: 48,
@@ -87,6 +91,12 @@ class PromptInputToolbar extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     FixedTagsButton(
+                      compact: true,
+                      iconOnly: !showUtilityLabels,
+                      maxLabelWidth: showUtilityLabels ? 48 : null,
+                    ),
+                    const SizedBox(width: 4),
+                    CameraAngleButton(
                       compact: true,
                       iconOnly: !showUtilityLabels,
                       maxLabelWidth: showUtilityLabels ? 48 : null,
@@ -154,6 +164,12 @@ class PromptInputToolbar extends ConsumerWidget {
                     ),
                     child: FixedTagsButton(),
                   ),
+                  const _MobilePromptToolbarAction(
+                    actionKey: ValueKey(
+                      'generation_prompt_mobile_camera_angle_action',
+                    ),
+                    child: CameraAngleButton(),
+                  ),
                   _MobilePromptToolbarAction(
                     actionKey: const ValueKey(
                       'generation_prompt_mobile_quality_action',
@@ -192,6 +208,7 @@ class PromptInputToolbar extends ConsumerWidget {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 const FixedTagsButton(compact: true),
+                const CameraAngleButton(compact: true),
                 QualityTagsSelector(model: model),
                 UcPresetSelector(model: model),
                 toolbar,

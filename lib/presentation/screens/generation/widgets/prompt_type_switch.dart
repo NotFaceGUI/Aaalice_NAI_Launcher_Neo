@@ -11,8 +11,8 @@ import '../../../providers/uc_preset_provider.dart';
 import '../../../../data/services/alias_resolver_service.dart';
 import '../../../adaptive/interaction_policy.dart';
 import '../../../themes/prompt_semantic_colors.dart';
-import '../../../themes/prompt_control_colors.dart';
 import '../../../widgets/prompt/prompt_control_button.dart';
+import '../../../widgets/prompt/prompt_tag_count_badge.dart';
 import '../../../widgets/common/rich_tooltip_surface.dart';
 import 'prompt_input_controller.dart';
 import 'prompt_input_models.dart';
@@ -206,46 +206,6 @@ class _PromptTypeButtonState extends State<PromptTypeButton> {
     return DelayedRichTooltip(
       content: RichTooltipSurface(maxWidth: 420, child: tooltipBuilder(theme)),
       child: button,
-    );
-  }
-}
-
-class PromptTagCountBadge extends StatelessWidget {
-  const PromptTagCountBadge({
-    super.key,
-    required this.count,
-    required this.selected,
-    required this.color,
-    this.compact = false,
-  });
-
-  final int count;
-  final bool selected;
-  final Color color;
-  final bool compact;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = PromptControlColors(
-      Theme.of(context),
-      color,
-      active: selected,
-    );
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: compact ? 4 : 5, vertical: 1),
-      decoration: BoxDecoration(
-        color: colors.background,
-        borderRadius: BorderRadius.circular(999),
-      ),
-      child: Text(
-        '$count',
-        style: TextStyle(
-          fontSize: compact ? 10 : 11,
-          fontWeight: FontWeight.w600,
-          color: colors.foreground,
-          fontFeatures: const [FontFeature.tabularFigures()],
-        ),
-      ),
     );
   }
 }

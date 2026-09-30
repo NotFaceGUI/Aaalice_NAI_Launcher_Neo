@@ -15420,4 +15420,161 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get storyboard_fillRemaining => '残りを埋める';
+
+  @override
+  String get cameraAngle_title => 'カメラアングル';
+
+  @override
+  String get cameraAngle_buttonLabel => 'アングル';
+
+  @override
+  String get cameraAngle_statusOn => '適用中';
+
+  @override
+  String get cameraAngle_statusOff => '未適用';
+
+  @override
+  String get cameraAngle_promptPreviewLabel => '挿入されるプロンプト';
+
+  @override
+  String get cameraAngle_openEditorHint => 'クリックでカメラエディタを開きます。ドラッグで旋回、ホイールで距離';
+
+  @override
+  String get cameraAngle_padLabel => 'カメラワークの可視化';
+
+  @override
+  String get cameraAngle_padHint =>
+      'ドラッグで旋回、ホイールまたはピンチで距離、ダブルタップでリセット。矢印キーと +/- も同じです';
+
+  @override
+  String get cameraAngle_dragHint => 'ドラッグで旋回 · ホイールで距離';
+
+  @override
+  String get cameraAngle_azimuthShort => '方位';
+
+  @override
+  String get cameraAngle_elevationShort => '仰角';
+
+  @override
+  String get cameraAngle_rollShort => '傾き';
+
+  @override
+  String get cameraAngle_distanceLabel => '距離';
+
+  @override
+  String get cameraAngle_poseSection => 'カメラポジション';
+
+  @override
+  String get cameraAngle_poseDescription =>
+      'モデルの周囲でカメラをドラッグ。距離がクローズアップからワイドまでの画角を決めます';
+
+  @override
+  String get cameraAngle_reset => 'リセット';
+
+  @override
+  String get cameraAngle_rollLabel => '画面の傾き';
+
+  @override
+  String get cameraAngle_azimuthLabel => '水平方向';
+
+  @override
+  String get cameraAngle_elevationLabel => '垂直方向';
+
+  @override
+  String get cameraAngle_sideNote =>
+      '左右どちらも from_side タグを使います。Danbooru の語彙は正面・側面・背面のみを区別します。';
+
+  @override
+  String get cameraAngle_azimuthFront => '正面';
+
+  @override
+  String get cameraAngle_azimuthLeft => '左側';
+
+  @override
+  String get cameraAngle_azimuthRight => '右側';
+
+  @override
+  String get cameraAngle_azimuthBack => '背面';
+
+  @override
+  String get cameraAngle_elevationAbove => '俯瞰';
+
+  @override
+  String get cameraAngle_elevationEye => '目線';
+
+  @override
+  String get cameraAngle_elevationBelow => 'あおり';
+
+  @override
+  String get cameraAngle_shotCloseUp => 'クローズアップ';
+
+  @override
+  String get cameraAngle_shotPortrait => 'ポートレート';
+
+  @override
+  String get cameraAngle_shotUpperBody => '上半身';
+
+  @override
+  String get cameraAngle_shotCowboyShot => 'カウボーイショット';
+
+  @override
+  String get cameraAngle_shotFullBody => '全身';
+
+  @override
+  String get cameraAngle_shotWideShot => 'ワイドショット';
+
+  @override
+  String get cameraAngle_effectsSection => 'レンズ表現';
+
+  @override
+  String get cameraAngle_effectsDescription =>
+      '被写界深度や歪み、レンズのタグを追加できます。未選択なら書き込まれません';
+
+  @override
+  String get cameraAngle_effectLookingAtViewer => '視線をカメラへ';
+
+  @override
+  String get cameraAngle_effectDepthOfField => '被写界深度';
+
+  @override
+  String get cameraAngle_effectBlurryBackground => '背景ぼかし';
+
+  @override
+  String get cameraAngle_effectFisheye => '魚眼';
+
+  @override
+  String get cameraAngle_effectLensFlare => 'レンズフレア';
+
+  @override
+  String get cameraAngle_effectChromaticAberration => '色収差';
+
+  @override
+  String get cameraAngle_effectMotionBlur => 'モーションブラー';
+
+  @override
+  String get cameraAngle_effectZoomLayer => 'ズーム';
+
+  @override
+  String get cameraAngle_effectVanishingPoint => '消失点';
+
+  @override
+  String get cameraAngle_effectForeshortening => '短縮遠近';
+
+  @override
+  String get cameraAngle_promptSection => 'プロンプト断片';
+
+  @override
+  String get cameraAngle_promptDescription => 'プロンプトの先頭に書き込まれます。オフにするとすぐ削除されます';
+
+  @override
+  String get cameraAngle_strengthLabel => 'プロンプト強度';
+
+  @override
+  String get cameraAngle_strengthHint => '1× はタグのみを出力します。数値強調は V4 以降のモデルが必要です。';
+
+  @override
+  String get cameraAngle_promptEmpty => '現在のポジションでは追加タグはありません。';
+
+  @override
+  String get cameraAngle_sceneSection => 'カメラビュー';
 }

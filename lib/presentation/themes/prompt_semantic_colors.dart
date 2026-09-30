@@ -15,6 +15,7 @@ class PromptSemanticColors extends ThemeExtension<PromptSemanticColors> {
     required this.positivePrompt,
     required this.negativePrompt,
     required this.fixedTag,
+    required this.cameraAngle,
   });
 
   factory PromptSemanticColors.from(ColorScheme colors) {
@@ -36,6 +37,9 @@ class PromptSemanticColors extends ThemeExtension<PromptSemanticColors> {
       negativeFixedTag: isDark
           ? const Color(0xFFFF8A80)
           : const Color(0xFFB42318),
+      cameraAngle: isDark
+          ? const Color(0xFFF5A9D0)
+          : const Color(0xFFA8197C),
     );
   }
 
@@ -47,6 +51,7 @@ class PromptSemanticColors extends ThemeExtension<PromptSemanticColors> {
   final Color positivePrompt;
   final Color negativePrompt;
   final Color fixedTag;
+  final Color cameraAngle;
 
   @override
   PromptSemanticColors copyWith({
@@ -58,6 +63,7 @@ class PromptSemanticColors extends ThemeExtension<PromptSemanticColors> {
     Color? positivePrompt,
     Color? negativePrompt,
     Color? fixedTag,
+    Color? cameraAngle,
   }) => PromptSemanticColors._(
     mainPrompt: mainPrompt ?? this.mainPrompt,
     positiveQuality: positiveQuality ?? this.positiveQuality,
@@ -67,6 +73,7 @@ class PromptSemanticColors extends ThemeExtension<PromptSemanticColors> {
     positivePrompt: positivePrompt ?? this.positivePrompt,
     negativePrompt: negativePrompt ?? this.negativePrompt,
     fixedTag: fixedTag ?? this.fixedTag,
+    cameraAngle: cameraAngle ?? this.cameraAngle,
   );
 
   @override
@@ -89,6 +96,7 @@ class PromptSemanticColors extends ThemeExtension<PromptSemanticColors> {
       positivePrompt: Color.lerp(positivePrompt, other.positivePrompt, t)!,
       negativePrompt: Color.lerp(negativePrompt, other.negativePrompt, t)!,
       fixedTag: Color.lerp(fixedTag, other.fixedTag, t)!,
+      cameraAngle: Color.lerp(cameraAngle, other.cameraAngle, t)!,
     );
   }
 }

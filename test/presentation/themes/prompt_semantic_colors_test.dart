@@ -4,7 +4,7 @@ import 'package:nai_launcher/presentation/themes/prompt_semantic_colors.dart';
 
 void main() {
   for (final brightness in Brightness.values) {
-    test('提示词五类业务语义色在 ${brightness.name} 主题下互不混用', () {
+    test('提示词六类业务语义色在 ${brightness.name} 主题下互不混用', () {
       final scheme = ColorScheme.fromSeed(
         seedColor: const Color(0xFF6750A4),
         brightness: brightness,
@@ -16,9 +16,10 @@ void main() {
         colors.negativeQuality,
         colors.positiveFixedTag,
         colors.negativeFixedTag,
+        colors.cameraAngle,
       };
 
-      expect(roles, hasLength(5));
+      expect(roles, hasLength(6));
       for (final color in roles) {
         final background = Color.alphaBlend(
           color.withValues(

@@ -25,6 +25,7 @@ import 'package:nai_launcher/presentation/widgets/common/themed_input.dart';
 import 'package:nai_launcher/presentation/widgets/common/weight_adjust_toolbar.dart';
 import 'package:nai_launcher/presentation/widgets/character/character_prompt_button.dart';
 import 'package:nai_launcher/presentation/widgets/character/inline_character_editor.dart';
+import 'package:nai_launcher/presentation/widgets/prompt/camera_angle_button.dart';
 import 'package:nai_launcher/presentation/widgets/prompt/fixed_tags_button.dart';
 import 'package:nai_launcher/presentation/widgets/prompt/quality_tags_selector.dart';
 import 'package:nai_launcher/presentation/widgets/prompt/uc_preset_selector.dart';
@@ -1022,7 +1023,7 @@ void main() {
     }
   });
 
-  testWidgets('450 宽无全屏按钮时顶栏保留文字并保持单行', (tester) async {
+  testWidgets('450 宽无全屏按钮时顶栏收成图标并保持单行', (tester) async {
     debugDefaultTargetPlatformOverride = TargetPlatform.windows;
     try {
       await tester.pumpWidget(
@@ -1078,13 +1079,18 @@ void main() {
       expect(tester.getRect(typeSwitch).right, lessThanOrEqualTo(450));
       expect(
         tester.widget<FixedTagsButton>(find.byType(FixedTagsButton)).iconOnly,
-        isFalse,
+        isTrue,
       );
       expect(
         tester
             .widget<QualityTagsSelector>(find.byType(QualityTagsSelector))
             .iconOnly,
-        isFalse,
+        isTrue,
+      );
+      expect(
+        find.byType(CameraAngleButton),
+        findsOneWidget,
+        reason: '窄屏也要保留视角入口，不能静默隐藏功能',
       );
       final bottomActions = find.byKey(
         const ValueKey('generation_prompt_bottom_actions'),
@@ -1195,27 +1201,25 @@ void main() {
       );
       expect(toolbar, findsOneWidget);
       expect(tester.getSize(toolbar).height, 48);
+      // 工具入口收成图标后模式切换拿到剩余宽度，但不得被压到不可读
+      expect(tester.getSize(find.text('Prompt')).width, greaterThan(10));
       expect(
-        tester
-            .getSize(
-              find.byKey(const ValueKey('generation_prompt_type_switch')),
-            )
-            .width,
-        lessThanOrEqualTo(200),
+        tester.getSize(find.text('Undesired Content')).width,
+        greaterThan(10),
       );
       expect(
         tester.widget<FixedTagsButton>(find.byType(FixedTagsButton)).iconOnly,
-        isFalse,
+        isTrue,
       );
       expect(
         tester
             .widget<QualityTagsSelector>(find.byType(QualityTagsSelector))
             .iconOnly,
-        isFalse,
+        isTrue,
       );
       expect(
         tester.widget<UcPresetSelector>(find.byType(UcPresetSelector)).iconOnly,
-        isFalse,
+        isTrue,
       );
       final typeSwitch = find.byKey(
         const ValueKey('generation_prompt_type_switch'),
@@ -1233,13 +1237,14 @@ void main() {
       );
       expect(
         find.descendant(
-          of: find.byType(UcPresetSelector),
-          matching: find.byType(Text),
+          of: find.byType(CameraAngleButton),
+          matching: find.byType(Icon),
         ),
-        findsOneWidget,
+        findsWidgets,
       );
       for (final control in <Finder>[
         find.byType(FixedTagsButton),
+        find.byType(CameraAngleButton),
         find.byType(QualityTagsSelector),
         find.byType(UcPresetSelector),
         find.widgetWithIcon(IconButton, Icons.fullscreen),
@@ -1262,6 +1267,91 @@ void main() {
       expect(
         tester.getRect(bottomActions).bottom,
         lessThanOrEqualTo(tester.getRect(footer).bottom),
+      );
+      expect(tester.takeException(), isNull);
+    } finally {
+      debugDefaultTargetPlatformOverride = null;
+    }
+  });
+
+  testWidgets('530 宽无全屏按钮时顶栏恢复文字标签且不溢出', (tester) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.windows;
+    try {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            localStorageServiceProvider.overrideWith(
+              (ref) => _TestLocalStorageService(),
+            ),
+            characterPromptNotifierProvider.overrideWith(
+              _TestCharacterPromptNotifier.new,
+            ),
+            promptTokenUsageProvider(
+              PromptTokenCountTarget.positive,
+            ).overrideWith(
+              (ref) async => const PromptTokenUsage(usedTokens: 0, limit: 703),
+            ),
+            promptTokenUsageProvider(
+              PromptTokenCountTarget.negative,
+            ).overrideWith(
+              (ref) async => const PromptTokenUsage(usedTokens: 0, limit: 703),
+            ),
+          ],
+          child: const MaterialApp(
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            home: Scaffold(
+              body: Align(
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  width: 530,
+                  height: 420,
+                  child: PromptInputWidget(
+                    autoGrow: true,
+                    showMaximizeButton: false,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+
+      final toolbar = find.byKey(
+        const ValueKey('generation_prompt_compact_single_row'),
+      );
+      expect(toolbar, findsOneWidget);
+      for (final control in <Finder>[
+        find.byType(FixedTagsButton),
+        find.byType(CameraAngleButton),
+        find.byType(QualityTagsSelector),
+        find.byType(UcPresetSelector),
+      ]) {
+        expect(
+          tester.getRect(control).right,
+          lessThanOrEqualTo(tester.getRect(toolbar).right),
+          reason: '$control must stay inside the compact toolbar',
+        );
+      }
+      expect(
+        tester.widget<FixedTagsButton>(find.byType(FixedTagsButton)).iconOnly,
+        isFalse,
+      );
+      expect(
+        tester.widget<CameraAngleButton>(find.byType(CameraAngleButton)).iconOnly,
+        isFalse,
+      );
+      expect(
+        tester
+            .widget<QualityTagsSelector>(find.byType(QualityTagsSelector))
+            .iconOnly,
+        isFalse,
+      );
+      expect(
+        tester.widget<UcPresetSelector>(find.byType(UcPresetSelector)).iconOnly,
+        isFalse,
       );
       expect(tester.takeException(), isNull);
     } finally {

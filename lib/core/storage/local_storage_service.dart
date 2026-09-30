@@ -939,6 +939,21 @@ class LocalStorageService {
     await _historyBox.close();
   }
 
+  // ==================== Camera Angle ====================
+
+  /// 获取视角控制预设 JSON
+  ///
+  /// 未设置时返回 null，默认值与合法性由 `CameraAnglePreset` 解析，
+  /// 避免在 core 层重复定义标签表。
+  String? getCameraAnglePresetJson() {
+    return getSetting<String>(StorageKeys.cameraAnglePreset);
+  }
+
+  /// 保存视角控制预设 JSON
+  Future<void> setCameraAnglePresetJson(String json) async {
+    await setSetting(StorageKeys.cameraAnglePreset, json);
+  }
+
   // ==================== Fixed Tags ====================
 
   /// 获取固定词列表 JSON
