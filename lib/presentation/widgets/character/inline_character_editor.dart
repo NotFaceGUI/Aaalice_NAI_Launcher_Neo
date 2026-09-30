@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:nai_launcher/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../data/models/character/character_interaction.dart';
 import '../../../data/models/character/character_prompt.dart';
+import '../../../data/models/image/image_params.dart' show ImageParamsExtension;
 import '../../adaptive/adaptive_presenter.dart';
 import '../../adaptive/interaction_policy.dart';
 import '../../prompt_assistant/providers/prompt_assistant_history_provider.dart';
@@ -12,6 +14,7 @@ import '../prompt/prompt_editor_control_row.dart';
 import '../../providers/character_prompt_provider.dart';
 import '../../providers/generation/character_editor_layout_provider.dart';
 import '../../providers/image_generation_provider.dart';
+import 'character_interaction_bar.dart';
 import '../common/themed_confirm_dialog.dart';
 import '../common/vertical_resize_handle.dart';
 import '../prompt/toolbar/toolbar.dart';
@@ -92,6 +95,21 @@ class _CharacterPromptEditorState extends ConsumerState<CharacterPromptEditor> {
   }
 
   /// 输入框是否持有焦点（供外层 TapRegion 判断是否应退出编辑态）
+  /// 多角色互动只对 V4.5 及以后的模型开放，且至少要有两个角色才谈得上配对。
+  bool get _supportsInteraction {
+    final supported = ref.watch(
+      generationParamsNotifierProvider.select(
+        (params) => params.capabilities.supportsCharacterInteraction,
+      ),
+    );
+    final characterCount = ref.watch(
+      characterPromptNotifierProvider.select(
+        (state) => state.characters.length,
+      ),
+    );
+    return supported && characterCount >= 2;
+  }
+
   bool get hasEditorFocus =>
       _promptFocusNode.hasFocus || _negativeFocusNode.hasFocus;
 
@@ -104,6 +122,19 @@ class _CharacterPromptEditorState extends ConsumerState<CharacterPromptEditor> {
 
   void _updateCharacter(CharacterPrompt updated) {
     ref.read(characterPromptNotifierProvider.notifier).updateCharacter(updated);
+  }
+
+  /// 写入或清除互动标签。
+  ///
+  /// 互动标签是角色提示词的一部分，因此同时更新本地输入框与 provider，让编辑器
+  /// 立即可见，避免只改 provider 后输入框内容过期。
+  void _applyInteraction(CharacterInteraction? interaction) {
+    final current = _promptController.text;
+    final next = CharacterInteraction.write(current, interaction);
+    if (next == current) return;
+    _promptController.text = next;
+    _updateCharacter(widget.character.copyWith(prompt: next));
+    setState(() {});
   }
 
   Future<void> _clearCurrentPrompt() async {
@@ -138,6 +169,7 @@ class _CharacterPromptEditorState extends ConsumerState<CharacterPromptEditor> {
     final assistantSessionId = _tabIndex == 0
         ? PromptHistorySessionIds.characterPrompt(widget.character.id)
         : PromptHistorySessionIds.characterNegative(widget.character.id);
+    final showInteraction = _tabIndex == 0 && _supportsInteraction;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -161,6 +193,14 @@ class _CharacterPromptEditorState extends ConsumerState<CharacterPromptEditor> {
               widget.character.copyWith(negativePrompt: value),
             ),
           ),
+        if (showInteraction) ...[
+          const SizedBox(height: 10),
+          CharacterInteractionBar(
+            interaction: CharacterInteraction.parse(_promptController.text),
+            onChanged: _applyInteraction,
+            compact: widget.compact,
+          ),
+        ],
       ],
     );
   }

@@ -49,6 +49,7 @@ class ModelCapabilities {
     this.randomPromptProfile = RandomPromptProfile.legacyAnime,
     this.paramsVersion = 3,
     this.maxCharacters = 0,
+    this.supportsCharacterInteraction = false,
     this.supportsVibeTransfer = false,
     this.supportsEncodedVibeTransfer = false,
     this.supportsPreciseReference = false,
@@ -91,6 +92,12 @@ class ModelCapabilities {
 
   /// 角色提示词数量上限，0 表示不支持多角色。
   final int maxCharacters;
+
+  /// 是否支持多角色互动标签（`source#` / `target#` / `mutual#`）。
+  ///
+  /// 官方只在 V4.5 及以后的模型上说明该语法，V4 保持关闭；标签本身只是
+  /// 提示词文本，关闭时界面不提供入口，智能体也不会写入。
+  final bool supportsCharacterInteraction;
 
   final bool supportsVibeTransfer;
 
@@ -275,6 +282,7 @@ class ModelCapabilityRegistry {
     defaultSteps: 23,
     randomPromptProfile: RandomPromptProfile.characterPrompts,
     maxCharacters: 6,
+    supportsCharacterInteraction: true,
     supportsVibeTransfer: true,
     supportsEncodedVibeTransfer: true,
     supportsPreciseReference: true,
@@ -296,6 +304,7 @@ class ModelCapabilityRegistry {
     defaultSteps: 23,
     randomPromptProfile: RandomPromptProfile.characterPrompts,
     maxCharacters: 6,
+    supportsCharacterInteraction: true,
     supportsVibeTransfer: true,
     supportsEncodedVibeTransfer: true,
     supportsPreciseReference: true,
@@ -322,6 +331,7 @@ class ModelCapabilityRegistry {
     defaultSteps: 28,
     randomPromptProfile: RandomPromptProfile.characterPrompts,
     maxCharacters: maximumCharacterCount,
+    supportsCharacterInteraction: true,
     supportsImg2ImgInpainting: true,
     supportsTransparentBackground: true,
     supportsMaxEnhance: true,
@@ -349,6 +359,7 @@ class ModelCapabilityRegistry {
     defaultSteps: 28,
     randomPromptProfile: RandomPromptProfile.characterPrompts,
     maxCharacters: maximumCharacterCount,
+    supportsCharacterInteraction: true,
     supportsImg2ImgInpainting: true,
     supportsTransparentBackground: true,
     supportsMaxEnhance: true,

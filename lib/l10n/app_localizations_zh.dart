@@ -15302,6 +15302,100 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cameraAngle_sceneSection => '摄像机画面';
+
+  @override
+  String get characterInteraction_title => '互动';
+
+  @override
+  String get characterInteraction_description => '声明谁主动、谁承受';
+
+  @override
+  String get characterInteraction_roleLabel => '本角色身份';
+
+  @override
+  String get characterInteraction_roleSource => '主动（source#）';
+
+  @override
+  String get characterInteraction_roleTarget => '承受（target#）';
+
+  @override
+  String get characterInteraction_roleMutual => '互相（mutual#）';
+
+  @override
+  String get characterInteraction_clear => '清除';
+
+  @override
+  String get characterInteraction_hint =>
+      '标签写在本角色自己的提示词里：主动方写 source#动作、承受方写 target#动作、互相则两边都写 mutual#动作，配对由另一个角色的标签共同完成。';
+
+  @override
+  String get characterInteraction_actionLookingAtAnother => '互相注视';
+
+  @override
+  String get characterInteraction_actionHug => '拥抱';
+
+  @override
+  String get characterInteraction_actionHoldingHands => '牵手';
+
+  @override
+  String get characterInteraction_actionKiss => '接吻';
+
+  @override
+  String get characterInteraction_actionEyeContact => '视线交汇';
+
+  @override
+  String get characterInteraction_actionHugFromBehind => '背后拥抱';
+
+  @override
+  String get characterInteraction_actionHeadpat => '摸头';
+
+  @override
+  String get characterInteraction_actionFrenchKiss => '舌吻';
+
+  @override
+  String get characterInteraction_actionPrincessCarry => '公主抱';
+
+  @override
+  String get characterInteraction_actionFeeding => '喂食';
+
+  @override
+  String get characterInteraction_actionLapPillow => '膝枕';
+
+  @override
+  String get characterInteraction_actionPiggyback => '背人';
+
+  @override
+  String get characterInteraction_actionTeasing => '调戏';
+
+  @override
+  String get characterInteraction_actionTickling => '挠痒';
+
+  @override
+  String get characterInteraction_actionCheekPinching => '捏脸';
+
+  @override
+  String get characterInteraction_actionSharedUmbrella => '共伞';
+
+  @override
+  String get characterInteraction_actionComforting => '安慰';
+
+  @override
+  String get characterInteraction_notSet => '未设置';
+
+  @override
+  String get characterInteraction_expand => '选择互动';
+
+  @override
+  String get characterInteraction_collapse => '收起互动';
+
+  @override
+  String get characterInteraction_customLabel => '自定义动作';
+
+  @override
+  String get characterInteraction_customHint => '例如 pointing at another';
+
+  @override
+  String get characterInteraction_customApply => '写入';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -30603,4 +30697,98 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get cameraAngle_sceneSection => '攝影機畫面';
+
+  @override
+  String get characterInteraction_title => '互動';
+
+  @override
+  String get characterInteraction_description => '宣告誰主動、誰承受';
+
+  @override
+  String get characterInteraction_roleLabel => '本角色身分';
+
+  @override
+  String get characterInteraction_roleSource => '主動（source#）';
+
+  @override
+  String get characterInteraction_roleTarget => '承受（target#）';
+
+  @override
+  String get characterInteraction_roleMutual => '互相（mutual#）';
+
+  @override
+  String get characterInteraction_clear => '清除';
+
+  @override
+  String get characterInteraction_hint =>
+      '標籤寫在本角色自己的提示詞裡：主動方寫 source#動作、承受方寫 target#動作、互相則兩邊都寫 mutual#動作，配對由另一個角色的標籤共同完成。';
+
+  @override
+  String get characterInteraction_actionLookingAtAnother => '互相注視';
+
+  @override
+  String get characterInteraction_actionHug => '擁抱';
+
+  @override
+  String get characterInteraction_actionHoldingHands => '牽手';
+
+  @override
+  String get characterInteraction_actionKiss => '接吻';
+
+  @override
+  String get characterInteraction_actionEyeContact => '視線交會';
+
+  @override
+  String get characterInteraction_actionHugFromBehind => '背後擁抱';
+
+  @override
+  String get characterInteraction_actionHeadpat => '摸頭';
+
+  @override
+  String get characterInteraction_actionFrenchKiss => '舌吻';
+
+  @override
+  String get characterInteraction_actionPrincessCarry => '公主抱';
+
+  @override
+  String get characterInteraction_actionFeeding => '餵食';
+
+  @override
+  String get characterInteraction_actionLapPillow => '膝枕';
+
+  @override
+  String get characterInteraction_actionPiggyback => '背人';
+
+  @override
+  String get characterInteraction_actionTeasing => '調戲';
+
+  @override
+  String get characterInteraction_actionTickling => '搔癢';
+
+  @override
+  String get characterInteraction_actionCheekPinching => '捏臉';
+
+  @override
+  String get characterInteraction_actionSharedUmbrella => '共傘';
+
+  @override
+  String get characterInteraction_actionComforting => '安慰';
+
+  @override
+  String get characterInteraction_notSet => '未設定';
+
+  @override
+  String get characterInteraction_expand => '選擇互動';
+
+  @override
+  String get characterInteraction_collapse => '收合互動';
+
+  @override
+  String get characterInteraction_customLabel => '自訂動作';
+
+  @override
+  String get characterInteraction_customHint => '例如 pointing at another';
+
+  @override
+  String get characterInteraction_customApply => '寫入';
 }

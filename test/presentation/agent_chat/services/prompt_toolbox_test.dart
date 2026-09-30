@@ -7,6 +7,7 @@ import 'package:nai_launcher/core/agent/agent_types.dart';
 import 'package:nai_launcher/core/agent/harness/harness_types.dart';
 import 'package:nai_launcher/core/agent/harness/skills.dart';
 import 'package:nai_launcher/data/models/character/character_prompt.dart';
+import 'package:nai_launcher/core/constants/api_constants.dart';
 import 'package:nai_launcher/data/models/image/image_params.dart'
     show ImageParams;
 import 'package:nai_launcher/presentation/agent_chat/services/prompt_toolbox.dart';
@@ -337,7 +338,145 @@ void main() {
             as Map<String, dynamic>;
     expect(positionModeSchema['default'], 'ai_choice');
   });
-}
+
+  test('update_character writes and clears character interaction tags', () async {
+    final container = ProviderContainer(
+      overrides: [
+        generationParamsNotifierProvider.overrideWith(
+          _TestGenerationParamsNotifier.new,
+        ),
+        characterPromptNotifierProvider.overrideWith(
+          _DuplicateNameCharacterNotifier.new,
+        ),
+      ],
+    );
+    addTearDown(container.dispose);
+    final tools = PromptToolbox(container.read(_refProvider)).tools();
+    AgentTool tool(String name) =>
+        tools.firstWhere((candidate) => candidate.name == name);
+
+    final written = await tool('update_character').execute(
+      'interaction-set',
+      const {
+        'id': 'old-character',
+        'interaction_role': 'target',
+        'interaction_action': 'hug',
+      },
+    );
+    expect(written.isError, isFalse, reason: _resultText(written));
+    var character =
+        (jsonDecode(_resultText(written)) as Map)['character']
+            as Map<String, dynamic>;
+    expect(character['prompt'], 'target#hug, black hair');
+    expect(character['interaction'], {
+      'role': 'target',
+      'action': 'hug',
+      'tag': 'target#hug',
+    });
+
+    // 同一次调用里改提示词再设置互动：标签要基于新文本
+    final combined = await tool('update_character').execute(
+      'interaction-combined',
+      const {
+        'id': 'old-character',
+        'prompt': 'silver hair',
+        'interaction_role': 'source',
+        'interaction_action': 'kiss',
+      },
+    );
+    expect(combined.isError, isFalse, reason: _resultText(combined));
+    character =
+        (jsonDecode(_resultText(combined)) as Map)['character']
+            as Map<String, dynamic>;
+    expect(character['prompt'], 'source#kiss, silver hair');
+
+    final cleared = await tool('update_character').execute(
+      'interaction-clear',
+      const {'id': 'old-character', 'interaction_role': 'none'},
+    );
+    expect(cleared.isError, isFalse, reason: _resultText(cleared));
+    character =
+        (jsonDecode(_resultText(cleared)) as Map)['character']
+            as Map<String, dynamic>;
+    expect(character['prompt'], 'silver hair');
+    expect(character.containsKey('interaction'), isFalse);
+
+    final missingRole = await tool('update_character').execute(
+      'interaction-missing-role',
+      const {'id': 'old-character', 'interaction_action': 'hug'},
+    );
+    expect(_resultText(missingRole), contains('missing_interaction_role'));
+
+    final missingAction = await tool('update_character').execute(
+      'interaction-missing-action',
+      const {'id': 'old-character', 'interaction_role': 'source'},
+    );
+    expect(_resultText(missingAction), contains('missing_interaction_action'));
+  });
+
+  test('get_prompt_state reports interaction capability and per-character tags',
+      () async {
+    final container = ProviderContainer(
+      overrides: [
+        generationParamsNotifierProvider.overrideWith(
+          _TestGenerationParamsNotifier.new,
+        ),
+        characterPromptNotifierProvider.overrideWith(
+          _DuplicateNameCharacterNotifier.new,
+        ),
+      ],
+    );
+    addTearDown(container.dispose);
+    final tools = PromptToolbox(container.read(_refProvider)).tools();
+    AgentTool tool(String name) =>
+        tools.firstWhere((candidate) => candidate.name == name);
+
+    await tool('update_character').execute('interaction-set', const {
+      'id': 'old-character',
+      'interaction_role': 'mutual',
+      'interaction_action': 'holding_hands',
+    });
+    final state = await tool('get_prompt_state').execute('state', const {});
+    final payload = jsonDecode(_resultText(state)) as Map<String, dynamic>;
+
+    expect(payload['supports_character_interaction'], isTrue);
+    final characters = payload['characters'] as List;
+    expect((characters.first as Map)['interaction'], {
+      'role': 'mutual',
+      'action': 'holding_hands',
+      'tag': 'mutual#holding_hands',
+    });
+  });
+
+  test('interaction tags are rejected on models without the syntax', () async {
+    final container = ProviderContainer(
+      overrides: [
+        generationParamsNotifierProvider.overrideWith(
+          _V4GenerationParamsNotifier.new,
+        ),
+        characterPromptNotifierProvider.overrideWith(
+          _DuplicateNameCharacterNotifier.new,
+        ),
+      ],
+    );
+    addTearDown(container.dispose);
+    final tool = PromptToolbox(
+      container.read(_refProvider),
+    ).tools().firstWhere((candidate) => candidate.name == 'update_character');
+
+    final result = await tool.execute('interaction-unsupported', const {
+      'id': 'old-character',
+      'interaction_role': 'source',
+      'interaction_action': 'hug',
+    });
+
+    expect(result.isError, isTrue);
+    expect(_resultText(result), contains('interaction_unsupported'));
+  });
+  }
+
+
+
 
 class _TestGenerationParamsNotifier extends GenerationParamsNotifier {
   @override
@@ -458,4 +597,18 @@ class _DuplicateNameCharacterNotifier extends CharacterPromptNotifier {
       ],
     );
   }
+
+  /// 测试里不写盘：provider 的默认实现会走未初始化的仓库。
+  @override
+  Future<bool> updateCharacterPersisted(CharacterPrompt character) async {
+    updateCharacter(character);
+    return true;
+  }
+}
+
+/// V4 模型：不支持互动标签，用于验证能力边界。
+class _V4GenerationParamsNotifier extends GenerationParamsNotifier {
+  @override
+  ImageParams build() =>
+      const ImageParams(model: ImageModels.animeDiffusionV4Full);
 }

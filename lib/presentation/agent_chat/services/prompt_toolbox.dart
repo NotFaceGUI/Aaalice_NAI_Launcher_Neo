@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/agent/agent_types.dart';
 import '../../../core/agent/harness/env/dart_io_execution_env.dart';
 import '../../../core/agent/harness/harness_types.dart';
+import '../../../data/models/character/character_interaction.dart';
 import '../../../data/models/character/character_prompt.dart';
 import '../../providers/character_prompt_provider.dart';
 import '../../providers/generation/generation_params_notifier.dart';
@@ -59,7 +60,9 @@ class PromptToolbox {
             'positive/negative prompts, enabled state, per-character saved '
             'position mode and continuous x/y centers, global AI/custom '
             'layout mode, current model, and its effective character limit. '
-            'Call this before editing anything.',
+            'Each character also reports its interaction tag (source/target/'
+            'mutual action) when one is set. Call this before editing '
+            'anything.',
         parameters: const {
           'type': 'object',
           'properties': <String, dynamic>{},
@@ -74,6 +77,8 @@ class PromptToolbox {
               'model': params.model,
               'model_character_limit': capabilities.maxCharacters,
               'supports_characters': capabilities.maxCharacters > 0,
+              'supports_character_interaction':
+                  capabilities.supportsCharacterInteraction,
               'character_layout_mode': config.globalAiChoice
                   ? 'ai_choice'
                   : 'custom',
@@ -150,7 +155,12 @@ class PromptToolbox {
             'coordinates. ai_choice preserves any saved custom point for later '
             'restoration. custom accepts both position_x and position_y, or '
             'reuses an existing saved point; it never invents a new point. x '
-            'is left-to-right and y is top-to-bottom, finite 0..1 values.',
+            'is left-to-right and y is top-to-bottom, finite 0..1 values. '
+            'interaction_role with interaction_action writes a NovelAI '
+            'interaction tag into this character prompt: source marks the '
+            'acting character, target the receiving one, mutual covers both '
+            'sides, none clears the tag. Requires an interaction-capable '
+            'model (V4.5 or newer).',
         parameters: const {
           'type': 'object',
           'properties': {
@@ -185,6 +195,22 @@ class PromptToolbox {
               'minimum': 0,
               'maximum': 1,
               'description': 'Vertical center: 0 top, 1 bottom.',
+            },
+            'interaction_role': {
+              'type': 'string',
+              'enum': ['source', 'target', 'mutual', 'none'],
+              'description':
+                  'Interaction role written into this character prompt. '
+                  'source = this character acts, target = this character '
+                  'receives the action, mutual = both sides, none = clear. '
+                  'Requires interaction_action unless none.',
+            },
+            'interaction_action': {
+              'type': 'string',
+              'description':
+                  'Action tag such as hug, kiss, holding_hands or '
+                  'hug_from_behind, written after the role prefix. Required '
+                  'with interaction_role unless the role is none.',
             },
           },
           'required': <String>[],
@@ -464,6 +490,7 @@ class PromptToolbox {
   Future<AgentToolResult> _updateCharacter(Map<String, dynamic> args) async {
     late final CharacterPrompt? target;
     late final _CharacterPositionChange positionChange;
+    late final _InteractionChange interactionChange;
     try {
       _validateCharacterStringFields(args);
       target = _findCharacter(
@@ -471,6 +498,7 @@ class PromptToolbox {
         name: args['name'] as String?,
       );
       positionChange = _parsePositionChange(args);
+      interactionChange = _parseInteractionChange(args);
     } on _PromptToolValidationException catch (error) {
       return agentToolError(error.code, error.message);
     }
@@ -525,6 +553,15 @@ class PromptToolbox {
       updated = updated.copyWith(enabled: enabled);
     }
     updated = _applyPositionChange(updated, positionChange);
+    if (interactionChange.provided) {
+      // 互动标签是提示词文本的一部分，写在最后，保证与其他字段同一批生效。
+      updated = updated.copyWith(
+        prompt: CharacterInteraction.write(
+          updated.prompt,
+          interactionChange.value,
+        ),
+      );
+    }
 
     final notifier = _ref.read(characterPromptNotifierProvider.notifier);
     if (!await notifier.updateCharacterPersisted(updated)) {
@@ -798,6 +835,64 @@ class PromptToolbox {
     );
   }
 
+  /// 解析互动参数。
+  ///
+  /// 角色互动只在支持该语法的模型（V4.5 及以上）上可用，因此这里同时守住
+  /// 能力边界，避免智能体写入网页端不认的标签。
+  _InteractionChange _parseInteractionChange(Map<String, dynamic> args) {
+    final hasRole = args.containsKey('interaction_role');
+    final hasAction = args.containsKey('interaction_action');
+    if (!hasRole && !hasAction) return const _InteractionChange.none();
+    if (!hasRole) {
+      throw const _PromptToolValidationException(
+        'missing_interaction_role',
+        'interaction_action requires interaction_role '
+            '(source, target, mutual or none).',
+      );
+    }
+    final capabilities = ModelCapabilityRegistry.of(
+      _ref.read(generationParamsNotifierProvider).model,
+    );
+    if (!capabilities.supportsCharacterInteraction) {
+      throw const _PromptToolValidationException(
+        'interaction_unsupported',
+        'The current model does not support character interaction tags. '
+            'Switch to V4.5 or V5 before setting them.',
+      );
+    }
+    final rawRole = args['interaction_role'];
+    if (rawRole is! String) {
+      throw const _PromptToolValidationException(
+        'invalid_interaction_role',
+        'interaction_role must be a string.',
+      );
+    }
+    if (rawRole == 'none') {
+      return const _InteractionChange(provided: true, value: null);
+    }
+    final role = CharacterInteractionRole.fromPrefix(rawRole);
+    if (role == null) {
+      throw const _PromptToolValidationException(
+        'invalid_interaction_role',
+        'interaction_role must be source, target, mutual or none.',
+      );
+    }
+    // 与界面共用清洗规则：允许直接粘贴 source#action 形式的完整标签。
+    final action = CharacterInteractionAction.normalizeAction(
+      (args['interaction_action'] as String?) ?? '',
+    );
+    if (action.isEmpty) {
+      throw const _PromptToolValidationException(
+        'missing_interaction_action',
+        'interaction_action is required unless interaction_role is none.',
+      );
+    }
+    return _InteractionChange(
+      provided: true,
+      value: CharacterInteraction(role: role, action: action),
+    );
+  }
+
   double _validateCoordinate(Object? value, String name) {
     if (value is! num) {
       throw _PromptToolValidationException(
@@ -831,7 +926,14 @@ class PromptToolbox {
         : 'custom',
     'position_x': character.customPosition?.column,
     'position_y': character.customPosition?.row,
+    ..._interactionJson(character.prompt),
   };
+
+  /// 角色提示词里的互动声明，未设置时为空（不占用模型注意力）。
+  static Map<String, dynamic> _interactionJson(String prompt) {
+    final interaction = CharacterInteraction.parse(prompt);
+    return interaction == null ? const {} : {'interaction': interaction.toJson()};
+  }
 
   Future<AgentToolResult> _readSkill(Map<String, dynamic> args) async {
     final name = (args['name'] as String?)?.trim() ?? '';
@@ -953,6 +1055,16 @@ class _CharacterPositionChange {
   final CharacterPositionMode? mode;
   final double? x;
   final double? y;
+}
+
+/// 互动参数解析结果：未提供、写入（value 非空）或清除（value 为 null）。
+class _InteractionChange {
+  const _InteractionChange({required this.provided, required this.value});
+
+  const _InteractionChange.none() : provided = false, value = null;
+
+  final bool provided;
+  final CharacterInteraction? value;
 }
 
 class _PromptToolValidationException implements Exception {

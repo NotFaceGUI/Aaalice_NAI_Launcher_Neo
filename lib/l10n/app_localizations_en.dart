@@ -16035,4 +16035,100 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cameraAngle_sceneSection => 'Camera view';
+
+  @override
+  String get characterInteraction_title => 'Interaction';
+
+  @override
+  String get characterInteraction_description =>
+      'Tell the model who acts and who receives';
+
+  @override
+  String get characterInteraction_roleLabel => 'This character is';
+
+  @override
+  String get characterInteraction_roleSource => 'Active (source#)';
+
+  @override
+  String get characterInteraction_roleTarget => 'Passive (target#)';
+
+  @override
+  String get characterInteraction_roleMutual => 'Mutual (mutual#)';
+
+  @override
+  String get characterInteraction_clear => 'Clear';
+
+  @override
+  String get characterInteraction_hint =>
+      'The tag is written into this character\'s own prompt: the active side gets source#action, the passive side gets target#action, and both sides use mutual#action. The pairing is completed by the other character\'s tag.';
+
+  @override
+  String get characterInteraction_actionLookingAtAnother =>
+      'Looking at each other';
+
+  @override
+  String get characterInteraction_actionHug => 'Hug';
+
+  @override
+  String get characterInteraction_actionHoldingHands => 'Holding hands';
+
+  @override
+  String get characterInteraction_actionKiss => 'Kiss';
+
+  @override
+  String get characterInteraction_actionEyeContact => 'Eye contact';
+
+  @override
+  String get characterInteraction_actionHugFromBehind => 'Hug from behind';
+
+  @override
+  String get characterInteraction_actionHeadpat => 'Head pat';
+
+  @override
+  String get characterInteraction_actionFrenchKiss => 'French kiss';
+
+  @override
+  String get characterInteraction_actionPrincessCarry => 'Princess carry';
+
+  @override
+  String get characterInteraction_actionFeeding => 'Feeding';
+
+  @override
+  String get characterInteraction_actionLapPillow => 'Lap pillow';
+
+  @override
+  String get characterInteraction_actionPiggyback => 'Piggyback';
+
+  @override
+  String get characterInteraction_actionTeasing => 'Teasing';
+
+  @override
+  String get characterInteraction_actionTickling => 'Tickling';
+
+  @override
+  String get characterInteraction_actionCheekPinching => 'Cheek pinching';
+
+  @override
+  String get characterInteraction_actionSharedUmbrella => 'Shared umbrella';
+
+  @override
+  String get characterInteraction_actionComforting => 'Comforting';
+
+  @override
+  String get characterInteraction_notSet => 'Not set';
+
+  @override
+  String get characterInteraction_expand => 'Choose an interaction';
+
+  @override
+  String get characterInteraction_collapse => 'Collapse interaction';
+
+  @override
+  String get characterInteraction_customLabel => 'Custom action';
+
+  @override
+  String get characterInteraction_customHint => 'e.g. pointing at another';
+
+  @override
+  String get characterInteraction_customApply => 'Write';
 }

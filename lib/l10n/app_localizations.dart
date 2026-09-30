@@ -27936,6 +27936,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Camera view'**
   String get cameraAngle_sceneSection;
+
+  /// No description provided for @characterInteraction_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Interaction'**
+  String get characterInteraction_title;
+
+  /// No description provided for @characterInteraction_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell the model who acts and who receives'**
+  String get characterInteraction_description;
+
+  /// No description provided for @characterInteraction_roleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'This character is'**
+  String get characterInteraction_roleLabel;
+
+  /// No description provided for @characterInteraction_roleSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Active (source#)'**
+  String get characterInteraction_roleSource;
+
+  /// No description provided for @characterInteraction_roleTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Passive (target#)'**
+  String get characterInteraction_roleTarget;
+
+  /// No description provided for @characterInteraction_roleMutual.
+  ///
+  /// In en, this message translates to:
+  /// **'Mutual (mutual#)'**
+  String get characterInteraction_roleMutual;
+
+  /// No description provided for @characterInteraction_clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get characterInteraction_clear;
+
+  /// No description provided for @characterInteraction_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The tag is written into this character\'s own prompt: the active side gets source#action, the passive side gets target#action, and both sides use mutual#action. The pairing is completed by the other character\'s tag.'**
+  String get characterInteraction_hint;
+
+  /// No description provided for @characterInteraction_actionLookingAtAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking at each other'**
+  String get characterInteraction_actionLookingAtAnother;
+
+  /// No description provided for @characterInteraction_actionHug.
+  ///
+  /// In en, this message translates to:
+  /// **'Hug'**
+  String get characterInteraction_actionHug;
+
+  /// No description provided for @characterInteraction_actionHoldingHands.
+  ///
+  /// In en, this message translates to:
+  /// **'Holding hands'**
+  String get characterInteraction_actionHoldingHands;
+
+  /// No description provided for @characterInteraction_actionKiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Kiss'**
+  String get characterInteraction_actionKiss;
+
+  /// No description provided for @characterInteraction_actionEyeContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Eye contact'**
+  String get characterInteraction_actionEyeContact;
+
+  /// No description provided for @characterInteraction_actionHugFromBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'Hug from behind'**
+  String get characterInteraction_actionHugFromBehind;
+
+  /// No description provided for @characterInteraction_actionHeadpat.
+  ///
+  /// In en, this message translates to:
+  /// **'Head pat'**
+  String get characterInteraction_actionHeadpat;
+
+  /// No description provided for @characterInteraction_actionFrenchKiss.
+  ///
+  /// In en, this message translates to:
+  /// **'French kiss'**
+  String get characterInteraction_actionFrenchKiss;
+
+  /// No description provided for @characterInteraction_actionPrincessCarry.
+  ///
+  /// In en, this message translates to:
+  /// **'Princess carry'**
+  String get characterInteraction_actionPrincessCarry;
+
+  /// No description provided for @characterInteraction_actionFeeding.
+  ///
+  /// In en, this message translates to:
+  /// **'Feeding'**
+  String get characterInteraction_actionFeeding;
+
+  /// No description provided for @characterInteraction_actionLapPillow.
+  ///
+  /// In en, this message translates to:
+  /// **'Lap pillow'**
+  String get characterInteraction_actionLapPillow;
+
+  /// No description provided for @characterInteraction_actionPiggyback.
+  ///
+  /// In en, this message translates to:
+  /// **'Piggyback'**
+  String get characterInteraction_actionPiggyback;
+
+  /// No description provided for @characterInteraction_actionTeasing.
+  ///
+  /// In en, this message translates to:
+  /// **'Teasing'**
+  String get characterInteraction_actionTeasing;
+
+  /// No description provided for @characterInteraction_actionTickling.
+  ///
+  /// In en, this message translates to:
+  /// **'Tickling'**
+  String get characterInteraction_actionTickling;
+
+  /// No description provided for @characterInteraction_actionCheekPinching.
+  ///
+  /// In en, this message translates to:
+  /// **'Cheek pinching'**
+  String get characterInteraction_actionCheekPinching;
+
+  /// No description provided for @characterInteraction_actionSharedUmbrella.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared umbrella'**
+  String get characterInteraction_actionSharedUmbrella;
+
+  /// No description provided for @characterInteraction_actionComforting.
+  ///
+  /// In en, this message translates to:
+  /// **'Comforting'**
+  String get characterInteraction_actionComforting;
+
+  /// No description provided for @characterInteraction_notSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get characterInteraction_notSet;
+
+  /// No description provided for @characterInteraction_expand.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an interaction'**
+  String get characterInteraction_expand;
+
+  /// No description provided for @characterInteraction_collapse.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse interaction'**
+  String get characterInteraction_collapse;
+
+  /// No description provided for @characterInteraction_customLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom action'**
+  String get characterInteraction_customLabel;
+
+  /// No description provided for @characterInteraction_customHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. pointing at another'**
+  String get characterInteraction_customHint;
+
+  /// No description provided for @characterInteraction_customApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Write'**
+  String get characterInteraction_customApply;
 }
 
 class _AppLocalizationsDelegate

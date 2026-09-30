@@ -15577,4 +15577,98 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cameraAngle_sceneSection => 'カメラビュー';
+
+  @override
+  String get characterInteraction_title => 'インタラクション';
+
+  @override
+  String get characterInteraction_description => 'どちらが能動でどちらが受動かを指定します';
+
+  @override
+  String get characterInteraction_roleLabel => 'このキャラの役割';
+
+  @override
+  String get characterInteraction_roleSource => '能動（source#）';
+
+  @override
+  String get characterInteraction_roleTarget => '受動（target#）';
+
+  @override
+  String get characterInteraction_roleMutual => '相互（mutual#）';
+
+  @override
+  String get characterInteraction_clear => '解除';
+
+  @override
+  String get characterInteraction_hint =>
+      'タグはこのキャラ自身のプロンプトに書き込まれます。能動側は source#動作、受動側は target#動作、相互なら両方に mutual#動作を書き、相手役のタグと組み合わせて成立します。';
+
+  @override
+  String get characterInteraction_actionLookingAtAnother => '見つめ合う';
+
+  @override
+  String get characterInteraction_actionHug => '抱きしめる';
+
+  @override
+  String get characterInteraction_actionHoldingHands => '手をつなぐ';
+
+  @override
+  String get characterInteraction_actionKiss => 'キス';
+
+  @override
+  String get characterInteraction_actionEyeContact => '視線を合わせる';
+
+  @override
+  String get characterInteraction_actionHugFromBehind => '後ろから抱きしめる';
+
+  @override
+  String get characterInteraction_actionHeadpat => '頭をなでる';
+
+  @override
+  String get characterInteraction_actionFrenchKiss => 'ディープキス';
+
+  @override
+  String get characterInteraction_actionPrincessCarry => 'お姫様抱っこ';
+
+  @override
+  String get characterInteraction_actionFeeding => '食べさせる';
+
+  @override
+  String get characterInteraction_actionLapPillow => '膝枕';
+
+  @override
+  String get characterInteraction_actionPiggyback => 'おんぶ';
+
+  @override
+  String get characterInteraction_actionTeasing => 'からかう';
+
+  @override
+  String get characterInteraction_actionTickling => 'くすぐる';
+
+  @override
+  String get characterInteraction_actionCheekPinching => 'ほっぺをつまむ';
+
+  @override
+  String get characterInteraction_actionSharedUmbrella => '相合傘';
+
+  @override
+  String get characterInteraction_actionComforting => 'なぐさめる';
+
+  @override
+  String get characterInteraction_notSet => '未設定';
+
+  @override
+  String get characterInteraction_expand => 'インタラクションを選ぶ';
+
+  @override
+  String get characterInteraction_collapse => 'インタラクションを閉じる';
+
+  @override
+  String get characterInteraction_customLabel => 'カスタム動作';
+
+  @override
+  String get characterInteraction_customHint => '例: pointing at another';
+
+  @override
+  String get characterInteraction_customApply => '書き込む';
 }

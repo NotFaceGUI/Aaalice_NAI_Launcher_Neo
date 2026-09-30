@@ -223,8 +223,20 @@ String buildAgentSystemPromptBody({required bool webAccessEnabled}) {
         'never estimate coordinates yourself. Switch to custom positioning '
         'only when the user explicitly asks for manual placement or concrete '
         'coordinates; preserve existing explicit positions when editing other '
-        'fields. V4.5 supports up to 6 characters with interaction tags '
-        'source# / target# / mutual#; V5 allows many more (20+).',
+        'fields. V4.5 supports up to 6 characters, V5 allows many more '
+        '(20+).',
+    '- Character interactions: when characters act on each other, say who '
+        'acts and who receives instead of leaving it to chance. Use '
+        'update_character with interaction_role (source = this character '
+        'acts, target = this character receives, mutual = both sides, none = '
+        'clear) plus interaction_action (hug, kiss, holding_hands, '
+        'hug_from_behind, lap_pillow, ...). The tag is written into that '
+        'that character\'s own prompt as source#action / target#action / '
+        'mutual#action, so one pairing needs source on one side and target on '
+        'the other, or mutual on both. Read get_prompt_state before changing '
+        'it. V4.5 or newer only; NovelAI notes the syntax helps but is not '
+        'fully reliable, so keep describing the scene in the character '
+        'prompts when the relationship matters.',
     '- V4/V4.5 share a ~512 T5 token budget across base + character '
         'prompts; V5 allows noticeably longer prompts. Avoid emoji / '
         'non-ASCII in V4 prompts.',
