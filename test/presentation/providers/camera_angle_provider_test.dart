@@ -23,7 +23,10 @@ void main() {
 
       expect(state.preset.pose, CameraAnglePose.neutral);
       expect(state.preset.enabled, isFalse);
-      expect(state.preset.promptFragment, 'upper_body');
+      expect(
+        state.preset.promptFragment(),
+        'upper_body, viewed from the front, an upper-body framing',
+      );
       expect(state.appliedFragment, isEmpty);
     });
 
@@ -57,7 +60,7 @@ void main() {
       );
       final state = container.read(cameraAnglePresetNotifierProvider);
 
-      expect(state.appliedFragment, state.preset.promptFragment);
+      expect(state.appliedFragment, state.preset.promptFragment());
     });
 
     test('损坏的 JSON 回落到默认预设', () {
@@ -135,7 +138,10 @@ void main() {
 
       final state = container.read(cameraAnglePresetNotifierProvider);
       expect(state.preset.enabled, isFalse);
-      expect(state.appliedFragment, 'close-up');
+      expect(
+        state.appliedFragment,
+        'close-up, viewed from the front, a tight close-up',
+      );
     });
   });
 }
