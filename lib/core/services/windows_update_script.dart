@@ -92,13 +92,22 @@ try {
 
   Remove-Item -LiteralPath \$ExtractDir -Recurse -Force -ErrorAction SilentlyContinue
   Remove-Item -LiteralPath \$BackupDir -Recurse -Force -ErrorAction SilentlyContinue
+  if (!(Test-Path -LiteralPath \$ZipPath -PathType Leaf)) {
+    throw "Update package is missing: \$ZipPath"
+  }
   Write-UpdateLog "Extracting update package to \$ExtractDir"
   Expand-Archive -LiteralPath \$ZipPath -DestinationPath \$ExtractDir -Force
 
   \$SourceDir = \$ExtractDir
-  \$Items = @(Get-ChildItem -LiteralPath \$ExtractDir)
-  if (\$Items.Count -eq 1 -and \$Items[0].PSIsContainer) {
-    \$SourceDir = \$Items[0].FullName
+  \$Items = @(Get-ChildItem -LiteralPath \$ExtractDir -Force)
+  if (\$Items.Count -eq 0) {
+    throw "The extracted update package is empty: \$ExtractDir"
+  }
+  # 包内若只有唯一顶层目录（把应用放进文件夹的打包方式）就从那里取；
+  # 平铺包直接用解根本身。这里不使用数组下标，避免空结果触发难懂的异常。
+  \$OnlyItem = \$Items | Select-Object -First 1
+  if (\$Items.Count -eq 1 -and \$OnlyItem.PSIsContainer) {
+    \$SourceDir = \$OnlyItem.FullName
   }
   if (!(Test-Path -LiteralPath (Join-Path \$SourceDir \$ExeName))) {
     throw 'The extracted update does not contain the application executable.'
@@ -156,7 +165,11 @@ try {
   Write-UpdateLog 'Portable update completed successfully.'
 } catch {
   \$FailureMessage = \$_.Exception.Message
-  Write-UpdateLog "Portable update failed: \$FailureMessage"
+  \$FailureLine = \$_.InvocationInfo.ScriptLineNumber
+  Write-UpdateLog "Portable update failed (script line \$FailureLine): \$FailureMessage"
+  Write-UpdateLog ("Debug: AppDir=\$AppDir Zip=\$(Test-Path -LiteralPath \$ZipPath) " +
+    "ExtractDir=\$(Test-Path -LiteralPath \$ExtractDir) SourceDir=\$SourceDir " +
+    "ExeName=\$ExeName Swapped=\$Swapped")
 
   if (Test-Path -LiteralPath \$BackupDir) {
     if (Test-Path -LiteralPath \$AppDir) {
