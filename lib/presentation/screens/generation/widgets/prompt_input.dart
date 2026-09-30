@@ -128,7 +128,13 @@ class _PromptInputWidgetState extends ConsumerState<PromptInputWidget> {
   /// 模糊匹配误删；移除与插入后立刻回写参数，保证生成请求使用同一份文本。
   void _syncCameraAnglePrompt() {
     final state = ref.read(cameraAnglePresetNotifierProvider);
-    final desired = state.preset.enabled ? state.preset.promptFragment : '';
+    // V3 及更早的模型只认 Danbooru 标签，写入英文句子只会白占 token。
+    final allowDescription = ImageModels.isV4Model(
+      ref.read(generationParamsNotifierProvider).model,
+    );
+    final desired = state.preset.enabled
+        ? state.preset.promptFragment(allowDescription: allowDescription)
+        : '';
     final applied = state.appliedFragment;
     if (desired == applied) return;
 

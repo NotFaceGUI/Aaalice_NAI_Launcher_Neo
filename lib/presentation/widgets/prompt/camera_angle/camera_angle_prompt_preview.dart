@@ -15,9 +15,13 @@ class CameraAnglePromptPreview extends StatelessWidget {
     required this.preset,
     this.selectable = false,
     this.maxLines,
+    this.allowDescription = true,
   });
 
   final CameraAnglePreset preset;
+
+  /// 当前模型是否支持自然语言描述（V3 及更早只认标签）。
+  final bool allowDescription;
   final bool selectable;
   final int? maxLines;
 
@@ -25,7 +29,7 @@ class CameraAnglePromptPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color = theme.promptSemanticColors.mainPrompt;
-    final fragment = preset.promptFragment;
+    final fragment = preset.promptFragment(allowDescription: allowDescription);
 
     if (fragment.isEmpty) {
       return Text(

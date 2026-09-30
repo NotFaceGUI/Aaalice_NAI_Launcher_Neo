@@ -15396,6 +15396,25 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get characterInteraction_customApply => '写入';
+
+  @override
+  String get cameraAngle_outputMode => '输出形式';
+
+  @override
+  String get cameraAngle_outputTags => '仅标签';
+
+  @override
+  String get cameraAngle_outputTagsAndDescription => '标签＋描述';
+
+  @override
+  String get cameraAngle_outputDescription => '仅描述';
+
+  @override
+  String get cameraAngle_outputModeHint =>
+      '描述是一句英文说明，V4 及以上模型都能读懂（V5 最擅长）；标签与描述同时输出时机位最准确。';
+
+  @override
+  String get cameraAngle_outputTagsOnlyHint => '当前模型只认标签，因此不提供描述。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -30791,4 +30810,23 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get characterInteraction_customApply => '寫入';
+
+  @override
+  String get cameraAngle_outputMode => '輸出形式';
+
+  @override
+  String get cameraAngle_outputTags => '僅標籤';
+
+  @override
+  String get cameraAngle_outputTagsAndDescription => '標籤＋描述';
+
+  @override
+  String get cameraAngle_outputDescription => '僅描述';
+
+  @override
+  String get cameraAngle_outputModeHint =>
+      '描述是一句英文說明，V4 及以上模型都能讀懂（V5 最擅長）；標籤與描述同時輸出時機位最準確。';
+
+  @override
+  String get cameraAngle_outputTagsOnlyHint => '當前模型只認標籤，因此不提供描述。';
 }

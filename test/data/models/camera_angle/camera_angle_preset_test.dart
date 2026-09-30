@@ -4,20 +4,89 @@ import 'package:nai_launcher/data/models/camera_angle/camera_angle_preset.dart';
 
 void main() {
   group('CameraAnglePreset', () {
-    test('强度为 1 时输出不带权重的纯标签', () {
+    test('中性姿态且强度为 1 时输出纯标签', () {
+      const preset = CameraAnglePreset(
+        pose: CameraAnglePose.neutral,
+        outputMode: CameraAngleOutputMode.tags,
+      );
+
+      expect(preset.promptFragment(), 'upper_body');
+    });
+
+    test('同一分档内角度越大权重越高', () {
+      const slight = CameraAnglePreset(
+        pose: CameraAnglePose(azimuth: 0.3),
+        outputMode: CameraAngleOutputMode.tags,
+      );
+      const strong = CameraAnglePreset(
+        pose: CameraAnglePose(azimuth: 0.62),
+        outputMode: CameraAngleOutputMode.tags,
+      );
+
+      expect(slight.promptFragment(), '1.05::from_side::, upper_body');
+      expect(strong.promptFragment(), '1.26::from_side::, upper_body');
+    });
+
+    test('俯仰与倾斜同样随幅度加权', () {
+      const mild = CameraAnglePreset(
+        pose: CameraAnglePose(elevation: -0.3, roll: 0.2),
+        outputMode: CameraAngleOutputMode.tags,
+      );
+      const strong = CameraAnglePreset(
+        pose: CameraAnglePose(elevation: -0.9, roll: 0.9),
+        outputMode: CameraAngleOutputMode.tags,
+      );
+
+      // 轻微倾斜落在权重死区内，保持纯标签，避免无意义的 1.04::dutch_angle::
+      expect(mild.promptFragment(), '1.05::from_below::, upper_body, dutch_angle');
+      expect(strong.promptFragment(), '1.35::from_below::, upper_body, 1.44::dutch_angle::');
+    });
+
+    test('自然语言描述给出标签表达不了的细节', () {
       const preset = CameraAnglePreset(
         pose: CameraAnglePose(
-          azimuth: 0.45,
+          azimuth: -0.45,
           elevation: 0.6,
-          distance: 1,
-          roll: 0.5,
+          distance: 0.4,
+          roll: 0.75,
         ),
+        outputMode: CameraAngleOutputMode.description,
       );
 
       expect(
-        preset.promptFragment,
-        'from_side, from_above, close-up, dutch_angle',
+        preset.promptFragment(),
+        'viewed from the left and from a slightly high angle, '
+        'a close portrait, tilted about 15° to the right (dutch angle)',
       );
+    });
+
+    test('输出形式决定标签与描述的组合', () {
+      const pose = CameraAnglePose(distance: 1);
+      const tags = CameraAnglePreset(
+        pose: pose,
+        outputMode: CameraAngleOutputMode.tags,
+      );
+      const both = CameraAnglePreset(pose: pose);
+      const description = CameraAnglePreset(
+        pose: pose,
+        outputMode: CameraAngleOutputMode.description,
+      );
+
+      expect(tags.promptFragment(), 'close-up');
+      expect(
+        both.promptFragment(),
+        'close-up, viewed from the front, a tight close-up',
+      );
+      expect(
+        description.promptFragment(),
+        'viewed from the front, a tight close-up',
+      );
+    });
+
+    test('V3 降级时只输出标签', () {
+      const preset = CameraAnglePreset(pose: CameraAnglePose(distance: 1));
+
+      expect(preset.promptFragment(allowDescription: false), 'close-up');
     });
 
     test('强度不等于 1 时使用 V4 数值强调语法', () {
@@ -27,8 +96,9 @@ void main() {
       );
 
       expect(
-        preset.promptFragment,
-        '1.3::from_side::, 1.3::upper_body::',
+        preset.promptFragment(),
+        '1.49::from_side::, 1.3::upper_body::, '
+        'viewed from the right, an upper-body framing',
       );
     });
 
@@ -38,7 +108,10 @@ void main() {
         strength: 0.7,
       );
 
-      expect(preset.promptFragment, '0.7::close-up::');
+      expect(
+        preset.promptFragment(),
+        '0.7::close-up::, viewed from the front, a tight close-up',
+      );
     });
 
     test('强度接近 1 时不写权重语法', () {
@@ -47,7 +120,10 @@ void main() {
         strength: 1.04,
       );
 
-      expect(preset.promptFragment, 'close-up');
+      expect(
+        preset.promptFragment(),
+        'close-up, viewed from the front, a tight close-up',
+      );
     });
 
     test('formatWeight 去掉多余小数位', () {

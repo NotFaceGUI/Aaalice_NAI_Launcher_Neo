@@ -92,23 +92,45 @@ void main() {
   });
 
   group('与 NAI 格式化配合', () {
-    test('带权重的片段原文在自动格式化后保持不变，仍可被精确移除', () {
+    test('仅标签的片段在自动格式化后原文不变，仍可被精确移除', () {
       const prompt = '1girl, black hair, looking at viewer';
       const preset = CameraAnglePreset(
         pose: CameraAnglePose(azimuth: 0.45, elevation: -0.5, distance: -0.5),
         strength: 1.3,
+        outputMode: CameraAngleOutputMode.tags,
       );
 
       final inserted = CameraAnglePromptInserter.insert(
         prompt,
-        preset.promptFragment,
+        preset.promptFragment(),
       );
       final formatted = NaiPromptFormatter.format(inserted);
 
-      expect(formatted.contains(preset.promptFragment), isTrue);
+      expect(formatted.contains(preset.promptFragment()), isTrue);
       expect(
-        CameraAnglePromptInserter.remove(formatted, preset.promptFragment),
+        CameraAnglePromptInserter.remove(formatted, preset.promptFragment()),
         '1girl, black_hair, looking_at_viewer',
+      );
+    });
+
+    test('带自然语言描述的片段在空格被改写成下划线后仍能被移除', () {
+      const prompt = '1girl, black hair';
+      const preset = CameraAnglePreset(
+        pose: CameraAnglePose(azimuth: -0.45, distance: 1),
+      );
+
+      final inserted = CameraAnglePromptInserter.insert(
+        prompt,
+        preset.promptFragment(),
+      );
+      final formatted = NaiPromptFormatter.format(inserted);
+
+      // 自动格式化会把描述里的空格改成下划线，原文不再逐字存在
+      expect(formatted.contains(preset.promptFragment()), isFalse);
+      expect(formatted, contains('viewed_from_the_left'));
+      expect(
+        CameraAnglePromptInserter.remove(formatted, preset.promptFragment()),
+        '1girl, black_hair',
       );
     });
 
@@ -119,12 +141,12 @@ void main() {
 
       final inserted = CameraAnglePromptInserter.insert(
         '1girl, black hair',
-        preset.promptFragment,
+        preset.promptFragment(),
       );
       final formatted = NaiPromptFormatter.format(inserted);
 
       expect(
-        CameraAnglePromptInserter.remove(formatted, preset.promptFragment),
+        CameraAnglePromptInserter.remove(formatted, preset.promptFragment()),
         '1girl, black_hair',
       );
     });

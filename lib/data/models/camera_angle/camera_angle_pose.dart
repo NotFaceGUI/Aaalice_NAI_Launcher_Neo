@@ -124,6 +124,93 @@ class CameraAnglePose {
   /// 倾斜对应的 NAI/Danbooru 标签。
   String? get rollTag => tilts ? 'dutch_angle' : null;
 
+  // ==================== 连续强度 ====================
+  //
+  // 标签是分档的，同一档内角度不同却输出同一段文字，看不出差别。这里给每个轴
+  // 一个随角度增长的 0..1 系数，由预设转换成 NAI 数值强调，让"刚转过去"和
+  // "几乎完全侧对"在提示词里也能区分开。死区内保持 0，中点以下不加权。
+
+  /// 方位强度：正面区间为 0，越接近正侧、正后越高。
+  double get azimuthEmphasis {
+    const deadzone = 0.22;
+    return ((azimuth.abs() - deadzone) / (1 - deadzone)).clamp(0.0, 1.0);
+  }
+
+  /// 俯仰强度：平视区间为 0，越接近极限俯视/仰视越高。
+  double get elevationEmphasis {
+    const deadzone = 0.2;
+    return ((elevation.abs() - deadzone) / (1 - deadzone)).clamp(0.0, 1.0);
+  }
+
+  /// 倾斜强度：死区内为 0，越倾斜越高。
+  double get rollEmphasis {
+    const deadzone = 0.12;
+    return ((roll.abs() - deadzone) / (1 - deadzone)).clamp(0.0, 1.0);
+  }
+
+  // ==================== 自然语言描述 ====================
+  //
+  // NovelAI 的 V4 及以上模型能读懂普通英文句子，V5 更是以自然语言见长，因此
+  // 除了分档标签再给一句机位描述：八向方位、俯仰与倾斜度数这些标签表达不了
+  // 的细节都在这里，写进提示词可显著提高机位准确度。
+
+  /// 八向方位短语。
+  String get azimuthPhrase {
+    final magnitude = azimuth.abs();
+    final toLeft = azimuth.isNegative;
+    if (magnitude < 0.12) return 'from the front';
+    if (magnitude < 0.34) {
+      return toLeft ? 'from the front-left' : 'from the front-right';
+    }
+    if (magnitude < 0.62) return toLeft ? 'from the left' : 'from the right';
+    if (magnitude < 0.86) {
+      return toLeft ? 'from the back-left' : 'from the back-right';
+    }
+    return 'from behind';
+  }
+
+  /// 俯仰短语；平视返回空串，由调用方省略。
+  String get elevationPhrase {
+    if (elevation >= 0.75) return 'from far above';
+    if (elevation >= 0.2) return 'from a slightly high angle';
+    if (elevation <= -0.75) return 'from far below';
+    if (elevation <= -0.2) return 'from a slightly low angle';
+    return '';
+  }
+
+  /// 取景短语，用句子写法而不是标签写法。
+  String get shotPhrase => switch (shotBucket) {
+    CameraShot.closeUp => 'a tight close-up',
+    CameraShot.portrait => 'a close portrait',
+    CameraShot.upperBody => 'an upper-body framing',
+    CameraShot.cowboyShot => 'a cowboy shot framing the thighs up',
+    CameraShot.fullBody => 'a full-body framing',
+    CameraShot.wideShot => 'a wide shot',
+  };
+
+  /// 倾斜短语；没有倾斜返回空串。
+  String get rollPhrase {
+    if (!tilts) return '';
+    final degrees = (roll * 20).abs().round();
+    final side = roll.isNegative ? 'left' : 'right';
+    return 'tilted about $degrees° to the $side (dutch angle)';
+  }
+
+  /// 一句可读的机位描述，例如
+  /// `viewed from the front-left and from a slightly high angle, a close
+  /// portrait, tilted about 12° to the right (dutch angle)`。
+  String get description {
+    final buffer = StringBuffer('viewed $azimuthPhrase');
+    final elevationPhrase = this.elevationPhrase;
+    if (elevationPhrase.isNotEmpty) {
+      buffer.write(' and $elevationPhrase');
+    }
+    buffer.write(', $shotPhrase');
+    final rollPhrase = this.rollPhrase;
+    if (rollPhrase.isNotEmpty) buffer.write(', $rollPhrase');
+    return buffer.toString();
+  }
+
   /// 按 NAI 提示词习惯排序的机位标签：方位 → 俯仰 → 取景 → 倾斜。
   List<String> get tags {
     final azimuthTag = this.azimuthTag;

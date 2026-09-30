@@ -7670,5 +7670,11 @@
   "characterInteraction_collapse": "收合互動",
   "characterInteraction_customLabel": "自訂動作",
   "characterInteraction_customHint": "例如 pointing at another",
-  "characterInteraction_customApply": "寫入"
+  "characterInteraction_customApply": "寫入",
+  "cameraAngle_outputMode": "輸出形式",
+  "cameraAngle_outputTags": "僅標籤",
+  "cameraAngle_outputTagsAndDescription": "標籤＋描述",
+  "cameraAngle_outputDescription": "僅描述",
+  "cameraAngle_outputModeHint": "描述是一句英文說明，V4 及以上模型都能讀懂（V5 最擅長）；標籤與描述同時輸出時機位最準確。",
+  "cameraAngle_outputTagsOnlyHint": "當前模型只認標籤，因此不提供描述。"
 }

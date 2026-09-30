@@ -48,7 +48,35 @@ enum CameraLensEffect {
   }
 }
 
-/// 视角控制的完整预设：姿态 + 镜头语言 + 强度 + 是否写入提示词。
+/// 视角片段的输出形式。
+///
+/// 标签走 Danbooru 词表，稳定但只有分档；自然语言描述能表达八向方位、俯仰与
+/// 倾斜度数，V4 及以上模型都能读懂（V5 尤其擅长），两者并存时准确度最高。
+/// V3 只认标签，调用方需要按模型限制可选项。
+enum CameraAngleOutputMode {
+  /// 只输出分档标签。
+  tags('tags'),
+
+  /// 标签加一句机位描述（默认）。
+  tagsWithDescription('tags_description'),
+
+  /// 只输出机位描述。
+  description('description');
+
+  const CameraAngleOutputMode(this.id);
+
+  /// 持久化用的稳定标识。
+  final String id;
+
+  static CameraAngleOutputMode fromId(String? id) {
+    for (final mode in values) {
+      if (mode.id == id) return mode;
+    }
+    return CameraAngleOutputMode.tagsWithDescription;
+  }
+}
+
+/// 视角控制的完整预设：姿态 + 镜头语言 + 强度 + 输出形式 + 是否写入提示词。
 ///
 /// 预设是纯数据，`buildPromptFragment()` 是唯一生成提示词文本的入口，
 /// 保证工具栏按钮、预览和实际插入内容完全一致。
@@ -57,6 +85,7 @@ class CameraAnglePreset {
     this.pose = CameraAnglePose.neutral,
     this.effects = const {},
     this.strength = defaultStrength,
+    this.outputMode = CameraAngleOutputMode.tagsWithDescription,
     this.enabled = false,
   });
 
@@ -75,6 +104,9 @@ class CameraAnglePreset {
   /// 提示词强度，`1` 表示原样输出标签。
   final double strength;
 
+  /// 输出形式：标签、标签加描述、或只输出描述。
+  final CameraAngleOutputMode outputMode;
+
   /// 是否已写入提示词；关闭时提示词里不保留视角片段。
   final bool enabled;
 
@@ -82,11 +114,13 @@ class CameraAnglePreset {
     CameraAnglePose? pose,
     Set<CameraLensEffect>? effects,
     double? strength,
+    CameraAngleOutputMode? outputMode,
     bool? enabled,
   }) => CameraAnglePreset(
     pose: pose ?? this.pose,
     effects: effects ?? this.effects,
     strength: strength ?? this.strength,
+    outputMode: outputMode ?? this.outputMode,
     enabled: enabled ?? this.enabled,
   );
 
@@ -104,21 +138,44 @@ class CameraAnglePreset {
       if (effects.contains(effect)) effect.tag,
   ];
 
-  /// 按当前强度输出的标签，必要时使用 NAI 数值强调 `weight::tag::`。
+  /// 按当前强度与角度输出的标签，必要时使用 NAI 数值强调 `weight::tag::`。
   ///
-  /// 强度为 1 时不加任何权重语法；数值强调自 V4 起可用，默认输出因此对
-  /// V3 及更低版本同样有效。
+  /// 权重 = 角度系数 × 强度：角度越大权重越高，因此同一分档内也能区分"刚转
+  /// 过去"和"几乎正侧对"。强度为 1 且角度在死区内时输出纯标签，对 V3 及更
+  /// 低版本同样有效。
   List<String> get promptTags {
-    final weight = strength.clamp(minStrength, maxStrength).toDouble();
-    final weighted = (weight - 1).abs() >= _strengthEpsilon;
-    final prefix = weighted ? '${formatWeight(weight)}::' : '';
+    final scale = strength.clamp(minStrength, maxStrength).toDouble();
     return [
-      for (final tag in plainTags) weighted ? '$prefix$tag::' : tag,
+      ?_weightedTag(pose.azimuthTag, 1 + 0.5 * pose.azimuthEmphasis, scale),
+      ?_weightedTag(pose.elevationTag, 1 + 0.4 * pose.elevationEmphasis, scale),
+      _weightedTag(pose.shotTag, 1, scale)!,
+      ?_weightedTag(pose.rollTag, 1 + 0.5 * pose.rollEmphasis, scale),
+      for (final effect in CameraLensEffect.values)
+        if (effects.contains(effect)) _weightedTag(effect.tag, 1, scale)!,
     ];
   }
 
-  /// 可直接写入提示词的片段；无标签时返回空串。
-  String get promptFragment => promptTags.join(', ');
+  String? _weightedTag(String? tag, double axisWeight, double scale) {
+    if (tag == null) return null;
+    final weight = axisWeight * scale;
+    if ((weight - 1).abs() < _strengthEpsilon) return tag;
+    return '${formatWeight(weight)}::$tag::';
+  }
+
+  /// 可直接写入提示词的片段，按 [outputMode] 组合标签与自然语言描述。
+  ///
+  /// [allowDescription] 为 false 时只用标签：V3 及更早的模型只认 Danbooru
+  /// 标签，写入英文句子会白占 token。
+  String promptFragment({bool allowDescription = true}) {
+    final tags = promptTags.join(', ');
+    if (!allowDescription || outputMode == CameraAngleOutputMode.tags) {
+      return tags;
+    }
+    if (outputMode == CameraAngleOutputMode.description) {
+      return pose.description;
+    }
+    return tags.isEmpty ? pose.description : '$tags, ${pose.description}';
+  }
 
   /// NAI 数值强调的权重写法，与 `PromptTag.toSyntaxString()` 保持一致。
   static String formatWeight(double weight) {
@@ -133,6 +190,7 @@ class CameraAnglePreset {
     'pose': pose.toJson(),
     'effects': [for (final effect in effects) effect.name],
     'strength': strength,
+    'outputMode': outputMode.id,
     'enabled': enabled,
   };
 
@@ -159,6 +217,9 @@ class CameraAnglePreset {
       strength: rawStrength is num
           ? rawStrength.toDouble().clamp(minStrength, maxStrength).toDouble()
           : defaultStrength,
+      outputMode: CameraAngleOutputMode.fromId(
+        json['outputMode'] is String ? json['outputMode'] as String : null,
+      ),
       enabled: json['enabled'] == true,
     );
   }
@@ -169,6 +230,7 @@ class CameraAnglePreset {
     return other is CameraAnglePreset &&
         other.pose == pose &&
         other.strength == strength &&
+        other.outputMode == outputMode &&
         other.enabled == enabled &&
         other.effects.length == effects.length &&
         other.effects.containsAll(effects);
@@ -178,6 +240,7 @@ class CameraAnglePreset {
   int get hashCode => Object.hash(
     pose,
     strength,
+    outputMode,
     enabled,
     Object.hashAllUnordered(effects),
   );

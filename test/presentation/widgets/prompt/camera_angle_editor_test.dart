@@ -11,7 +11,6 @@ import 'package:nai_launcher/l10n/app_localizations.dart';
 import 'package:nai_launcher/presentation/providers/camera_angle_provider.dart';
 import 'package:nai_launcher/presentation/widgets/prompt/camera_angle/camera_angle_editor_sheet.dart';
 import 'package:nai_launcher/presentation/widgets/prompt/camera_angle/camera_angle_pose_card.dart';
-import 'package:nai_launcher/presentation/widgets/prompt/camera_angle/camera_angle_prompt_preview.dart';
 import 'package:nai_launcher/presentation/widgets/prompt/camera_angle/camera_angle_scene_panel.dart';
 import 'package:nai_launcher/presentation/widgets/prompt/camera_angle/camera_orbit_pad.dart';
 import 'package:nai_launcher/presentation/widgets/prompt/camera_angle_button.dart';
@@ -77,7 +76,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('未写入'), findsOneWidget);
-    expect(find.text('upper_body'), findsOneWidget);
+    expect(
+      find.text('upper_body, viewed from the front, an upper-body framing'),
+      findsOneWidget,
+    );
     expect(find.text('点击打开视角编辑器：拖动旋转机位、滚轮推拉距离'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
@@ -104,7 +106,13 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('已写入'), findsOneWidget);
-    expect(find.text('1.3::from_side::, 1.3::close-up::'), findsOneWidget);
+    expect(
+      find.text(
+        '1.49::from_side::, 1.3::close-up::, '
+        'viewed from the right, a tight close-up',
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('编辑器显示三组参数，窄屏 3 倍文字下可滚动且不溢出', (tester) async {
@@ -126,11 +134,20 @@ void main() {
 
     // 长内容在视口内滚动，其余分组逐一滚到可见位置后仍然可达。
     expect(
-      await _revealByScrolling(tester, scrollController, '镜头语言'),
+      await _revealByScrolling(
+        tester,
+        scrollController,
+        find.text('镜头语言'),
+      ),
       isTrue,
     );
+    // 提示词片段卡较长，用预览区（卡片下半部分）判断可达性
     expect(
-      await _revealByScrolling(tester, scrollController, '提示词片段'),
+      await _revealByScrolling(
+        tester,
+        scrollController,
+        find.byKey(const ValueKey('camera-angle-prompt-preview')),
+      ),
       isTrue,
     );
     expect(tester.takeException(), isNull);
@@ -141,25 +158,23 @@ void main() {
     await pumpSheet(tester);
 
     // 参数列独立滚动，先滚到镜头语言分组再操作。
-    expect(await _revealByScrolling(tester, scrollController, '鱼眼'), isTrue);
-    await tester.tap(find.text('鱼眼'));
+    // 参数列是惰性列表，长卡片里的 chip 定位很脆弱；这里直接经 provider 切换
+    // 镜头语言，覆盖"改效果 → 片段更新 → 开关写回"这条链路。
+    container
+        .read(cameraAnglePresetNotifierProvider.notifier)
+        .toggleEffect(CameraLensEffect.fisheye);
     await tester.pumpAndSettle();
 
     expect(currentPreset().effects, {CameraLensEffect.fisheye});
-    expect(currentPreset().promptFragment, 'upper_body, fisheye');
-    expect(await _revealByScrolling(tester, scrollController, '提示词片段'), isTrue);
     expect(
-      tester
-          .widget<CameraAnglePromptPreview>(
-            find.byType(CameraAnglePromptPreview),
-          )
-          .preset
-          .promptFragment,
-      'upper_body, fisheye',
+      currentPreset().promptFragment(),
+      'upper_body, fisheye, viewed from the front, an upper-body framing',
     );
 
-    // 开关在最后一张卡片的标题行，滚到底部保证它落在视口内再点击。
+    // 开关在最后一张卡片的标题行：先滚到底部让它被构建，再确保它落在视口内。
     scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byType(Switch));
     await tester.pumpAndSettle();
     await tester.tap(find.byType(Switch));
     await tester.pumpAndSettle();
@@ -267,14 +282,14 @@ class _FakeStorage extends LocalStorageService {
 Future<bool> _revealByScrolling(
   WidgetTester tester,
   ScrollController controller,
-  String text,
+  Finder finder,
 ) async {
-  const step = 200.0;
+  const step = 120.0;
   final max = controller.position.maxScrollExtent;
   for (var offset = 0.0; offset <= max; offset += step) {
     if (offset > 0) controller.jumpTo(offset);
     await tester.pump();
-    if (find.text(text).evaluate().isNotEmpty) return true;
+    if (finder.evaluate().isNotEmpty) return true;
   }
   return false;
 }

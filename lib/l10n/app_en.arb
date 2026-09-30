@@ -7323,5 +7323,11 @@
   "characterInteraction_collapse": "Collapse interaction",
   "characterInteraction_customLabel": "Custom action",
   "characterInteraction_customHint": "e.g. pointing at another",
-  "characterInteraction_customApply": "Write"
+  "characterInteraction_customApply": "Write",
+  "cameraAngle_outputMode": "Output form",
+  "cameraAngle_outputTags": "Tags only",
+  "cameraAngle_outputTagsAndDescription": "Tags + description",
+  "cameraAngle_outputDescription": "Description only",
+  "cameraAngle_outputModeHint": "The description is a plain English sentence; V4 and newer models read it well, V5 best of all. Tags and description together are the most accurate.",
+  "cameraAngle_outputTagsOnlyHint": "The current model only understands tags, so descriptions are not offered."
 }

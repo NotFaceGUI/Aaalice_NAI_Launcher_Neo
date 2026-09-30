@@ -7348,5 +7348,11 @@
   "characterInteraction_collapse": "インタラクションを閉じる",
   "characterInteraction_customLabel": "カスタム動作",
   "characterInteraction_customHint": "例: pointing at another",
-  "characterInteraction_customApply": "書き込む"
+  "characterInteraction_customApply": "書き込む",
+  "cameraAngle_outputMode": "出力形式",
+  "cameraAngle_outputTags": "タグのみ",
+  "cameraAngle_outputTagsAndDescription": "タグ＋説明",
+  "cameraAngle_outputDescription": "説明のみ",
+  "cameraAngle_outputModeHint": "説明は英文の一文です。V4 以降のモデルがよく理解し（V5 が最も得意）、タグと併用すると構図が最も正確になります。",
+  "cameraAngle_outputTagsOnlyHint": "現在のモデルはタグのみを理解するため、説明は提供されません。"
 }

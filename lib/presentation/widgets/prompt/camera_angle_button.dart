@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/constants/api_constants.dart';
 import '../../../core/utils/localization_extension.dart';
 import '../../../data/models/camera_angle/camera_angle_preset.dart';
+import '../../providers/image_generation_provider.dart';
 import '../common/delayed_rich_tooltip.dart';
 import '../common/rich_tooltip_surface.dart';
 import '../../providers/camera_angle_provider.dart';
@@ -34,11 +36,19 @@ class CameraAngleButton extends ConsumerWidget {
     final state = ref.watch(cameraAnglePresetNotifierProvider);
     final preset = state.preset;
     final color = theme.promptSemanticColors.cameraAngle;
+    final allowDescription = ref.watch(
+      generationParamsNotifierProvider.select(
+        (params) => ImageModels.isV4Model(params.model),
+      ),
+    );
 
     return DelayedRichTooltip(
       content: RichTooltipSurface(
         maxWidth: 360,
-        child: _CameraAngleTooltip(preset: preset),
+        child: _CameraAngleTooltip(
+          preset: preset,
+          allowDescription: allowDescription,
+        ),
       ),
       child: PromptControlButton(
         key: const Key('camera-angle-button-surface'),
@@ -95,9 +105,13 @@ class CameraAngleButton extends ConsumerWidget {
 }
 
 class _CameraAngleTooltip extends StatelessWidget {
-  const _CameraAngleTooltip({required this.preset});
+  const _CameraAngleTooltip({
+    required this.preset,
+    required this.allowDescription,
+  });
 
   final CameraAnglePreset preset;
+  final bool allowDescription;
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +159,10 @@ class _CameraAngleTooltip extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 6),
-        CameraAnglePromptPreview(preset: preset),
+        CameraAnglePromptPreview(
+          preset: preset,
+          allowDescription: allowDescription,
+        ),
         const SizedBox(height: 10),
         Row(
           children: [

@@ -28122,6 +28122,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Write'**
   String get characterInteraction_customApply;
+
+  /// No description provided for @cameraAngle_outputMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Output form'**
+  String get cameraAngle_outputMode;
+
+  /// No description provided for @cameraAngle_outputTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags only'**
+  String get cameraAngle_outputTags;
+
+  /// No description provided for @cameraAngle_outputTagsAndDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags + description'**
+  String get cameraAngle_outputTagsAndDescription;
+
+  /// No description provided for @cameraAngle_outputDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description only'**
+  String get cameraAngle_outputDescription;
+
+  /// No description provided for @cameraAngle_outputModeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The description is a plain English sentence; V4 and newer models read it well, V5 best of all. Tags and description together are the most accurate.'**
+  String get cameraAngle_outputModeHint;
+
+  /// No description provided for @cameraAngle_outputTagsOnlyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The current model only understands tags, so descriptions are not offered.'**
+  String get cameraAngle_outputTagsOnlyHint;
 }
 
 class _AppLocalizationsDelegate

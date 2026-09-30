@@ -28,7 +28,7 @@ class CameraAnglePresetNotifier extends _$CameraAnglePresetNotifier {
       preset: preset,
       // 已启用的预设视为已经写进提示词：启动时不再重复插入，
       // 也不因为提示词被其他入口改写而擅自删除用户内容。
-      appliedFragment: preset.enabled ? preset.promptFragment : '',
+      appliedFragment: preset.enabled ? preset.promptFragment() : '',
     );
   }
 
@@ -62,6 +62,10 @@ class CameraAnglePresetNotifier extends _$CameraAnglePresetNotifier {
   /// 设置提示词强度。
   Future<void> setStrength(double strength) =>
       _update(state.preset.copyWith(strength: strength));
+
+  /// 设置输出形式（标签 / 标签加描述 / 仅描述）。
+  Future<void> setOutputMode(CameraAngleOutputMode mode) =>
+      _update(state.preset.copyWith(outputMode: mode));
 
   /// 开启或关闭视角提示词。
   Future<void> setEnabled(bool enabled) =>

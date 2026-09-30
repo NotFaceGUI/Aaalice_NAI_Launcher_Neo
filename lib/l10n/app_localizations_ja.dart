@@ -15671,4 +15671,23 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get characterInteraction_customApply => '書き込む';
+
+  @override
+  String get cameraAngle_outputMode => '出力形式';
+
+  @override
+  String get cameraAngle_outputTags => 'タグのみ';
+
+  @override
+  String get cameraAngle_outputTagsAndDescription => 'タグ＋説明';
+
+  @override
+  String get cameraAngle_outputDescription => '説明のみ';
+
+  @override
+  String get cameraAngle_outputModeHint =>
+      '説明は英文の一文です。V4 以降のモデルがよく理解し（V5 が最も得意）、タグと併用すると構図が最も正確になります。';
+
+  @override
+  String get cameraAngle_outputTagsOnlyHint => '現在のモデルはタグのみを理解するため、説明は提供されません。';
 }

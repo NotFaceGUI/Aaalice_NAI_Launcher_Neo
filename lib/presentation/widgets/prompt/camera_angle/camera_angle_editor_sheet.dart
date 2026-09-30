@@ -90,6 +90,7 @@ class CameraAngleEditorSheet extends ConsumerWidget {
         preset: preset,
         onStrengthChanged: notifier.setStrength,
         onEnabledChanged: notifier.setEnabled,
+        onOutputModeChanged: notifier.setOutputMode,
       ),
     ];
 

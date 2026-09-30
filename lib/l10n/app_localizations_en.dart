@@ -16131,4 +16131,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get characterInteraction_customApply => 'Write';
+
+  @override
+  String get cameraAngle_outputMode => 'Output form';
+
+  @override
+  String get cameraAngle_outputTags => 'Tags only';
+
+  @override
+  String get cameraAngle_outputTagsAndDescription => 'Tags + description';
+
+  @override
+  String get cameraAngle_outputDescription => 'Description only';
+
+  @override
+  String get cameraAngle_outputModeHint =>
+      'The description is a plain English sentence; V4 and newer models read it well, V5 best of all. Tags and description together are the most accurate.';
+
+  @override
+  String get cameraAngle_outputTagsOnlyHint =>
+      'The current model only understands tags, so descriptions are not offered.';
 }
